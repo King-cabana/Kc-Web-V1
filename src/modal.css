@@ -1,0 +1,7 @@
+body.active-modal {
+  overflow: hidden;
+}
+
+div.notShown {
+  display: none;
+}
