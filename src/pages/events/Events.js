@@ -8,33 +8,36 @@ import {
   EventCard,
   NavButtonHolder,
   TypeTextHolder,
+  EventCardHolder,
+  EventDisplaySection,
+  // DisplayEvents,
 } from "./EventsStyled";
 import {
   CardHolder,
   ImageDisplayOverlay,
-  ImageDisplayOverlayB,
+  // ImageDisplayOverlayB,
 } from "../../globalStyles";
 import Footer from "../../components/footer/Footer";
 import { NavButtonLink } from "../../components/navbar/Navbar.styled";
 import Navbar from "../../components/navbar/Navbar";
 import { Typewriter } from "react-simple-typewriter";
-import Img from "../../assets/images/Business.jpg"
-import {
-  ASContentSection,
-  ASContent,
-  ASImage,
-  SponsorSection,
-  SponsorSectionInner,
-  SponsorCard,
-  ASSectionInner,
-  ASContentInner,
-  // TestimonialSection,
-  ReadySection,
-} from "./EventsStyled";
-import Search from "../../assets/images/search.svg"
-import Bulb from "../../assets/images/Frame 21613bulb.svg";
-import Speaker from "../../assets/images/speaker.svg";
-import Subscribe from "../../assets/images/computer.jpg";
+// import Img from "../../assets/images/Business.jpg"
+// import {
+//   ASContentSection,
+//   ASContent,
+//   ASImage,
+//   SponsorSection,
+//   SponsorSectionInner,
+//   SponsorCard,
+//   ASSectionInner,
+//   ASContentInner,
+//   // TestimonialSection,
+//   ReadySection,
+// } from "./EventsStyled";
+// import Search from "../../assets/images/search.svg"
+// import Bulb from "../../assets/images/Frame 21613bulb.svg";
+// import Speaker from "../../assets/images/speaker.svg";
+// import Subscribe from "../../assets/images/computer.jpg";
 // import Testimonial from "../../components/testimonials/Testimonial";
 import Food from "../../assets/images/Food.jpg";
 import Business from "../../assets/images/BusinessB.jpg";
@@ -49,9 +52,12 @@ import {
 import {
   KBDisplayL,
   KBDisplayM,
+  KBDisplayXs,
   KBTextL,
-  KBTextM,
+  // KBTextM,
 } from "../../components/fonts/Fonts";
+import Card from "../../components/cards/Card";
+import CardData from "../../components/cards/CardData";
 
 const Events = () => {
   return (
@@ -143,85 +149,53 @@ const Events = () => {
         </NavButtonHolder>
       </ContentSection>
 
-      {/* <ASContentSection style={{ backgroundColor: "#FEF5F7" }}>
-        <ASSectionInner>
-          <ASContent>
-            <ASContentInner>
-              <KBDisplayM fontWeight="600">
-                Advertise your events on our platform.
-              </KBDisplayM>
-              <KBTextL style={{ marginTop: "5%", marginBottom: "4%" }}>
-                Publicize your events and business here and experience potential
-                customers seek you out in record time.
-              </KBTextL>
-              <NavButtonLink to="/waitlist">
-                <PrimaryButton style={{ marginTop: "4%" }}>
-                  Get in touch
-                </PrimaryButton>
-              </NavButtonLink>
-            </ASContentInner>
-          </ASContent>
-          <ASImage img={Img} />
-        </ASSectionInner>
-      </ASContentSection>
-      <SponsorSection>
-        <KBDisplayM fontWeight="600" color="#484848;">
-          Leverage for being an Event sponsor
-        </KBDisplayM>
-        <KBTextL>
-          As a sponsor, these are some of the opportunities you would get.
-        </KBTextL>
-        <SponsorSectionInner>
-          <SponsorCard>
-            <img src={Search} alt="" />
-            <KBTextM style={{ marginTop: "10%" }}>
-              Assess target markets.
-            </KBTextM>
-          </SponsorCard>
-          <SponsorCard>
-            <img src={Bulb} alt="" />
-            <KBTextM style={{ marginTop: "10%" }}>
-              Enhance connection with target markets.
-            </KBTextM>
-          </SponsorCard>
-          <SponsorCard>
-            <img src={Speaker} alt="" />
-            <KBTextM style={{ marginTop: "10%" }}>
-              Promote your brand through experiential marketing.
-            </KBTextM>
-          </SponsorCard>
-        </SponsorSectionInner>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100vw",
-          }}
-        >
-          <NavButtonLink to="/waitlist">
-            <PrimaryButton fontWeight="600">Let's get started</PrimaryButton>
+      <EventDisplaySection>
+        <KBDisplayXs style={{marginBottom:'3%'}} fontWeight="600" color="484848">Upcoming Events</KBDisplayXs>
+        <EventCardHolder>
+           {CardData.map(data => 
+              <Card key={data.id}
+                    image={data.image}
+                    eventName={data.eventName}
+                    eventDescription={data.eventDescription}
+                    eventTime={data.eventTime}
+                    eventDate={data.eventDate}
+                    eventLocation={data.eventLocation}
+          />)}
+        </EventCardHolder>
+        <NavButtonHolder>
+          <NavButtonLink to="">
+            <AlternativeButton style={{ color: "black" }} fontWeight="600">
+              Explore More
+            </AlternativeButton>
           </NavButtonLink>
-        </div>
-      </SponsorSection>
+        </NavButtonHolder>
+
+      </EventDisplaySection>
+
+      <EventDisplaySection>
+        <KBDisplayXs style={{marginBottom:'3%'}} fontWeight="600" color="484848">Previously Held Events</KBDisplayXs>
+        <EventCardHolder>
+           {CardData.map(data => 
+              <Card key={data.id}
+                    image={data.image}
+                    eventName={data.eventName}
+                    eventDescription={data.eventDescription}
+                    eventTime={data.eventTime}
+                    eventDate={data.eventDate}
+                    eventLocation={data.eventLocation}
+          />)}
+        </EventCardHolder>
+        <NavButtonHolder>
+          <NavButtonLink to="">
+            <AlternativeButton style={{ color: "black" }} fontWeight="600">
+              Explore More
+            </AlternativeButton>
+          </NavButtonLink>
+        </NavButtonHolder>
+
+      </EventDisplaySection>
+       
       
-      
-      <ReadySection>
-        <ASImage img={Subscribe}>
-          <ImageDisplayOverlayB />
-        </ASImage>
-        <ASContent>
-          <div style={{ width: "inherit", justifyContent: "flex-start" }}>
-            <KBDisplayM fontWeight="600" color="#484848">
-              Ready to be sponsored?{" "}
-            </KBDisplayM>
-            <KBTextL>Enter your email with King Cabana now!</KBTextL>
-            <NavButtonLink to="/signup">
-              <PrimaryButton>Sign me up</PrimaryButton>
-            </NavButtonLink>
-          </div>
-        </ASContent>
-      </ReadySection> */}
       <Footer />
     </>
   );

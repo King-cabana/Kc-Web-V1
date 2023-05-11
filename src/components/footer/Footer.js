@@ -70,8 +70,8 @@ const Footer = () => {
           <FooterLinksHolder>
             <p>Company</p>
             <ul>
-              <li>About</li>
-              <li>Contact Us</li>
+              <li><a style={{color:'white', textDecoration:'none'}} href="/aboutUs">About</a></li>
+              <li><a style={{color:'white', textDecoration:'none'}} href="/contactUs">Contact Us</a></li>
               <li>Privacy Policy</li>
               <li>Terms & Conditions</li>
             </ul>
@@ -89,16 +89,15 @@ const Footer = () => {
             <p style={{ color: "white", fontSize: "14px", marginBottom: "5%" }}>
               Download on
             </p>
-            <DownloadIconHolder style={{}}>
-            <img style={{cursor:'pointer'}} src={appleIcon} alt=" "/>
-            <img style={{cursor:'pointer'}} src={googlePlayIcon} alt=" "/>
+            <DownloadIconHolder >
+              <img style={{cursor:'pointer'}} src={appleIcon} alt="apple store"/>
+              <img style={{cursor:'pointer'}} src={googlePlayIcon} alt="google play store"/>
             </DownloadIconHolder>
-           
             
           </EventButtonHolder>
         </FooterContent>
         <BottomLogo>
-           {`${copyright} ${currentYear}` + ` All Rights Reserved.`}
+        {`${copyright} ${currentYear} All Rights Reserved.`}
         </BottomLogo>
       </FooterBody>
     </>

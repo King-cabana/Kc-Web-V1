@@ -199,6 +199,33 @@ export const ContentSectionParagraph = styled.p`
   }
 `;
 
+export const EventDisplaySection = styled.div`
+    padding:2% 6%; 
+    width:100%;
+    height:max-content;
+    display:flex
+    flex-direction:column;
+    justify-content:center;
+
+    @media screen and (max-width: 480px){
+        margin-top : 10%;
+    }
+
+`
+
+export const EventCardHolder = styled.div`
+    width:100%;
+    height:100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:20px;
+
+    @media screen and (max-width: 480px){
+        display: block;
+      
+    }
+`
+
 export const EventCard = styled.div`
   box-sizing: border-box;
   width: 26vw;
