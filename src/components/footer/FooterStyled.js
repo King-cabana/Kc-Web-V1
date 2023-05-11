@@ -159,6 +159,8 @@ export const FooterLinksHolder = styled.div`
   @media screen and (max-width: 480px) {
     width: inherit;
     margin-top: 5%;
+    height: fit-content;
+    margin-bottom: 5%;
   }
 
   @media screen and (min-width: 481px) and (max-width: 960px) {
@@ -176,6 +178,7 @@ export const EventButtonHolder = styled.div`
     width: fit-content;
     justify-content: center;
     align-items: center;
+    margin-top : 5%;
   }
 
   @media screen and (min-width: 481px) and (max-width: 960px) {
@@ -198,6 +201,12 @@ export const DownloadIconHolder = styled.div`
   @media screen and (max-width: 480px){
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img{
+      width: 50px;
+    }
   }
 `
 export const EventButton = styled.button`
@@ -264,8 +273,11 @@ export const BottomLogo = styled.div`
   margin-top: 5%;
 
   @media screen and (max-width: 480px) {
-    width: 40%;
+    // width: 40%;
     margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   @media screen and(min-width: 481px) and (max-width: 960px) {
