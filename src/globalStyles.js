@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
+import background from "./assets/images/pawel-czerwinski-OG44d93iNJk-unsplash.jpg"
 import people from "./assets/images/people.jpg";
 import computer from "./assets/images/computer.jpg";
 
@@ -27,10 +28,14 @@ export const ModalOverlay = styled.div`
 export const AuthBackground = styled.div`
   width: 100%;
   height: 100vh;
-  background: #fffcfc;
+  // background: #fffcfc;
   align-items: center;
   justify-content: center;
   display: flex;
+  background: url(${background});
+  bacground-repeat : no-repeat;
+  background-position: right;
+  background-size: cover;
 
   /* @media screen and (max-width:'480px') {
     width: 100%;
@@ -88,11 +93,11 @@ export const Form = styled.form`
 `;
 
 export const InputFieldWrapper = styled.div`
+  width : 100%;
   display: flex;
   height: 6vh;
   outline: 1px solid #c4c4c4;
   border-radius: 4px;
-  /* margin-top: 2%; */
 
   input {
     height: inherit;
@@ -184,9 +189,12 @@ export const CardHolder = styled.div`
   }
 
   @media screen and (orientation: landscape) and (max-width: 960px){
-    background-color: red;
     width: 100%;
-    display: inline-block;
+    display : grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:10px;
+    height : max-content;
+    padding : 4%;
   }
 `;
 
@@ -412,7 +420,7 @@ export const Div = styled.div`
 `;
 
 export const Horizontal = styled.div`
-  width: 40vw;
+  width: 50vw;
   height: 0.2vh;
   background-color: #c4c4c4;
 

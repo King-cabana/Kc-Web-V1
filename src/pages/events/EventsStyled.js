@@ -4,7 +4,6 @@ import background from "../../assets/images/clay-banks-POzx_amnWJw-unsplash.jpg"
 export const HeroSection = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-repeat: no-repeat;
   background: url(${background});
   background-position: right;
   background-size: cover;
@@ -246,6 +245,10 @@ export const EventCard = styled.div`
     margin-bottom: 4%;
     /* display: inline-block; */
     /* margin: 2%; */
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 960px){
+    width : 100%;
   }
 `;
 

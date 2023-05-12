@@ -21,14 +21,17 @@ export const FooterBody = styled.div`
   @media screen and (min-width: 481px) and (max-width: 960px) {
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     justify-content: center;
     align-items: center;
-    justify-items: center;
-    align-content: center;
     text-align: center;
-    padding: 2%;
+    padding: 3%;
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 960px){
+    width: 100%;
+
   }
 `;
 
@@ -56,9 +59,7 @@ export const FooterContent = styled.div`
     width: 100%;
     height: fit-content;
     justify-content: space-between;
-    align-items: center;
     justify-items: center;
-    align-content: center;
     text-align: center;
     position: relative;
   }
@@ -67,7 +68,7 @@ export const FooterContent = styled.div`
 export const FooterInner = styled.div`
   color: white;
   width: 30%;
-  height: 30vh;
+  height: fit-content;
   line-height: 2em;
 
   img {
@@ -164,8 +165,8 @@ export const FooterLinksHolder = styled.div`
   }
 
   @media screen and (min-width: 481px) and (max-width: 960px) {
-    padding-top: 3vh;
     text-align: left;
+    height : fit-content;
     /* padding-left: 2%; */
   }
 `;
@@ -183,8 +184,8 @@ export const EventButtonHolder = styled.div`
 
   @media screen and (min-width: 481px) and (max-width: 960px) {
     width: 22%;
-    justify-content: center;
-    align-items: flex-end;
+    // justify-content: center;
+    // align-items: flex-end;
     display: flex;
     flex-direction: column;
 
