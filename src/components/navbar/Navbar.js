@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import hb from "../../assets/images/hb.svg";
 import times from "../../assets/images/times.svg";
 import { IconContext } from "react-icons/lib";
@@ -21,21 +21,26 @@ const Navbar = () => {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
-  const handleClick = () => setClick(!click);
+  const handleClick = useCallback(() => {
+    setClick((prevClick) => !prevClick);
+  }, []);
 
-  const showButton = () => {
+  const showButton = useCallback(() => {
     if (window.innerWidth <= 960) {
       setButton(false);
     } else {
       setButton(true);
     }
-  };
+  }, []);
 
   useEffect(() => {
     showButton();
-  }, []);
+    window.addEventListener("resize", showButton);
 
-  window.addEventListener("resize", showButton);
+    return () => {
+      window.removeEventListener("resize", showButton);
+    };
+  }, [showButton]);
 
   return (
     <>
@@ -63,22 +68,21 @@ const Navbar = () => {
               <NavGroup>
                 {button ? (
                   <>
-                  <NavButtonLink to="/login">
-                    <AltNavBtn fontWeight='500'>Sign In</AltNavBtn>
-                  </NavButtonLink>  
-                  <NavButtonLink to="/signup">  
-                    <PryNavBtn fontWeight='500'>Create Event</PryNavBtn>
-                  </NavButtonLink>
+                    <NavButtonLink to="/login">
+                      <AltNavBtn fontWeight="500">Sign In</AltNavBtn>
+                    </NavButtonLink>
+                    <NavButtonLink to="/signup">
+                      <PryNavBtn fontWeight="500">Create Event</PryNavBtn>
+                    </NavButtonLink>
                   </>
-                  
                 ) : (
                   <>
-                  <NavButtonLink to="/login">
-                    <AltNavBtn fontWeight='500'>Sign In</AltNavBtn>
-                  </NavButtonLink>  
-                  <NavButtonLink to="/signup">  
-                    <PryNavBtn fontWeight='500'>Create Event</PryNavBtn>
-                  </NavButtonLink>
+                    <NavButtonLink to="/login">
+                      <AltNavBtn fontWeight="500">Sign In</AltNavBtn>
+                    </NavButtonLink>
+                    <NavButtonLink to="/signup">
+                      <PryNavBtn fontWeight="500">Create Event</PryNavBtn>
+                    </NavButtonLink>
                   </>
                 )}
               </NavGroup>
@@ -91,3 +95,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

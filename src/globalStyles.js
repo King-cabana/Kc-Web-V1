@@ -410,9 +410,13 @@ export const WhatsApp = styled.div`
 export const Div = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 60%;
   font-size: 12px;
   justify-content: space-between;
+
+   @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
 
   @media only screen and (max-width: 960px) {
     width: 100%;

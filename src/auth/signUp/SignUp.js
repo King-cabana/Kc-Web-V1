@@ -157,7 +157,7 @@ const SignUp = () => {
                 </p>
               </InputFieldWrapper>
             </div>
-            <Div style={{ marginTop: "3%", width: "60%" }}>
+            <Div style={{ marginTop: "3%" }}>
               <Horizontal />
               <Or>Or Signup with</Or>
               <Horizontal />
@@ -220,6 +220,7 @@ const SignUp = () => {
                     top: "auto",
                     marginRight: "3%",
                     color: "#C4C4C4",
+                    cursor : "pointer",
                   }}
                 />
               ) : (
@@ -230,6 +231,7 @@ const SignUp = () => {
                     top: "auto",
                     marginRight: "3%",
                     color: "#C4C4C4",
+                    cursor : "pointer",
                   }}
                 />
               )}
@@ -253,6 +255,7 @@ const SignUp = () => {
                     top: "auto",
                     marginRight: "3%",
                     color: "#C4C4C4",
+                    cursor : "pointer",
                   }}
                 />
               ) : (
@@ -263,13 +266,13 @@ const SignUp = () => {
                     top: "auto",
                     marginRight: "3%",
                     color: "#C4C4C4",
+                    cursor : "pointer",
                   }}
                 />
               )}
                
             </InputFieldWrapper>  
             {formErrors.confirmPassword && (
-              // <span className="error"></span>
               <ErrorText>{formErrors.confirmPassword}</ErrorText>
             )}      
           </LabelInputHolder>
@@ -281,7 +284,6 @@ const SignUp = () => {
               <input type="checkbox" required></input>
               <KBTextXs
                 style={{
-                  textAlign: "center",
                   marginBottom: "0",
                   lineHeight: "1em",
                 }}
@@ -292,7 +294,7 @@ const SignUp = () => {
               </KBTextXs>
             </div>
             <LongButton
-              style={{ marginTop: "3%" }}
+              style={{ marginTop: "3%", marginBottom: '1%' }}
               type="submit"
               disabled={disabledButton}
               onClick={handleValidation}

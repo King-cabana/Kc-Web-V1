@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import OtpInput from "react-otp-input";
 import { LongButton, Form, AuthBackground } from "../../globalStyles";
 import { VerifyBody } from "./SignUpStyled";
-import Logo from "../../images/Logo.svg";
-import { verifyEmail } from "../../redux/service/authService";
+import Logo from "../../assets/images/Logo.svg";
+import { verifyEmail } from "../../redux/services/authService";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
@@ -17,13 +17,12 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
 
  const handleSubmit = async (e) => {
-    
-    e.preventDefault();
+  e.preventDefault();
    try {
     setLoading(true)
     const res = await verifyEmail(otp);
     console.log(res)
-    toast.success("Email Successfully verified!")
+    // toast.success("Email Successfully verified!")
     navigate("/login");
    } catch (error) {
     setLoading(false)
@@ -34,9 +33,15 @@ const VerifyEmail = () => {
   }
   }
 
-  // const resendCode = () => {
-
-  // }
+  const renderInput = (inputProps, index) => {
+    return (
+      <input
+        className="otp-input"
+        {...inputProps}
+        key={index}
+      />
+    );
+  };
  
 
   return (
@@ -76,6 +81,7 @@ const VerifyEmail = () => {
             }}
             // isInputSecure
             separator={<span> </span>}
+            renderInput={renderInput}
           />
           <LongButton style={{ marginTop: "5%" }} type="submit">
           {loading ? <ImSpinner6 size={"1.5rem"} /> : "Verify"}
