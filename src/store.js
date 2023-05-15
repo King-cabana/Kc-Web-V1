@@ -8,8 +8,8 @@ import eventOrganizerProfileSlice from "./redux/slices/eventOrganizerProfileSlic
 import messageSlice from "./redux/slices/userDetailsSlice";
 import otpSlice from "./redux/slices/otpSlice";
 import userDetailsSlice from "./redux/slices/userDetailsSlice";
-import userProfileSlice from './redux/slices/userProfileSlice';
-import proposalSlice from './redux/slices/proposalSlice';
+import userProfileSlice from "./redux/slices/userProfileSlice";
+import proposalSlice from "./redux/slices/proposalSlice";
 import proposalPreviewSlice from "./redux/slices/proposalPreviewSlice";
 
 const persistConfig = {
@@ -18,11 +18,11 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-//   message: messageSlice,
-//   profile: profileSlice,
-//   eventOrganizerProfile: eventOrganizerProfileSlice,
-//   otp: otpSlice,
-//   createEvent: createEventSlice,
+  message: messageSlice,
+  profile: profileSlice,
+  eventOrganizerProfile: eventOrganizerProfileSlice,
+  otp: otpSlice,
+  createEvent: createEventSlice,
   eventCreated: eventCreatedSlice,
   userDetails: userDetailsSlice,
   userProfile: userProfileSlice,
