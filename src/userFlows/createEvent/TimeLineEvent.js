@@ -51,7 +51,6 @@ import {
 } from "../../components/buttons/button";
 import { BsChevronRight } from "react-icons/bs";
 import { WelcomeHeader, Txt } from "../emptyEvent/EmptyEventStyled";
-// const { LoadScript } = lazy(() => import("@react-google-maps/api"));
 const libraries = ["places"];
 
 const TimeLineEvent = ({ padding }) => {
@@ -62,12 +61,6 @@ const TimeLineEvent = ({ padding }) => {
   const state = useSelector((state) => state.createEvent);
   const navigate = useNavigate();
   const inputRef = useRef();
-
-  // useEffect(() => {
-  //   if (locationType === "virtual") {
-  //     window.location.reload();
-  //   }
-  // }, [locationType]);
 
   const handlePlaceChanged = () => {
     const [place] = inputRef.current.getPlaces();
@@ -99,7 +92,6 @@ const TimeLineEvent = ({ padding }) => {
         {tag}
         <Delete onClick={() => handleRemoveTag(tag)}>
           <AiOutlineClose />
-          {/* ... */}
         </Delete>
       </EventButton>
     </div>
@@ -111,7 +103,6 @@ const TimeLineEvent = ({ padding }) => {
   const navigateBack = () => {
     navigate("/createEvent/eventDetails");
   };
-
   const navigateNext = () => {
     navigate("/createEvent/eventPlanPreview");
     console.log(state);
