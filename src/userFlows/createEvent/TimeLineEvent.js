@@ -299,16 +299,6 @@ const TimeLineEvent = ({ padding }) => {
                 )}
               </StandaloneSearchBox>
             </LoadScript>
-            {/* <EventInputBox>
-                  <input
-                    type="text"
-                    placeholder="E.g: 19, Isaac Mike Street, Ikeja, Lagos, Nigeria."
-                    name="eventAddress"
-                    onChange={change}
-                    defaultValue={state.eventAddress}
-                    style={{ fontSize: "15px" }}
-                  ></input>
-                </EventInputBox> */}
           </EventSubSection>
         </BudgetSection>
 
