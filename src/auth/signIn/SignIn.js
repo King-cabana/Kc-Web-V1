@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import {
-  AuthBackground,
   Div,
   Horizontal,
   InputFieldWrapper,
@@ -10,13 +9,12 @@ import {
   Or,
   SocialIconsHolder,
 } from "../../globalStyles";
-import { SignUpContent, LogInLink, SignUpBody } from "../signUp/SignUpStyled";
+import { SignUpContent, LogInLink } from "../signUp/SignUpStyled";
 import Logo from "../../assets/images/Logo.svg";
-import { KBDisplayXs, KBTextXs } from "../../components/fonts/Fonts";
+import { KBDisplayXs} from "../../components/fonts/Fonts";
 import { Form } from "../../globalStyles";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 import google from "../../assets/images/Google.svg";
-import linkedin from "../../assets/images/linkedin.svg";
 import { login } from "../../redux/services/authService";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
@@ -25,6 +23,9 @@ import { useDispatch } from "react-redux";
 import { setUserToken } from "../../redux/slices/userDetailsSlice";
 import axios from "axios";
 import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfileSlice";
+import { SignInBg, SignInBody } from "./SignInStyled";
+import {gapi} from "gapi-script";
+import GoogleLogin from "react-google-login";
 
 const SignIn = () => {
   const [click, setClick] = useState(false);
@@ -67,6 +68,26 @@ const SignIn = () => {
     }
   };
 
+  //signin with google
+  const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
+  const onSuccess = (res) => {
+    console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
+  }
+
+  const onFailure = (res) => {
+      console.log("LOGIN FAILED! res: ", res);
+  }
+
+  useEffect(()=>{
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "email profile openid https://www.googleapis.com/auth/userinfo.email"
+      })
+    };
+    gapi.load('client:auth2', start);
+  });
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -101,32 +122,91 @@ const SignIn = () => {
     }
   };
 
+
+
   return (
-    <AuthBackground>
-      <SignUpBody>
-        <SignUpContent>
-          <img style={{ marginTop: "5%" }} src={Logo} alt="King Cabana Logo" />
+    <SignInBg>
+      <SignInBody>
+          <SignUpContent>
+          <img src={Logo} alt="King Cabana Logo" />
           <KBDisplayXs
             fontWeight="700"
             style={{ textAlign: "left", color: "#484848", marginTop: "2%" }}
           >
-            log in
+            Sign in
           </KBDisplayXs>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "3%",
+              marginBottom: "3%",
+            }}
+          >
+      <div style={{ width: '100%', justifyContent:'center', alignItems:'center', display:'flex'}}>
+      <GoogleLogin
+         clientId={clientId}
+         buttonText="Continue with Google"
+         onSuccess={onSuccess}
+         onFailure={onFailure}
+         cookiePolicy={'single_host_origin'}
+         isSignedIn={true}
+         render={(renderProps) => (
+          <div
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+            style={{width:'100%'}}
+          >
+             <div style={{ width: "100%"}}>
+              <InputFieldWrapper
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <SocialIconsHolder style={{ border: "transparent" }}>
+                  <img src={google} alt="google" />
+                </SocialIconsHolder>
+                <p
+                  style={{
+                    marginBottom: "0",
+                    fontWeight: "600",
+                    fontSize: "12px",
+                  }}
+                >
+                  Continue with Google
+                </p>
+              </InputFieldWrapper>
+            </div>
+          </div>
+        )}
+      />
+    </div>
+            <Div width="80%" style={{ marginTop: "3%" }}>
+              <Horizontal />
+              <Or>Or Sign in with</Or>
+              <Horizontal />
+            </Div>
+          </div>
 
           <Form onSubmit={handleLogin}>
-            <label style={{ marginBottom: "2%" }}>E-mail</label>
+            <label style={{ fontSize:'14px', marginBottom: "1%"}}>E-mail</label>
             <InputFieldWrapper>
               <input
-                placeholder="Enter your E-mail"
+                placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
             </InputFieldWrapper>
 
-            <label style={{ marginBottom: "2%" }}>Password</label>
+            <label style={{ fontSize:'14px', marginBottom: "1%" }}>Password</label>
             <InputFieldWrapper>
               <input
-                placeholder="Create a password"
+                placeholder="Enter password"
                 type={InputType}
                 required
                 value={password}
@@ -163,25 +243,6 @@ const SignIn = () => {
                 justifyContent: "space-between",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignitems: "center",
-                  justifyContent: "center",
-                  gap: "5px",
-                }}
-              >
-                <input type="checkbox"></input>
-                <KBTextXs
-                  style={{
-                    textAlign: "center",
-                    marginBottom: "0",
-                    lineHeight: "1em",
-                  }}
-                >
-                  Keep me signed in{" "}
-                </KBTextXs>
-              </div>
               <p
                 style={{
                   cursor: "pointer",
@@ -193,62 +254,11 @@ const SignIn = () => {
                 Forgot Password?
               </p>
             </div>
-            <LongButton style={{ marginTop: "5%" }} type="submit">
-              {loading ? <ImSpinner6 size={"1.5rem"} /> : "Log in"}
+            <LongButton style={{ marginTop: "3%",  marginBottom: '2%' }} type="submit">
+              {loading ? <ImSpinner6 size={"1.5rem"} /> : "Sign in"}
             </LongButton>
           </Form>
 
-          <Div style={{ marginTop: "5%" }}>
-            <Horizontal />
-            <Or>Or Login with</Or>
-            <Horizontal />
-          </Div>
-
-          <div style={{ marginTop: "5%", marginBottom: "5%" }}>
-            <InputFieldWrapper
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-            >
-              <SocialIconsHolder style={{ border: "transparent" }}>
-                <img src={google} alt="google" />
-              </SocialIconsHolder>
-              <p
-                style={{
-                  marginBottom: "0",
-                  fontWeight: "600",
-                  fontSize: "12px",
-                }}
-              >
-                Sign up with Google
-              </p>
-            </InputFieldWrapper>
-            <InputFieldWrapper
-              style={{
-                marginTop: "3%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-            >
-              <SocialIconsHolder style={{ border: "transparent" }}>
-                <img src={linkedin} alt="linkedin" />
-              </SocialIconsHolder>
-              <p
-                style={{
-                  marginBottom: "0",
-                  fontWeight: "600",
-                  fontSize: "12px",
-                }}
-              >
-                Sign up with linkedin
-              </p>
-            </InputFieldWrapper>
-          </div>
 
           <LogInLink to="/signup">
             Don't have an account?{" "}
@@ -259,8 +269,8 @@ const SignIn = () => {
             </span>
           </LogInLink>
         </SignUpContent>
-      </SignUpBody>
-    </AuthBackground>
+      </SignInBody>
+    </SignInBg>
   );
 };
 

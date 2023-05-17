@@ -37,9 +37,10 @@ export const AuthBackground = styled.div`
   background-position: right;
   background-size: cover;
 
-  /* @media screen and (max-width:'480px') {
-    width: 100%;
-  } */
+  @media screen and (orientation: landscape) and (max-width: 960px){
+    width : 100%;
+    overflow-y : scroll;
+  }
 `;
 
 export const LongButton = styled.button`
@@ -55,6 +56,10 @@ export const LongButton = styled.button`
     color: rgba(255, 255, 255, 0.3);
     outline: none;
     border: none;
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 960px){
+    height : 10vh;
   }
 `;
 
@@ -114,6 +119,10 @@ export const InputFieldWrapper = styled.div`
     input {
       width: 100%;
     }
+
+    @media screen and (orientation: landscape) and (max-width: 960px){
+      height: 10vh;
+    }  
   }
 `;
 
@@ -410,7 +419,7 @@ export const WhatsApp = styled.div`
 export const Div = styled.div`
   display: flex;
   align-items: center;
-  width: 60%;
+  width: ${(props) => props.width};;
   font-size: 12px;
   justify-content: space-between;
 

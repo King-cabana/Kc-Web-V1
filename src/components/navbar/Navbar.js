@@ -60,7 +60,7 @@ const Navbar = () => {
                 <NavBarLink to="/">Events</NavBarLink>
               </li>
               <li>
-                <NavBarLink to="/sponsors">For Sponsors</NavBarLink>
+                <NavBarLink  to="/sponsors">For Sponsors</NavBarLink>
               </li>
               <li>
                 <NavBarLink to="/vendors">For Vendors</NavBarLink>
@@ -68,7 +68,7 @@ const Navbar = () => {
               <NavGroup>
                 {button ? (
                   <>
-                    <NavButtonLink to="/login">
+                    <NavButtonLink to="/signin">
                       <AltNavBtn fontWeight="500">Sign In</AltNavBtn>
                     </NavButtonLink>
                     <NavButtonLink to="/signup">
@@ -77,7 +77,7 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <NavButtonLink to="/login">
+                    <NavButtonLink to="/signin">
                       <AltNavBtn fontWeight="500">Sign In</AltNavBtn>
                     </NavButtonLink>
                     <NavButtonLink to="/signup">

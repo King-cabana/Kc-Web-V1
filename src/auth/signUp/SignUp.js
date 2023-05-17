@@ -153,11 +153,11 @@ const SignUp = () => {
                     fontSize: "12px",
                   }}
                 >
-                  Sign up with Google
+                  Continue with Google
                 </p>
               </InputFieldWrapper>
             </div>
-            <Div style={{ marginTop: "3%" }}>
+            <Div width="60%" style={{ marginTop: "3%" }}>
               <Horizontal />
               <Or>Or Signup with</Or>
               <Horizontal />
@@ -303,9 +303,9 @@ const SignUp = () => {
             </LongButton>
           </Form>
 
-          <LogInLink to="/logIn">
+          <LogInLink to="/signin">
             Already have an account?
-            <span>Login</span>
+            <span> Signin</span>
           </LogInLink>
         </SignUpContent>
       </SignUpBody>

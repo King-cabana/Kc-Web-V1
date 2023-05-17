@@ -25,7 +25,7 @@ export const Image = styled.img`
 
 export const CardContentHolder = styled.div`
     height: 270px;
-    padding: 2%;
+    padding: 3%;
 
 `
 

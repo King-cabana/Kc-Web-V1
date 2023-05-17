@@ -1,18 +1,19 @@
 import React, { useState, useEffect} from "react";
 import {
-  AuthBackground,
   InputFieldWrapper,
   LongButton,
 } from "../../globalStyles";
-import { SignUpContent, SignUpBody } from "../signUp/SignUpStyled";
+import { SignUpContent } from "../signUp/SignUpStyled";
 import Logo from "../../assets/images/Logo.svg";
 import { KBDisplayXs } from "../../components/fonts/Fonts";
 import { Form } from "../../globalStyles";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
-import { resetPassword } from "../../redux/service/authService";
+import { resetPassword } from "../../redux/services/authService";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
+import { SignInBg } from "./SignInStyled";
+import VerifyEmail from "../signUp/VerifyEmail";
 
 const ResetPassword = () => {
   const [click, setClick] = useState(false);
@@ -28,14 +29,14 @@ const ResetPassword = () => {
     setVisibility(!visible);
   };
 
-  useEffect(()=>{
-    if(sessionStorage.getItem("otp")){
-        setOtp(sessionStorage.getItem("otp"))
-    } else{
-      toast.error('You do not have access to this page')
-      window.history.back()
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(sessionStorage.getItem("otp")){
+  //       setOtp(sessionStorage.getItem("otp"))
+  //   } else{
+  //     toast.error('You do not have access to this page')
+  //     window.history.back()
+  //   }
+  // },[])
 
   const InputType = visible ? "text" : "password";
 
@@ -47,7 +48,7 @@ const ResetPassword = () => {
       setLoading(true)
       await resetPassword(password, confirmPassword, otp);
       toast.success("Password Reset Successful!")
-      navigate("/login")
+      navigate("/signin")
     } catch (error) {
       setLoading(false)
       alert(error.response.data);
@@ -58,8 +59,8 @@ const ResetPassword = () => {
   };
 
   return (
-    <AuthBackground>
-      <SignUpBody>
+    <SignInBg>
+      <VerifyEmail>
         <SignUpContent>
           <img style={{ marginTop: "5%" }} src={Logo} alt="King Cabana Logo" />
           <KBDisplayXs
@@ -119,8 +120,8 @@ const ResetPassword = () => {
 
           </Form>
         </SignUpContent>
-      </SignUpBody>
-    </AuthBackground>
+      </VerifyEmail>
+    </SignInBg>
   );
 };
 
