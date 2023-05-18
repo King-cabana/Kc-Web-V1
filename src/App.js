@@ -9,8 +9,12 @@ import Vendor from "./pages/vendor/Vendor";
 import NoPage from "./pages/noPage/NoPage";
 import About from "./pages/about/About";
 import ContactUs from "./pages/contactUs/ContactUs";
+<<<<<<< HEAD
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
 
+=======
+import SignUp from "./auth/signUp/SignUp";
+>>>>>>> 955382d4c5239f3b0e9ce56ea0a149899a64667b
 
 
 // const Events = lazy(() => import("./pages/events/Events"));
@@ -29,7 +33,12 @@ function App() {
           <Route path="/aboutUs" element={<About/> } />
           <Route path="/contactUs" element={<ContactUs/> }/>
           <Route path="*" element={<NoPage/> }/>
+<<<<<<< HEAD
           <Route path="/help" element={<HelpCenter/> }/>
+=======
+          <Route path="/signup" element={<SignUp/>} />
+          
+>>>>>>> 955382d4c5239f3b0e9ce56ea0a149899a64667b
         </Routes>
       </>
     </>
