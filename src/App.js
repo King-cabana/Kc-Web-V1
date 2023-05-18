@@ -10,6 +10,13 @@ import NoPage from "./pages/noPage/NoPage";
 import About from "./pages/about/About";
 import ContactUs from "./pages/contactUs/ContactUs";
 import SignUp from "./auth/signUp/SignUp";
+import VerifyEmail from "./auth/signUp/VerifyEmail";
+import SignUpSuccess from "./auth/signUp/SignUpSuccess";
+import SignIn from "./auth/signIn/SignIn";
+import ForgotPassword from "./auth/forgotPassword/ForgotPassword";
+import ResetPassword from "./auth/signIn/ResetPassword";
+import Sidebar from "./userFlows/Dashboard/Sidebar";
+import DashboardHome from "./userFlows/pages/DashboardHome"
 
 
 // const Events = lazy(() => import("./pages/events/Events"));
@@ -28,7 +35,15 @@ function App() {
           <Route path="/aboutUs" element={<About/> } />
           <Route path="/contactUs" element={<ContactUs/> }/>
           <Route path="*" element={<NoPage/> }/>
+          <Route path="/signin" element={<SignIn/>} />
           <Route path="/signup" element={<SignUp/>} />
+          <Route path="/verifyEmail" element={<VerifyEmail/>} />
+          <Route path="/signupsuccess" element={<SignUpSuccess/>} />
+          <Route path="/forgotpassword" element={<ForgotPassword/> } />
+          <Route path="/resetpassword" element={<ResetPassword/> } />
+
+          
+          <Route path="/dashboard" element={<Sidebar><DashboardHome/> </Sidebar>} />
           
         </Routes>
       </>

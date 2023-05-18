@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
 export const Nav = styled.div`
@@ -134,6 +134,7 @@ export const NavBarLink = styled(NavLink)`
     &:hover {
       color: #ff2957;
     }
+
   }
 `;
 
