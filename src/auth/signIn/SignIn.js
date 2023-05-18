@@ -26,6 +26,7 @@ import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfi
 import { SignInBg, SignInBody } from "./SignInStyled";
 import {gapi} from "gapi-script";
 import GoogleLogin from "react-google-login";
+import GoogleLogout from "../signUp/GoogleLogout";
 
 const SignIn = () => {
   const [click, setClick] = useState(false);
@@ -266,7 +267,7 @@ const SignIn = () => {
             </LongButton>
           </Form>
 
-
+          <GoogleLogout/>
           <LogInLink to="/signup">
             Don't have an account?{" "}
             <span

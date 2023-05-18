@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { ErrorText, KBDisplayXs, KBTextXs } from "../../components/fonts/Fonts";
 import {
@@ -19,6 +19,8 @@ import {Validation} from "../Validation";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
+import {gapi} from "gapi-script";
+import GoogleLogin from "react-google-login";
 
 const SignUp = () => {
   const [click, setClick] = useState(false);
@@ -84,6 +86,35 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
+    //signup with google
+    const [accessToken, setAccessToken] = useState('');
+
+    const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
+    const onSuccess = (res) => {
+      console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
+      const token = res.accessToken;
+      console.log(token);
+      setAccessToken(token); 
+      // handleGoogleSignIn(token); // Pass the token to the handleGoogleSignIn function
+    }
+
+    const onFailure = (res) => {
+      console.log("LOGIN FAILED! res: ", res);
+    }
+    
+
+    useEffect(() => {
+      function start() {
+        gapi.client.init({
+          clientId: clientId,
+          scope: "email profile openid https://www.googleapis.com/auth/userinfo.email"
+        });
+      }
+      gapi.load('client:auth2', start);
+    }, [clientId]);
+
+
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     const errors = Validation(inputs);
@@ -134,7 +165,21 @@ const SignUp = () => {
               marginBottom: "3%",
             }}
           >
-            <div style={{ width: "100%" }}>
+            <div style={{ width: '100%', justifyContent:'center', alignItems:'center', display:'flex'}}>
+      <GoogleLogin
+         clientId={clientId}
+         buttonText="Continue with Google"
+         onSuccess={onSuccess}
+         onFailure={onFailure}
+         cookiePolicy={'single_host_origin'}
+         isSignedIn={true}
+         render={(renderProps) => (
+          <div
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+            style={{width:'100%'}}
+          >
+             <div style={{ width: "100%"}}>
               <InputFieldWrapper
                 style={{
                   display: "flex",
@@ -157,6 +202,13 @@ const SignUp = () => {
                 </p>
               </InputFieldWrapper>
             </div>
+          </div>
+        )}
+      />
+    </div>
+      
+
+
             <Div width="60%" style={{ marginTop: "3%" }}>
               <Horizontal />
               <Or>Or Signup with</Or>
