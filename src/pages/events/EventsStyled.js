@@ -4,7 +4,6 @@ import background from "../../assets/images/clay-banks-POzx_amnWJw-unsplash.jpg"
 export const HeroSection = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-repeat: no-repeat;
   background: url(${background});
   background-position: right;
   background-size: cover;
@@ -15,7 +14,7 @@ export const HeroSection = styled.div`
     background-position: right;
   }
 
-  @media screen and (orientation: landscape) and (max-width: 960px){
+  @media screen and (orientation: landscape) and (max-width: 960px) {
     width: 100%;
     height: 100vh;
   }
@@ -26,7 +25,7 @@ export const BgOverlay = styled.div`
   width: 100%;
   background: rgba(49, 38, 49, 0.8);
 
-  @media screen and (orientation: landscape) and (max-width: 960px){
+  @media screen and (orientation: landscape) and (max-width: 960px) {
     width: 100%;
     height: 100vh;
   }
@@ -86,7 +85,7 @@ export const ContentHolder = styled.div`
     }
   }
 
-  @media screen and (orientation: landscape) and (max-width: 960px){
+  @media screen and (orientation: landscape) and (max-width: 960px) {
     width: 100%;
     padding-top: 0;
     padding: 5%;
@@ -94,33 +93,29 @@ export const ContentHolder = styled.div`
     /* display: flex; */
 
     h1 {
-    color: white;
-    line-height: 1.2;
-    font-size: 48px;
-    padding-top: 10px;
-  }
-
+      color: white;
+      line-height: 1.2;
+      font-size: 48px;
+      padding-top: 10px;
+    }
   }
 `;
 
 export const TypeTextHolder = styled.div`
+  @media screen and (max-width: 480px) {
+    height: 45vh;
+  }
 
-@media screen and (max-width: 480px){
-  height: 45vh;
-}
-
-@media screen and (min-width: 481px) and (max-width: 960px){
-  height: 35vh;
- 
-} 
-
-`
+  @media screen and (min-width: 481px) and (max-width: 960px) {
+    height: 35vh;
+  }
+`;
 
 export const BtnHolder = styled.div`
   display: flex;
   padding-top: 5%;
   width: 20%;
-  gap:10px;
+  gap: 10px;
   justify-content: space-between;
 
   @media screen and (max-width: 960px) {
@@ -133,7 +128,7 @@ export const BtnHolder = styled.div`
     margin: auto;
   }
 
-  @media screen and (orientation: landscape) and (max-width: 960px){
+  @media screen and (orientation: landscape) and (max-width: 960px) {
     width: 40%;
     display: flex;
     flex-direction: row;
@@ -200,31 +195,29 @@ export const ContentSectionParagraph = styled.p`
 `;
 
 export const EventDisplaySection = styled.div`
-    padding:2% 6%; 
-    width:100%;
-    height:max-content;
-    display:flex
-    flex-direction:column;
-    justify-content:center;
+  padding: 2% 6%;
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-    @media screen and (max-width: 480px){
-        margin-top : 10%;
-    }
-
-`
+  @media screen and (max-width: 480px) {
+    margin-top: 10%;
+  }
+`;
 
 export const EventCardHolder = styled.div`
-    width:100%;
-    height:100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap:20px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
 
-    @media screen and (max-width: 480px){
-        display: block;
-      
-    }
-`
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
+`;
 
 export const EventCard = styled.div`
   box-sizing: border-box;
@@ -246,6 +239,10 @@ export const EventCard = styled.div`
     margin-bottom: 4%;
     /* display: inline-block; */
     /* margin: 2%; */
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 960px) {
+    width: 100%;
   }
 `;
 
@@ -591,4 +588,3 @@ export const TestButton = styled.button`
     color: white;
   }
 `;
-

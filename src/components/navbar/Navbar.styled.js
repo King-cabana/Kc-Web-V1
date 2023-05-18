@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
 export const Nav = styled.div`
@@ -30,13 +30,19 @@ export const NavLogo = styled.div`
   width: 12vw;
   cursor: pointer;
 
-  img {
-    width: 35;
-  }
+  // img {
+  //   width: 35;
+  // }
 
   @media screen and (max-width: 480px) {
     img {
       max-width: 100px;
+    }
+
+    @media screen and (min-width: 481px) and (max-width: 960px) {
+    img {
+      // min-width: 200px;
+      max-width :0 ;
     }
   }
 `;
@@ -128,6 +134,7 @@ export const NavBarLink = styled(NavLink)`
     &:hover {
       color: #ff2957;
     }
+
   }
 `;
 
