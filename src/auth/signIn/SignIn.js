@@ -69,24 +69,31 @@ const SignIn = () => {
   };
 
   //signin with google
+  const [accessToken, setAccessToken] = useState('');
+
   const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
   const onSuccess = (res) => {
     console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
+    const token = res.accessToken;
+    console.log(token);
+    setAccessToken(token); 
+    // handleGoogleSignIn(token); // Pass the token to the handleGoogleSignIn function
   }
 
   const onFailure = (res) => {
       console.log("LOGIN FAILED! res: ", res);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     function start() {
       gapi.client.init({
         clientId: clientId,
         scope: "email profile openid https://www.googleapis.com/auth/userinfo.email"
-      })
-    };
+      });
+    }
     gapi.load('client:auth2', start);
-  });
+  }, [clientId]);
+
   
   const handleLogin = async (e) => {
     e.preventDefault();
