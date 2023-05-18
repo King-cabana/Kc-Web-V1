@@ -9,6 +9,8 @@ import Vendor from "./pages/vendor/Vendor";
 import NoPage from "./pages/noPage/NoPage";
 import About from "./pages/about/About";
 import ContactUs from "./pages/contactUs/ContactUs";
+import HelpCenter from "./pages/HelpCenter/HelpCenter";
+
 
 
 // const Events = lazy(() => import("./pages/events/Events"));
@@ -27,7 +29,7 @@ function App() {
           <Route path="/aboutUs" element={<About/> } />
           <Route path="/contactUs" element={<ContactUs/> }/>
           <Route path="*" element={<NoPage/> }/>
-          
+          <Route path="/help" element={<HelpCenter/> }/>
         </Routes>
       </>
     </>
