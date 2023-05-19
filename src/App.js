@@ -29,29 +29,26 @@ function App() {
     <Suspense fallback={<LoadingScreen />}>
       <>
         <ToastContainer />
-        <>
-          <Routes>
-            <Route path="/" element={<Events />} />
-            <Route path="/sponsors" element={<Sponsor />} />
-            <Route path="/vendors" element={<Vendor />} />
-            <Route path="/aboutUs" element={<About />} />
-            <Route path="/contactUs" element={<ContactUs />} />
-            <Route
-              path="/createEvent/eventDetails"
-              element={<FirstCreateEvent />}
-            />
-            <Route
-              path="/createEvent/tagsTimelines"
-              element={<TimeLineEvent />}
-            />
-            <Route
-              path="/createEvent/eventPlanPreview"
-              element={<EventPlanPreview />}
-            />
-            <Route path="/createEvent/submitted" element={<Submitted />} />
-          </Routes>
-        </>
         <Routes>
+          <Route path="/" element={<Events />} />
+          <Route path="/sponsors" element={<Sponsor />} />
+          <Route path="/vendors" element={<Vendor />} />
+          <Route path="/aboutUs" element={<About />} />
+          <Route path="/contactUs" element={<ContactUs />} />
+          <Route
+            path="/createEvent/eventDetails"
+            element={<FirstCreateEvent />}
+          />
+          <Route
+            path="/createEvent/tagsTimelines"
+            element={<TimeLineEvent />}
+          />
+          <Route
+            path="/createEvent/eventPlanPreview"
+            element={<EventPlanPreview />}
+          />
+          <Route path="/createEvent/submitted" element={<Submitted />} />
+
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/verifyEmail" element={<VerifyEmail />} />
@@ -63,7 +60,7 @@ function App() {
             path="/dashboard"
             element={
               <Sidebar>
-                <DashboardHome />{" "}
+                <DashboardHome />
               </Sidebar>
             }
           />

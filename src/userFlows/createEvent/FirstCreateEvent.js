@@ -32,6 +32,7 @@ import {
 import { BsChevronRight } from "react-icons/bs";
 import { WelcomeHeader, Txt } from "../emptyEvent/EmptyEventStyled";
 import { Asterix } from "../../pages/profile/organiserProfile/OrganiserProfileStyled";
+import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
 
 const FirstCreateEvent = ({ padding }) => {
   const [file, setFile] = useState("");
@@ -40,11 +41,17 @@ const FirstCreateEvent = ({ padding }) => {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [email, setEmail] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const state = useSelector((state) => state.createEvent);
+
+  const userEmail = sessionStorage.getItem("email");
+
+  console.log(userEmail);
+  dispatch(editGenerally({ name: "keyContactEmail", value: userEmail }));
 
   const change = (e) => {
     dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
@@ -140,6 +147,9 @@ const FirstCreateEvent = ({ padding }) => {
 
   return (
     <>
+      {location.pathname === "/createEvent/eventPlanPreview" ? null : (
+        <CreateEventTopBar />
+      )}
       <BudgetInventoryContainer style={{ padding: padding }}>
         {location.pathname === "/createEvent/eventPlanPreview" ? null : (
           <>
@@ -243,7 +253,7 @@ const FirstCreateEvent = ({ padding }) => {
                 placeholder="Enter your Event Name"
                 name="eventName"
                 onChange={change}
-                defaultValue={state.eventName}
+                defaultValue={state?.eventName}
               />
             </EventSubSection>
             {/* input section  */}
@@ -269,7 +279,7 @@ const FirstCreateEvent = ({ padding }) => {
                     onChange={change}
                     defaultValue="Corporate Event"
                     checked={
-                      state.eventCategory?.includes("Corporate Event")
+                      state?.eventCategory?.includes("Corporate Event")
                         ? true
                         : false
                     }
@@ -285,7 +295,7 @@ const FirstCreateEvent = ({ padding }) => {
                     onChange={change}
                     defaultValue="Non-Corporate Event"
                     checked={
-                      state.eventCategory?.includes("Non-Corporate Event")
+                      state?.eventCategory?.includes("Non-Corporate Event")
                         ? true
                         : false
                     }

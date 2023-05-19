@@ -18,16 +18,16 @@ export const CETopBarContainer = styled.div`
 
 export const CETopBarLogo = styled.div`
   height: inherit;
-  width: 5%;
+  /* width: 5%; */
   display: flex;
   justify-content: center;
   align-items: center;
 
   @media screen and (max-width: 480px) {
-    width: 15%;
+    /* width: 15%; */
     img {
-      width: 30px;
-      height: 30px;
+      width: 100px;
+      /* height: 30px; */
     }
   }
 `;

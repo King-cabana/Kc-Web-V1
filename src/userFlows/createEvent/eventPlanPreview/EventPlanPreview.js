@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { clearEvent } from "../../../redux/slices/createEventSlice";
+import { setEventCreated } from "../../../redux/slices/eventCreatedSlice";
 import SwipeableViews from "react-swipeable-views";
 import Pagination from "./Pagination";
 import "./EventPlanPreview.css";
@@ -14,8 +18,11 @@ import {
 import { Space } from "./EventPlanPreviewStyled";
 import { AbsolutePrimaryButton } from "../../../components/buttons/button";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
+import { ImSpinner6 } from "react-icons/im";
 import FirstCreateEvent from "../FirstCreateEvent";
 import TimeLineEvent from "../TimeLineEvent";
+import CreateEventTopBar from "../../topBar/CreateEventTopBar/CreateEventTopBar";
+import { API_URL_2 } from "../../../redux/services/authService";
 
 const styles = {
   root: {
@@ -26,9 +33,13 @@ const styles = {
 
 const EventPlanPreview = () => {
   const [index, setIndex] = useState(0);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [sending, setSending] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const state = useSelector((state) => state.createEvent);
+  const user = useSelector((state) => state.userDetails);
+  console.log(user);
   const handleChangeIndex = (newIndex) => {
     setIndex(newIndex);
   };
@@ -67,16 +78,38 @@ const EventPlanPreview = () => {
   const handleSubmit = async function (e) {
     e.preventDefault();
     console.log(state);
-    navigate("/createEvent/submitted");
+    try {
+      setSending(true);
+      setIsDisabled(true);
+      const { data } = await axios.post(API_URL_2 + "events/create", state, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      console.log(data);
+      dispatch(setEventCreated(data));
+      navigate("/createEvent/submitted");
+      toast.success("You have created event Successfully");
+      dispatch(clearEvent());
+      localStorage.removeItem("banner");
+      // localStorage.removeItem("budget");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Creating Event");
+      setIsDisabled(false);
+      setSending(false);
+    }
   };
   return (
     <>
+      <CreateEventTopBar />
       <BudgetInventoryContainer style={{ marginBottom: "0rem" }}>
         <BudgetInventoryHeader>
           <BudgetTitle1>Event Plan Preview</BudgetTitle1>
           <BudgetInventorySubtitle>
-            Swipe to preview, make changes if need be, then proceed to generate
-            event proposal.
+            Swipe pages to preview, make changes if need be, then proceed to
+            create event.
           </BudgetInventorySubtitle>
         </BudgetInventoryHeader>
 
@@ -100,11 +133,8 @@ const EventPlanPreview = () => {
         {renderArrow("left")}
         {renderArrow("right")}
         <ButtonContainer display={"flex"}>
-          <AbsolutePrimaryButton
-            onClick={handleSubmit}
-            // disabled={isDisabled}
-          >
-            Create
+          <AbsolutePrimaryButton onClick={handleSubmit} disabled={isDisabled}>
+            <>{sending ? <ImSpinner6 size={"1.5rem"} /> : "Create"}</>
           </AbsolutePrimaryButton>
         </ButtonContainer>
       </BudgetInventoryContainer>

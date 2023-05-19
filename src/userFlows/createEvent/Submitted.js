@@ -14,6 +14,7 @@ import Lottie from "lottie-react";
 import animationData from "../../assets/lotties/102001-success-icon.json";
 import { AnimationContainer } from "../../globalStyles";
 import { useNavigate } from "react-router";
+import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
 // import TopBar from "../../components/createEventTopBar/TopBar";
 
 const Submitted = () => {
@@ -28,7 +29,7 @@ const Submitted = () => {
 
   return (
     <>
-      {/* <TopBar /> */}
+      <CreateEventTopBar />
       <SubmittedContainer>
         <AnimationContainer>
           <Lottie animationData={animationData} loop={true} />
