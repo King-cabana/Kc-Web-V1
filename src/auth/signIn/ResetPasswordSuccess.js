@@ -1,16 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import {
   Form,
   LongButton,
   AnimationContainer,
   AuthBackground,
 } from "../../globalStyles";
-import { SuccessBody } from "./SignUpSuccessStyled";
+import { SuccessBody } from "../signUp/SignUpSuccessStyled";
 import Lottie from "lottie-react";
 import animationData from "../../assets/lotties/102001-success-icon.json";
 import Logo from "../../assets/images/Logo.svg";
 
-const SignUpSuccess = () => {
+const ResetPasswordSuccess = () => {
+
+  const navigate = useNavigate();
+
+  const navigateClick = () => {
+    navigate("/login");
+  };
+
+
   return (
     <AuthBackground>
       <SuccessBody>
@@ -19,13 +28,15 @@ const SignUpSuccess = () => {
           <Lottie animationData={animationData} loop={true} />
         </AnimationContainer>
         <p style={{ fontWeight: "bold", fontSize: "20px" }}>Success!</p>
-        <p>Your Email has been verified</p>
+        <p>Reset password done successfully </p>
         <Form>
-          <LongButton style={{ marginTop: "2%" }}>Proceed</LongButton>
+          <LongButton  style={{ marginTop: "2%" }} onClick={navigateClick}>
+            Return to log in page{" "}
+          </LongButton>
         </Form>
       </SuccessBody>
     </AuthBackground>
   );
 };
 
-export default SignUpSuccess;
+export default ResetPasswordSuccess;

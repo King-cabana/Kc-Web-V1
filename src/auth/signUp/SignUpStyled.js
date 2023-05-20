@@ -24,6 +24,13 @@ export const SignUpBody = styled.div`
         
     }
 
+    @media screen and (orientation: landscape) and (max-width: 960px){
+        width : 70%;
+        margin-top : 40%;
+        height: max-content;
+       
+      }
+
 `
 
 export const SignUpContent = styled.div` 
@@ -105,9 +112,19 @@ export const VerifyBody = styled.div`
 
     @media screen and (max-width: 960px) {
         width: 90%;
+        display: flex;
+        flex-direction : column;
+        justify-content : center;
+        align-items : center;
         border-radius: 3px;
-        padding: 5%;
+        padding: 6%;
         box-shadow: none;
 }
+
+ @media screen and (orientation: landscape) and (max-width: 960px){
+        width : 70%;
+        margin-top : 40%;
+        height: max-content;
+      }
 
 `
