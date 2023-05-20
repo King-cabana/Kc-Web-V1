@@ -9,6 +9,8 @@ import Vendor from "./pages/vendor/Vendor";
 import NoPage from "./pages/noPage/NoPage";
 import About from "./pages/about/About";
 import ContactUs from "./pages/contactUs/ContactUs";
+import HelpCenter from "./pages/HelpCenter/HelpCenter";
+
 import SignUp from "./auth/signUp/SignUp";
 import VerifyEmail from "./auth/signUp/VerifyEmail";
 import SignUpSuccess from "./auth/signUp/SignUpSuccess";
@@ -36,6 +38,7 @@ function App() {
           <Route path="/contactUs" element={<ContactUs/> }/>
           <Route path="*" element={<NoPage/> }/>
           <Route path="/signin" element={<SignIn/>} />
+          <Route path="/help" element={<HelpCenter/> }/>
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/verifyEmail" element={<VerifyEmail/>} />
           <Route path="/signupsuccess" element={<SignUpSuccess/>} />

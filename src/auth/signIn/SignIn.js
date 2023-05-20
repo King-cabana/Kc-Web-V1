@@ -26,7 +26,6 @@ import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfi
 import { SignInBg, SignInBody } from "./SignInStyled";
 import {gapi} from "gapi-script";
 import GoogleLogin from "react-google-login";
-import GoogleLogout from "../signUp/GoogleLogout";
 
 const SignIn = () => {
   const [click, setClick] = useState(false);
@@ -75,7 +74,7 @@ const SignIn = () => {
   const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
   const onSuccess = (res) => {
     console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
-    const token = res.accessToken;
+    const token = res.accessToken; 
     console.log(token);
     setAccessToken(token); 
     // handleGoogleSignIn(token); // Pass the token to the handleGoogleSignIn function
@@ -94,7 +93,6 @@ const SignIn = () => {
     }
     gapi.load('client:auth2', start);
   }, [clientId]);
-
   
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -267,7 +265,7 @@ const SignIn = () => {
             </LongButton>
           </Form>
 
-          <GoogleLogout/>
+
           <LogInLink to="/signup">
             Don't have an account?{" "}
             <span
