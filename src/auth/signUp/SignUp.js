@@ -13,13 +13,23 @@ import {
 } from "../../globalStyles";
 import google from "../../assets/images/Google.svg";
 import Logo from "../../assets/images/Logo.svg";
-import { register } from "../../redux/services/authService";
-import { LogInLink, SignUpBody, SignUpContent, LabelInputHolder, InputFieldFlex } from "./SignUpStyled";
-import {Validation} from "../Validation";
+import {
+  googleSignIn,
+  googleSignin,
+  register,
+} from "../../redux/services/authService";
+import {
+  LogInLink,
+  SignUpBody,
+  SignUpContent,
+  LabelInputHolder,
+  InputFieldFlex,
+} from "./SignUpStyled";
+import { Validation } from "../Validation";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
-import {gapi} from "gapi-script";
+import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
 
 const SignUp = () => {
@@ -29,11 +39,10 @@ const SignUp = () => {
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
-  
 
   const [inputs, setInput] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -45,17 +54,17 @@ const SignUp = () => {
   const inputChange = (e) => {
     const newInputs = { ...inputs, [e.target.name]: e.target.value };
     setInput(newInputs);
-  
+
     const errors = Validation(newInputs);
     setFormErrors(errors);
-  
+
     const isFilled = Object.values(newInputs).every(
       (value) => value.trim() !== ""
     );
     setAllFieldsFilled(isFilled);
     setDisabledButton(!isFilled || Object.keys(errors).length > 0);
   };
-  
+
   const handleValidation = () => {
     const errors = Validation(inputs);
     setFormErrors(errors);
@@ -69,7 +78,7 @@ const SignUp = () => {
     }, 5000);
     return () => clearTimeout(timer);
   };
-  
+
   const handleClick = () => {
     setClick(!click);
     setVisibility(!visible);
@@ -83,37 +92,48 @@ const SignUp = () => {
   const InputType = visible ? "text" : "password";
   const ConfrimType = confirm ? "text" : "password";
 
-
   const navigate = useNavigate();
 
-    //signup with google
-    const [accessToken, setAccessToken] = useState('');
+  //signup with google
+  const [userObject, setUserObject] = useState({});
 
-    const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
-    const onSuccess = (res) => {
-      console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
-      const token = res.accessToken;
-      console.log(token);
-      setAccessToken(token); 
-      // handleGoogleSignIn(token); // Pass the token to the handleGoogleSignIn function
+  const clientId =
+    "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com";
+  const onSuccess = async (res) => {
+    console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+    const { email, googleId, familyName, givenName, imageUrl } = res.profileObj;
+    const user = {
+      email,
+      googleId,
+      familyName,
+      givenName,
+      imageUrl,
+    };
+    setUserObject(user);
+    try {
+      await googleSignIn(user);
+      navigate("/createEvent/eventDetails");
+    } catch (error) {
+      error?.response
+        ? toast.error(error?.response?.data?.message)
+        : toast.error(error.message);
     }
+  };
 
-    const onFailure = (res) => {
-      console.log("LOGIN FAILED! res: ", res);
+  const onFailure = (res) => {
+    console.log("LOGIN FAILED! res: ", res);
+  };
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope:
+          "email profile openid https://www.googleapis.com/auth/userinfo.email",
+      });
     }
-    
-
-    useEffect(() => {
-      function start() {
-        gapi.client.init({
-          clientId: clientId,
-          scope: "email profile openid https://www.googleapis.com/auth/userinfo.email"
-        });
-      }
-      gapi.load('client:auth2', start);
-    }, [clientId]);
-
-
+    gapi.load("client:auth2", start);
+  }, [clientId]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -134,8 +154,8 @@ const SignUp = () => {
         : toast.error(error.message);
     } finally {
       setInput({
-        firstName: "",
-        lastName: "",
+        firstname: "",
+        lastname: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -165,49 +185,54 @@ const SignUp = () => {
               marginBottom: "3%",
             }}
           >
-            <div style={{ width: '100%', justifyContent:'center', alignItems:'center', display:'flex'}}>
-      <GoogleLogin
-         clientId={clientId}
-         buttonText="Continue with Google"
-         onSuccess={onSuccess}
-         onFailure={onFailure}
-         cookiePolicy={'single_host_origin'}
-         isSignedIn={true}
-         render={(renderProps) => (
-          <div
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            style={{width:'100%'}}
-          >
-             <div style={{ width: "100%"}}>
-              <InputFieldWrapper
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <SocialIconsHolder style={{ border: "transparent" }}>
-                  <img src={google} alt="google" />
-                </SocialIconsHolder>
-                <p
-                  style={{
-                    marginBottom: "0",
-                    fontWeight: "600",
-                    fontSize: "12px",
-                  }}
-                >
-                  Continue with Google
-                </p>
-              </InputFieldWrapper>
+            <div
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="Continue with Google"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={"single_host_origin"}
+                isSignedIn={false}
+                render={(renderProps) => (
+                  <div
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{ width: "100%" }}
+                  >
+                    <div style={{ width: "100%" }}>
+                      <InputFieldWrapper
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <SocialIconsHolder style={{ border: "transparent" }}>
+                          <img src={google} alt="google" />
+                        </SocialIconsHolder>
+                        <p
+                          style={{
+                            marginBottom: "0",
+                            fontWeight: "600",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Continue with Google
+                        </p>
+                      </InputFieldWrapper>
+                    </div>
+                  </div>
+                )}
+              />
             </div>
-          </div>
-        )}
-      />
-    </div>
-      
-
 
             <Div width="60%" style={{ marginTop: "3%" }}>
               <Horizontal />
@@ -219,119 +244,142 @@ const SignUp = () => {
           <Form onSubmit={handleSignUp}>
             <InputFieldFlex>
               <LabelInputHolder>
-                <label style={{ fontSize:'14px', marginBottom: "2%" }}>First Name</label>
+                <label style={{ fontSize: "14px", marginBottom: "2%" }}>
+                  First Name
+                </label>
                 <InputFieldWrapper>
                   <input
                     placeholder="Enter your first name"
-                    name="firstName"
+                    name="firstname"
                     onChange={inputChange}
                   />
                 </InputFieldWrapper>
-                {formErrors.firstName && (
-                <ErrorText>{formErrors.firstName}</ErrorText>
-               )}
+                {formErrors.firstname && (
+                  <ErrorText>{formErrors.firstname}</ErrorText>
+                )}
               </LabelInputHolder>
 
               <LabelInputHolder>
-                <label style={{fontSize:'14px', marginBottom: "2%" }}>Last Name</label>
+                <label style={{ fontSize: "14px", marginBottom: "2%" }}>
+                  Last Name
+                </label>
                 <InputFieldWrapper>
                   <input
                     placeholder="Enter your last name"
-                    name="lastName"
+                    name="lastname"
                     onChange={inputChange}
                   />
                 </InputFieldWrapper>
-                {formErrors.lastName && (
-                <ErrorText>{formErrors.lastName}</ErrorText>
-               )}
+                {formErrors.lastname && (
+                  <ErrorText>{formErrors.lastname}</ErrorText>
+                )}
               </LabelInputHolder>
             </InputFieldFlex>
-            
-                  
-            <label style={{ fontSize:'14px', marginBottom: "1%" }}>E-mail</label>
+
+            <label style={{ fontSize: "14px", marginBottom: "1%" }}>
+              E-mail
+            </label>
             <InputFieldWrapper>
-              <input placeholder="Enter your E-mail" name="email" onChange={inputChange} className={formErrors.email && "error"}
+              <input
+                placeholder="Enter your E-mail"
+                name="email"
+                onChange={inputChange}
+                className={formErrors.email && "error"}
               />
-               
             </InputFieldWrapper>
-            {formErrors.email && (
-                <ErrorText>{formErrors.email}</ErrorText>
-               )}
+            {formErrors.email && <ErrorText>{formErrors.email}</ErrorText>}
 
-            <InputFieldFlex style={{marginTop:'2%', minHeight:'5rem'}}>
-                  <LabelInputHolder >
-                  <label style={{fontSize:'14px', marginBottom: "2%" }}>Password</label>
-            <InputFieldWrapper>
-              <input placeholder="Create a password" type={InputType} name="password" onChange={inputChange} className={formErrors.password && "error"}
-              />
-              {click ? (
-                <HiOutlineEyeOff
-                  onClick={handleClick}
-                  style={{
-                    margin: "auto",
-                    top: "auto",
-                    marginRight: "3%",
-                    color: "#C4C4C4",
-                    cursor : "pointer",
-                  }}
-                />
-              ) : (
-                <HiOutlineEye
-                  onClick={handleClick}
-                  style={{
-                    margin: "auto",
-                    top: "auto",
-                    marginRight: "3%",
-                    color: "#C4C4C4",
-                    cursor : "pointer",
-                  }}
-                />
-              )}
-              
-            </InputFieldWrapper>
-           {formErrors.password && (
-            <ErrorText>{formErrors.password}</ErrorText>
-            )}
-          </LabelInputHolder>
+            <InputFieldFlex style={{ marginTop: "2%", minHeight: "5rem" }}>
+              <LabelInputHolder>
+                <label style={{ fontSize: "14px", marginBottom: "2%" }}>
+                  Password
+                </label>
+                <InputFieldWrapper>
+                  <input
+                    placeholder="Create a password"
+                    type={InputType}
+                    name="password"
+                    onChange={inputChange}
+                    className={formErrors.password && "error"}
+                  />
+                  {click ? (
+                    <HiOutlineEyeOff
+                      onClick={handleClick}
+                      style={{
+                        margin: "auto",
+                        top: "auto",
+                        marginRight: "3%",
+                        color: "#C4C4C4",
+                        cursor: "pointer",
+                      }}
+                    />
+                  ) : (
+                    <HiOutlineEye
+                      onClick={handleClick}
+                      style={{
+                        margin: "auto",
+                        top: "auto",
+                        marginRight: "3%",
+                        color: "#C4C4C4",
+                        cursor: "pointer",
+                      }}
+                    />
+                  )}
+                </InputFieldWrapper>
+                {formErrors.password && (
+                  <ErrorText>{formErrors.password}</ErrorText>
+                )}
+              </LabelInputHolder>
 
-          <LabelInputHolder>
-          <label style={{fontSize:'14px', marginBottom: "2%" }}>Confirm Password</label>
-            <InputFieldWrapper>
-              <input placeholder="Re-enter password" type={ConfrimType} name="confirmPassword" onChange={inputChange} className={formErrors.confirmPassword && "error"}
-              />
-              {show ? (
-                <HiOutlineEyeOff
-                  onClick={handleConfirm}
-                  style={{
-                    margin: "auto",
-                    top: "auto",
-                    marginRight: "3%",
-                    color: "#C4C4C4",
-                    cursor : "pointer",
-                  }}
-                />
-              ) : (
-                <HiOutlineEye
-                  onClick={handleConfirm}
-                  style={{
-                    margin: "auto",
-                    top: "auto",
-                    marginRight: "3%",
-                    color: "#C4C4C4",
-                    cursor : "pointer",
-                  }}
-                />
-              )}
-               
-            </InputFieldWrapper>  
-            {formErrors.confirmPassword && (
-              <ErrorText>{formErrors.confirmPassword}</ErrorText>
-            )}      
-          </LabelInputHolder>
-          </InputFieldFlex>
+              <LabelInputHolder>
+                <label style={{ fontSize: "14px", marginBottom: "2%" }}>
+                  Confirm Password
+                </label>
+                <InputFieldWrapper>
+                  <input
+                    placeholder="Re-enter password"
+                    type={ConfrimType}
+                    name="confirmPassword"
+                    onChange={inputChange}
+                    className={formErrors.confirmPassword && "error"}
+                  />
+                  {show ? (
+                    <HiOutlineEyeOff
+                      onClick={handleConfirm}
+                      style={{
+                        margin: "auto",
+                        top: "auto",
+                        marginRight: "3%",
+                        color: "#C4C4C4",
+                        cursor: "pointer",
+                      }}
+                    />
+                  ) : (
+                    <HiOutlineEye
+                      onClick={handleConfirm}
+                      style={{
+                        margin: "auto",
+                        top: "auto",
+                        marginRight: "3%",
+                        color: "#C4C4C4",
+                        cursor: "pointer",
+                      }}
+                    />
+                  )}
+                </InputFieldWrapper>
+                {formErrors.confirmPassword && (
+                  <ErrorText>{formErrors.confirmPassword}</ErrorText>
+                )}
+              </LabelInputHolder>
+            </InputFieldFlex>
 
-          <div
-              style={{ marginTop: "5%", display: "flex", alignItems: "center", gap:"10px" }}
+            <div
+              style={{
+                marginTop: "5%",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
             >
               <input type="checkbox" required></input>
               <KBTextXs
@@ -340,13 +388,12 @@ const SignUp = () => {
                   lineHeight: "1em",
                 }}
               >
-                I agree to King Cabana’s{" "}
-                <span>Terms of service</span> and{" "}
+                I agree to King Cabana’s <span>Terms of service</span> and{" "}
                 <span>Privacy Policy</span>
               </KBTextXs>
             </div>
             <LongButton
-              style={{ marginTop: "3%", marginBottom: '1%' }}
+              style={{ marginTop: "3%", marginBottom: "1%" }}
               type="submit"
               disabled={disabledButton}
               onClick={handleValidation}

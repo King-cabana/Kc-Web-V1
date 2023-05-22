@@ -1,17 +1,21 @@
 import React from "react";
-import { BudgetInventorySubtitle, ButtonContainer } from "./BudgetStyled";
+import {
+  BudgetInventorySubtitle,
+  ButtonContainer,
+} from "./budgetInventory/BudgetStyled";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { SubmittedContainer, SubmittedButtons } from "./SubmittedStyled";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
-} from "../../components/button/button";
+} from "../../components/buttons/button";
 import Lottie from "lottie-react";
-import animationData from "../../lotties/102001-success-icon.json";
+import animationData from "../../assets/lotties/102001-success-icon.json";
 import { AnimationContainer } from "../../globalStyles";
 import { useNavigate } from "react-router";
-import TopBar from "../topBar/dashboardTopBar/TopBar";
+import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
+// import TopBar from "../../components/createEventTopBar/TopBar";
 
 const Submitted = () => {
   const navigate = useNavigate();
@@ -25,7 +29,7 @@ const Submitted = () => {
 
   return (
     <>
-      <TopBar />
+      <CreateEventTopBar />
       <SubmittedContainer>
         <AnimationContainer>
           <Lottie animationData={animationData} loop={true} />
@@ -33,7 +37,7 @@ const Submitted = () => {
         <BudgetInventorySubtitle
           style={{ marginBottom: "1rem", fontWeight: "600" }}
         >
-          {location.pathname === "/submitted"
+          {location.pathname === "/createEvent/submitted"
             ? "Event created successfully."
             : null}
           {location.pathname === "/proposal-generated"
@@ -41,21 +45,21 @@ const Submitted = () => {
             : null}
         </BudgetInventorySubtitle>
 
-        {location.pathname === "/submitted" ? (
+        {location.pathname === "/createEvent/submitted" ? (
           <SubmittedButtons>
             <AlternativeButton2
               onClick={() => {
                 window.navigator.share(shareDetails);
               }}
             >
-              Copy & Share Link
+              Share event link
             </AlternativeButton2>
           </SubmittedButtons>
         ) : null}
 
         <ButtonContainer>
-          {location.pathname === "/submitted" ? (
-            <AbsolutePrimaryButton onClick={() => navigate("/event/planning")}>
+          {location.pathname === "/createEvent/submitted" ? (
+            <AbsolutePrimaryButton onClick={() => navigate("/dashboard")}>
               Done
             </AbsolutePrimaryButton>
           ) : null}
