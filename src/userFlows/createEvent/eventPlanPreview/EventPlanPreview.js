@@ -39,7 +39,7 @@ const EventPlanPreview = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.createEvent);
   const user = useSelector((state) => state.userDetails);
-  console.log(user);
+
   const handleChangeIndex = (newIndex) => {
     setIndex(newIndex);
   };
@@ -84,7 +84,7 @@ const EventPlanPreview = () => {
       const { data } = await axios.post(API_URL_2 + "events/create", state, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       });
       console.log(data);

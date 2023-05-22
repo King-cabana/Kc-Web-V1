@@ -127,7 +127,6 @@ const TimeLineEvent = ({ padding }) => {
               />
             </WelcomeHeader>
             <BudgetInventoryHeader>
-              {/* <BudgetTitle1>Create Event</BudgetTitle1> */}
               <BudgetInventorySubtitle>
                 Capture and share every information needed to make your event
                 desirable and splendid.

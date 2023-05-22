@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Div,
   Horizontal,
@@ -19,7 +19,6 @@ import { googleSignIn, login } from "../../redux/services/authService";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
 import { setUserDetails } from "../../redux/slices/userDetailsSlice";
-import { useDispatch } from "react-redux";
 import { setUserToken } from "../../redux/slices/userDetailsSlice";
 import axios from "axios";
 import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfileSlice";
@@ -69,7 +68,6 @@ const SignIn = () => {
   };
 
   //signin with google
-
   const [userObject, setUserObject] = useState({});
 
   const clientId =
