@@ -16,7 +16,7 @@ const InnerContainerData = () => {
   const [eventListLength, setEventListLength] = useState(0);
   const [attendees, setAttendees] = useState(0);
   const { state } = useContext(EventOrganizerContext) || { state: {} };
-  const { axios, user, API_URL_2, navigate } = useContext(
+  const { userEmail, axios, user, API_URL_2, navigate } = useContext(
     EventOrganizerContext
   );
 
@@ -26,15 +26,30 @@ const InnerContainerData = () => {
     // console.log(state?.profileEmail);
 
     const fetchAttendees = async () => {
+      let data = null;
       try {
-        const { data } = await axios.get(
-          API_URL_2 + `profiles/events/attendees?email=${state?.profileEmail}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user?.token}`,
-            },
-          }
-        );
+        if (state?.profileEmail) {
+          const response = await axios.get(
+            API_URL_2 +
+              `profiles/events/attendees?email=${state?.profileEmail}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          data = response.data;
+        } else {
+          const response = await axios.get(
+            API_URL_2 + `profiles/events/attendees?email=${userEmail}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          data = response.data;
+        }
         // console.log(data);
         setAttendees(data);
       } catch (error) {
@@ -42,7 +57,7 @@ const InnerContainerData = () => {
       }
     };
     fetchAttendees();
-  }, [state]);
+  }, [state, userEmail]);
 
   const eventReportData = [
     {

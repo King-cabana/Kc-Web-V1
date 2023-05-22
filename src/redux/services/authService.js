@@ -32,7 +32,11 @@ const verifyEmail = async (otp) => {
     if (otp === response.data.otp) {
       return response.data;
     }
-    return response.data;
+    const authHeader = response.headers.get("Authorization");
+    const vToken = authHeader.split(" ")[1];
+    // console.log(vToken);
+    localStorage.setItem("vToken", vToken);
+    return response;
   } catch (error) {
     throw error;
   }

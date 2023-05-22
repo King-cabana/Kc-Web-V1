@@ -5,6 +5,8 @@ import { VerifyBody } from "./SignUpStyled";
 import Logo from "../../assets/images/Logo.svg";
 import { verifyEmail } from "../../redux/services/authService";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "../../redux/slices/userDetailsSlice";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
 
@@ -14,6 +16,7 @@ const VerifyEmail = () => {
   const [email, setEmail] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +24,8 @@ const VerifyEmail = () => {
       setLoading(true);
       const res = await verifyEmail(otp);
       console.log(res);
+      const vToken = localStorage.getItem("vToken") || "{}";
+      dispatch(setUserToken({ name: "token", value: vToken }));
       // toast.success("Email Successfully verified!")
       navigate("/createEvent/eventDetails");
     } catch (error) {

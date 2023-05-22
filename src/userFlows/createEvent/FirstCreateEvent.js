@@ -50,7 +50,7 @@ const FirstCreateEvent = ({ padding }) => {
 
   const userEmail = sessionStorage.getItem("email");
 
-  console.log(userEmail);
+  // console.log(userEmail);
   dispatch(editGenerally({ name: "keyContactEmail", value: userEmail }));
 
   const change = (e) => {
@@ -163,7 +163,6 @@ const FirstCreateEvent = ({ padding }) => {
               />
             </WelcomeHeader>
             <BudgetInventoryHeader>
-              {/* <BudgetTitle1>Create Event</BudgetTitle1> */}
               <BudgetInventorySubtitle>
                 Capture and share every information needed to make your event
                 desirable and splendid.

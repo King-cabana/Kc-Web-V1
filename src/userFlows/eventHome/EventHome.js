@@ -51,18 +51,37 @@ const EventHome = () => {
   const user = useSelector((state) => state?.userDetails);
   const [modal, setModal] = useState(true);
   const navigate = useNavigate();
+  const userEmail = sessionStorage.getItem("email");
 
   useEffect(() => {
+    let data = null;
     const fetchOrganizerProfile = async () => {
       try {
-        const { data } = await axios.get(API_URL_2 + `profiles/${state?.id}`, {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        });
+        if (state?.id) {
+          const response = await axios.get(
+            API_URL_2 + `profiles/${state?.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          data = response.data;
+        } else {
+          const response = await axios.get(
+            API_URL_2 + `profiles/email?email=${userEmail}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          data = response.data;
+        }
         // console.log(data);
         // console.log(user);
         dispatch(setEventOrganizerProfile(data));
+        console.log(state);
       } catch (error) {
         if (error?.message === "Network Error") {
           toast.error("Error retrieving data, reload page.");
@@ -71,7 +90,7 @@ const EventHome = () => {
       }
     };
     fetchOrganizerProfile();
-  }, [state?.id]);
+  }, [state?.id, userEmail]);
 
   const navitgateToEditOrganiserProfile = () => {
     navigate("/organiserProfile/home/edit");
@@ -88,7 +107,7 @@ const EventHome = () => {
 
   return (
     <EventOrganizerContext.Provider
-      value={{ state, axios, user, API_URL_2, navigate }}
+      value={{ state, axios, user, API_URL_2, navigate, userEmail }}
     >
       {modal && <PopUpOverlay onClick={toggleModal}></PopUpOverlay>}
       <OverallContainer>
