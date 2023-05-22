@@ -74,7 +74,7 @@ const SignIn = () => {
   const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
   const onSuccess = (res) => {
     console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
-    const token = res.accessToken;
+    const token = res.accessToken; 
     console.log(token);
     setAccessToken(token); 
     // handleGoogleSignIn(token); // Pass the token to the handleGoogleSignIn function
@@ -93,7 +93,6 @@ const SignIn = () => {
     }
     gapi.load('client:auth2', start);
   }, [clientId]);
-
   
   const handleLogin = async (e) => {
     e.preventDefault();
