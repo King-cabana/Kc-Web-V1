@@ -45,8 +45,6 @@ function App() {
           <Route path="/signupsuccess" element={<SignUpSuccess/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/> } />
           <Route path="/resetpassword" element={<ResetPassword/> } />
-
-          
           <Route path="/dashboard" element={<Sidebar><DashboardHome/> </Sidebar>} />
           
         </Routes>
