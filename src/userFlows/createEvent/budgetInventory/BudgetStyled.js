@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import budgetBackground from "../../images/budgetBackground.png";
+import budgetBackground from "../../../assets/images/budgetBackground.png";
 
 export const BudgetInventoryContainer = styled.div`
   width: 100%;

@@ -1,11 +1,10 @@
-
 export const Validation = (values) => {
   let errors = {};
-  if (!values.firstName.trim()) {
-    errors.firstName = "First name is required";
+  if (!values.firstname.trim()) {
+    errors.firstname = "First name is required";
   }
-  if (!values.lastName.trim()) {
-    errors.lastName = "Last name is required";
+  if (!values.lastname.trim()) {
+    errors.lastname = "Last name is required";
   }
   if (!values.email.trim()) {
     errors.email = "Email is required";
@@ -18,20 +17,9 @@ export const Validation = (values) => {
     errors.password = "Password must be at least 10 characters long";
   }
   if (!values.confirmPassword.trim()) {
-        errors.confirmPassword = "Kindly Confirm your Password";
-      } else if (values.confirmPassword !== values.password) {
-        errors.confirmPassword = "Passwords do not match";
-      }
+    errors.confirmPassword = "Kindly Confirm your Password";
+  } else if (values.confirmPassword !== values.password) {
+    errors.confirmPassword = "Passwords do not match";
+  }
   return errors;
 };
-
-
-
-
-
-
-
-
-
-
-

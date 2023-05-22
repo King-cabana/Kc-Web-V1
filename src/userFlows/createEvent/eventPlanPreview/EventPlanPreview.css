@@ -1,0 +1,19 @@
+.arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 9;
+}
+
+.arrow-left {
+  left: 10px;
+  z-index: 9;
+  display: flex;
+}
+
+.arrow-right {
+  right: 15px;
+  z-index: 9;
+  display: flex;
+}
