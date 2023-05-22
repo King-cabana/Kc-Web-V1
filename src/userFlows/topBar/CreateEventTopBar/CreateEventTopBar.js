@@ -6,9 +6,8 @@ import {
   CETopBarLogo,
   PPAndArrowHolder,
 } from "./CreateEventTopBarStyled";
-import { RiArrowDownSLine } from "react-icons/ri";
-import Profile from "../../../images/pexels-george-ikwegbu-2379429.jpg";
-import Logo from "../../../images/KCLogo.svg";
+import Profile from "../../../assets/images/pexels-george-ikwegbu-2379429.jpg";
+import Logo from "../../../assets/images/kingCabanaLogo.svg";
 
 const CreateEventTopBar = () => {
   return (
@@ -22,11 +21,6 @@ const CreateEventTopBar = () => {
         <ProfilePicture>
           <img src={Profile} alt="pp" />
         </ProfilePicture>
-        <RiArrowDownSLine
-          style={{
-            cursor: "pointer",
-          }}
-        />
       </PPAndArrowHolder>
     </CETopBarContainer>
   );

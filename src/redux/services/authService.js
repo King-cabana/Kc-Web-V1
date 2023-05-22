@@ -1,8 +1,11 @@
 import axios from "axios";
 
-const API_URL = "https://api.kingcabana.com/eventuser/";
-export const API_URL_2 = "https://api.kingcabana.com/";
-// export const API_URL_2 = "http://localhost:8080/";
+// const API_URL = "https://api.kingcabana.com/eventuser/";
+const API_URL = "http://localhost:8081/eventuser/";
+// export const API_URL_2 = "https://api.kingcabana.com/";
+export const API_URL_2 = "http://localhost:8081/";
+export const GOOGLE_URL = "http://localhost:8081/login/google";
+
 const register = async (payload) => {
   try {
     const response = await axios.post(
@@ -31,7 +34,11 @@ const verifyEmail = async (otp) => {
     if (otp === response.data.otp) {
       return response.data;
     }
-    return response.data;
+    const authHeader = response.headers.get("Authorization");
+    const vToken = authHeader.split(" ")[1];
+    // console.log(vToken);
+    localStorage.setItem("vToken", vToken);
+    return response;
   } catch (error) {
     throw error;
   }
@@ -127,6 +134,29 @@ const resetPassword = async (password, confirmPassword, otp) => {
   }
 };
 
+
+const googleSignIn = async (user) => {
+  try {
+    const { email, googleId, familyName, givenName, imageUrl } = user;
+    const payload = {
+      email,
+      googleId,
+      familyName,
+      givenName,
+      imageUrl,
+      isVerified: true,
+    };
+    const response = await axios.post('http://localhost:8081/login/google', payload);
+    console.log('Response:', response.data);
+    return response.data; 
+  } catch (error) {
+    console.error('Request error:', error);
+    // throw error; 
+  }
+};
+
+
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -138,5 +168,6 @@ export {
   forgotPassword,
   forgotPasswordOtp,
   resetPassword,
+  googleSignIn,
   logout,
 };

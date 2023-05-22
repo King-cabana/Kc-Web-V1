@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Div,
   Horizontal,
@@ -11,20 +11,19 @@ import {
 } from "../../globalStyles";
 import { SignUpContent, LogInLink } from "../signUp/SignUpStyled";
 import Logo from "../../assets/images/Logo.svg";
-import { KBDisplayXs} from "../../components/fonts/Fonts";
+import { KBDisplayXs } from "../../components/fonts/Fonts";
 import { Form } from "../../globalStyles";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 import google from "../../assets/images/Google.svg";
-import { login } from "../../redux/services/authService";
+import { googleSignIn, login } from "../../redux/services/authService";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
 import { setUserDetails } from "../../redux/slices/userDetailsSlice";
-import { useDispatch } from "react-redux";
 import { setUserToken } from "../../redux/slices/userDetailsSlice";
 import axios from "axios";
 import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfileSlice";
 import { SignInBg, SignInBody } from "./SignInStyled";
-import {gapi} from "gapi-script";
+import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
 
 const SignIn = () => {
@@ -69,32 +68,46 @@ const SignIn = () => {
   };
 
   //signin with google
-  const [accessToken, setAccessToken] = useState('');
+  const [userObject, setUserObject] = useState({});
 
-  const clientId = "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com"
-  const onSuccess = (res) => {
-    console.log("LOGIN SUCCESS! Current user: ", res.profileObj)
-    const token = res.accessToken;
-    console.log(token);
-    setAccessToken(token); 
-    // handleGoogleSignIn(token); // Pass the token to the handleGoogleSignIn function
-  }
+  const clientId =
+    "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com";
+  const onSuccess = async (res) => {
+    console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+    const { email, googleId, familyName, givenName, imageUrl } = res.profileObj;
+    const user = {
+      email,
+      googleId,
+      familyName,
+      givenName,
+      imageUrl,
+    };
+    setUserObject(user);
+    try {
+      await googleSignIn(user);
+      navigate("/dashboard");
+    } catch (error) {
+      error?.response
+        ? toast.error(error?.response?.data?.message)
+        : toast.error(error.message);
+    }
+  };
 
   const onFailure = (res) => {
-      console.log("LOGIN FAILED! res: ", res);
-  }
+    console.log("LOGIN FAILED! res: ", res);
+  };
 
   useEffect(() => {
     function start() {
       gapi.client.init({
         clientId: clientId,
-        scope: "email profile openid https://www.googleapis.com/auth/userinfo.email"
+        scope:
+          "email profile openid https://www.googleapis.com/auth/userinfo.email",
       });
     }
-    gapi.load('client:auth2', start);
+    gapi.load("client:auth2", start);
   }, [clientId]);
 
-  
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -129,12 +142,10 @@ const SignIn = () => {
     }
   };
 
-
-
   return (
     <SignInBg>
       <SignInBody>
-          <SignUpContent>
+        <SignUpContent>
           <img src={Logo} alt="King Cabana Logo" />
           <KBDisplayXs
             fontWeight="700"
@@ -152,47 +163,54 @@ const SignIn = () => {
               marginBottom: "3%",
             }}
           >
-      <div style={{ width: '100%', justifyContent:'center', alignItems:'center', display:'flex'}}>
-      <GoogleLogin
-         clientId={clientId}
-         buttonText="Continue with Google"
-         onSuccess={onSuccess}
-         onFailure={onFailure}
-         cookiePolicy={'single_host_origin'}
-         isSignedIn={true}
-         render={(renderProps) => (
-          <div
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            style={{width:'100%'}}
-          >
-             <div style={{ width: "100%"}}>
-              <InputFieldWrapper
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <SocialIconsHolder style={{ border: "transparent" }}>
-                  <img src={google} alt="google" />
-                </SocialIconsHolder>
-                <p
-                  style={{
-                    marginBottom: "0",
-                    fontWeight: "600",
-                    fontSize: "12px",
-                  }}
-                >
-                  Continue with Google
-                </p>
-              </InputFieldWrapper>
+            <div
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="Continue with Google"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={"single_host_origin"}
+                isSignedIn={true}
+                render={(renderProps) => (
+                  <div
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{ width: "100%" }}
+                  >
+                    <div style={{ width: "100%" }}>
+                      <InputFieldWrapper
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <SocialIconsHolder style={{ border: "transparent" }}>
+                          <img src={google} alt="google" />
+                        </SocialIconsHolder>
+                        <p
+                          style={{
+                            marginBottom: "0",
+                            fontWeight: "600",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Continue with Google
+                        </p>
+                      </InputFieldWrapper>
+                    </div>
+                  </div>
+                )}
+              />
             </div>
-          </div>
-        )}
-      />
-    </div>
             <Div width="80%" style={{ marginTop: "3%" }}>
               <Horizontal />
               <Or>Or Sign in with</Or>
@@ -201,7 +219,9 @@ const SignIn = () => {
           </div>
 
           <Form onSubmit={handleLogin}>
-            <label style={{ fontSize:'14px', marginBottom: "1%"}}>E-mail</label>
+            <label style={{ fontSize: "14px", marginBottom: "1%" }}>
+              E-mail
+            </label>
             <InputFieldWrapper>
               <input
                 placeholder="Enter your email address"
@@ -210,7 +230,9 @@ const SignIn = () => {
               ></input>
             </InputFieldWrapper>
 
-            <label style={{ fontSize:'14px', marginBottom: "1%" }}>Password</label>
+            <label style={{ fontSize: "14px", marginBottom: "1%" }}>
+              Password
+            </label>
             <InputFieldWrapper>
               <input
                 placeholder="Enter password"
@@ -261,11 +283,13 @@ const SignIn = () => {
                 Forgot Password?
               </p>
             </div>
-            <LongButton style={{ marginTop: "3%",  marginBottom: '2%' }} type="submit">
+            <LongButton
+              style={{ marginTop: "3%", marginBottom: "2%" }}
+              type="submit"
+            >
               {loading ? <ImSpinner6 size={"1.5rem"} /> : "Sign in"}
             </LongButton>
           </Form>
-
 
           <LogInLink to="/signup">
             Don't have an account?{" "}

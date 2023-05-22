@@ -5,44 +5,40 @@ import { VerifyBody } from "./SignUpStyled";
 import Logo from "../../assets/images/Logo.svg";
 import { verifyEmail } from "../../redux/services/authService";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "../../redux/slices/userDetailsSlice";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
 
 const VerifyEmail = () => {
-
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState(null)
+  const [email, setEmail] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-   try {
-    setLoading(true)
-    const res = await verifyEmail(otp);
-    console.log(res)
-    // toast.success("Email Successfully verified!")
-    navigate("/login");
-   } catch (error) {
-    setLoading(false)
-    toast.error(error.response.data);
-   }
-   finally {
-    setOtp("");
-  }
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await verifyEmail(otp);
+      console.log(res);
+      const vToken = localStorage.getItem("vToken") || "{}";
+      dispatch(setUserToken({ name: "token", value: vToken }));
+      // toast.success("Email Successfully verified!")
+      navigate("/createEvent/eventDetails");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.data);
+    } finally {
+      setOtp("");
+    }
+  };
 
   const renderInput = (inputProps, index) => {
-    return (
-      <input
-        className="otp-input"
-        {...inputProps}
-        key={index}
-      />
-    );
+    return <input className="otp-input" {...inputProps} key={index} />;
   };
- 
 
   return (
     <AuthBackground>
@@ -52,9 +48,10 @@ const VerifyEmail = () => {
           Email Verification
         </h5>
         <p style={{ textAlign: "center", fontSize: "12px" }}>
-        {"Enter the verification code sent to" + " "}
-         {setEmail ? (sessionStorage.getItem("email",email))
-          : setEmail(sessionStorage.getItem("email"))}
+          {"Enter the verification code sent to" + " "}
+          {setEmail
+            ? sessionStorage.getItem("email", email)
+            : setEmail(sessionStorage.getItem("email"))}
         </p>
 
         <Form onSubmit={handleSubmit}>
@@ -84,8 +81,8 @@ const VerifyEmail = () => {
             renderInput={renderInput}
           />
           <LongButton style={{ marginTop: "5%" }} type="submit">
-          {loading ? <ImSpinner6 size={"1.5rem"} /> : "Verify"}
-            </LongButton>
+            {loading ? <ImSpinner6 size={"1.5rem"} /> : "Verify"}
+          </LongButton>
           <p
             style={{
               color: "#ff2957",
@@ -93,7 +90,7 @@ const VerifyEmail = () => {
               textAlign: "center",
               fontSize: "12px",
               marginTop: "20px",
-              cursor:'pointer'
+              cursor: "pointer",
             }}
             // onClick={resendCode}
           >
