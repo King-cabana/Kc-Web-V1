@@ -11,10 +11,12 @@ import { GoPlusSmall } from "react-icons/go";
 // import Plus from "../../assets/images/VectorPlus.png"
 // import SearchHelp from "../../assets/images/SearchHelp.png";
 import Footer from "../../components/footer/Footer";
+import Navbar from "../../components/navbar/Navbar"
 
 const HelpCenter = () => {
   return (
     <>
+    <Navbar/>
     <HelpPage>
       <HelpBody>
         <h3>Hi, We are here to help you</h3>

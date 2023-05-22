@@ -32,7 +32,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Events />} />
           <Route path="/signin" element={<SignIn/>} />
-          {/* <Route path="/help" element={<HelpCenter/> }/> */}
+
+          <Route path="/sponsors" element={<Sponsor/> } />
+          <Route path="/vendors" element={<Vendor/> } />
+          <Route path="/aboutUs" element={<About/> } />
+          <Route path="/contactUs" element={<ContactUs/> }/>
+          <Route path="*" element={<NoPage/> }/>
+          <Route path="/help" element={<HelpCenter/> }/>
+          <Route path="/signin" element={<SignIn/>} />
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/verifyEmail" element={<VerifyEmail/>} />
           <Route path="/signupsuccess" element={<SignUpSuccess/>} />
