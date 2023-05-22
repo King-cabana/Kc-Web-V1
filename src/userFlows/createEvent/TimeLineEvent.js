@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, lazy } from "react";
-import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import {LoadScript, StandaloneSearchBox} from "@react-google-maps/api"
 import { useSelector, useDispatch } from "react-redux";
 import {
   editGenerally,
