@@ -2,11 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { isSignedIn: false, details: {} };
 
-export const fetchUserDetails = (email) => async (dispatch) => {
-  const token = localStorage.getItem("accessToken");
+export const fetchUserDetails = (email, token) => async (dispatch) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/eventuser/email?email=${email}`,
+      `http://localhost:8081/eventuser/email?email=${email}`,
       {
         method: "GET",
         headers: {

@@ -26,8 +26,13 @@ const VerifyEmail = () => {
       console.log(res);
       const vToken = localStorage.getItem("vToken") || "{}";
       dispatch(setUserToken({ name: "token", value: vToken }));
+      console.log(vToken);
       // toast.success("Email Successfully verified!")
-      navigate("/createEvent/eventDetails");
+      navigate("/signupsuccess")
+
+      setTimeout(() => {
+        navigate("/createEvent/eventDetails"); 
+      }, 2000);
     } catch (error) {
       setLoading(false);
       toast.error(error.response.data);

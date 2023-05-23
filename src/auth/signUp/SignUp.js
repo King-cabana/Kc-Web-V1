@@ -31,6 +31,11 @@ import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
 import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
+import {
+  setUserDetails,
+  setUserToken,
+} from "../../redux/slices/userDetailsSlice";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const [click, setClick] = useState(false);
@@ -93,14 +98,15 @@ const SignUp = () => {
   const ConfrimType = confirm ? "text" : "password";
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //signup with google
   const [userObject, setUserObject] = useState({});
+  const [email, setEmail] = useState(null);
 
   const clientId =
     "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com";
   const onSuccess = async (res) => {
-    console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
     const { email, googleId, familyName, givenName, imageUrl } = res.profileObj;
     const user = {
       email,
@@ -111,7 +117,18 @@ const SignUp = () => {
     };
     setUserObject(user);
     try {
-      await googleSignIn(user);
+      const res = await googleSignIn(user);
+      dispatch(setUserDetails(email));
+      setEmail(email);
+      sessionStorage.setItem("email", email);
+      const headers = res.headers;
+      const token = headers.get("authorization");
+      const tokenWithoutBearer = token ? token.replace("Bearer ", "") : "";
+      const userToken = tokenWithoutBearer || "";
+      dispatch(setUserToken({ name: "token", value: userToken }));
+      localStorage.setItem("userToken", userToken);
+      localStorage.setItem("email", email);
+
       navigate("/createEvent/eventDetails");
     } catch (error) {
       error?.response

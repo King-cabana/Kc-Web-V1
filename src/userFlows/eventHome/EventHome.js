@@ -79,7 +79,7 @@ const EventHome = () => {
           data = response.data;
         }
         // console.log(data);
-        // console.log(user);
+        console.log(user);
         dispatch(setEventOrganizerProfile(data));
         console.log(state);
       } catch (error) {
@@ -91,6 +91,7 @@ const EventHome = () => {
     };
     fetchOrganizerProfile();
   }, [state?.id, userEmail]);
+  console.log(userEmail);
 
   const navitgateToEditOrganiserProfile = () => {
     navigate("/organiserProfile/home/edit");

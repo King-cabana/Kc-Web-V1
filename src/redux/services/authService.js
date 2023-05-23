@@ -147,8 +147,8 @@ const googleSignIn = async (user) => {
       isVerified: true,
     };
     const response = await axios.post('http://localhost:8081/login/google', payload);
-    console.log('Response:', response.data);
-    return response.data; 
+    // console.log('Response:', response.data);
+    return response; 
   } catch (error) {
     console.error('Request error:', error);
     // throw error; 

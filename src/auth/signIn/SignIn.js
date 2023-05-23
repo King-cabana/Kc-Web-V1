@@ -115,7 +115,6 @@ const SignIn = () => {
       const { data } = await login(email, password);
       dispatch(setUserDetails(data?.data));
       console.log(data?.data);
-      console.log(user);
       toast.success("login successfully!");
       const userToken = localStorage.getItem("bearerToken") || "{}";
       dispatch(setUserToken({ name: "token", value: userToken }));
@@ -177,7 +176,7 @@ const SignIn = () => {
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy={"single_host_origin"}
-                isSignedIn={true}
+                isSignedIn={false}
                 render={(renderProps) => (
                   <div
                     onClick={renderProps.onClick}

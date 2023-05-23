@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import OtpInput from "react-otp-input";
 import { LongButton, Form, AuthBackground } from "../../globalStyles";
-import { VerifyBody } from "./../signup/SignUpStyled";
-import Logo from "../../images/Logo.svg";
-import { forgotPasswordOtp } from "../../redux/service/authService";
+import { VerifyBody } from "../signUp/SignUpStyled";
+import Logo from "../../assets/images/Logo.svg";
+import { forgotPasswordOtp } from "../../redux/services/authService";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
@@ -31,6 +31,11 @@ const ForgotPasswordOtp = () => {
       setOtp("");
     }
   };
+
+  const renderInput = (inputProps, index) => {
+    return <input className="otp-input" {...inputProps} key={index} />;
+  };
+
 
   return (
     <AuthBackground>
@@ -69,6 +74,7 @@ const ForgotPasswordOtp = () => {
             }}
             // isInputSecure
             separator={<span> </span>}
+            renderInput={renderInput}
           />
           <LongButton style={{ marginTop: "5%" }} type="submit">
            {loading ?<ImSpinner6 size={"1.5rem"} /> : "Verify"}
