@@ -44,23 +44,26 @@ export const PopUpOverlay = styled.div`
 
 export const PopUpComponent = styled.div`
   position: absolute;
-  margin-top: 0.1rem;
+  top: 0.5rem;
+  right: 0;
+  /* right: 100%; */
   background-color: #fff;
-  width: 200px;
-  height: 150px;
+  /* width: 200px; */
+  width: 100%;
+  height: 175px;
   border: 1px solid rgba(0, 104, 255, 0.1);
   border-radius: 8px;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   flex-direction: column;
 
   @media screen and (max-width: 769px) {
-    width: 100%;
-    height: 130px;
-    margin-left: -1rem;
+    height: 150px;
+    margin-right: 0;
   }
   img {
+    align-self: flex-end;
     width: 15px;
     height: 20px;
     margin-bottom: 1rem;
@@ -170,6 +173,7 @@ export const BioSection = styled.div`
 
 export const Bio = styled.section`
   color: #484848;
+  margin-top: 2rem;
 `;
 export const Name = styled.h2`
   margin-bottom: 0.5rem;
@@ -215,18 +219,24 @@ export const Description = styled(Location)`
 `;
 
 export const JointContainer = styled.div`
+  /* border: 4px solid yellow; */
   z-index: 999999;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 150px;
 
   @media screen and (max-width: 960px) {
-    width: 120px;
-    /* z-index: -100; */
+    /* width: 120px; */
   }
 `;
 
 export const EditPen = styled.div`
   display: flex;
   justify-content: flex-end;
+  /* border: 2px solid green; */
 `;
 
 export const AlternativeButton2 = styled.button`
@@ -261,6 +271,7 @@ export const CustomAlt = styled(AlternativeButton2)`
   margin-top: 1rem;
   @media screen and (max-width: 960px) {
     width: 100px;
+    margin-right: 1rem;
   }
 `;
 

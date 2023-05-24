@@ -92,9 +92,6 @@ const EventHome = () => {
     fetchOrganizerProfile();
   }, [state?.id, userEmail]);
 
-  const navitgateToEditOrganiserProfile = () => {
-    navigate("/organiserProfile/home/edit");
-  };
   const toggleModal = () => {
     setModal(!modal);
   };
@@ -109,7 +106,7 @@ const EventHome = () => {
     <EventOrganizerContext.Provider
       value={{ state, axios, user, API_URL_2, navigate, userEmail }}
     >
-      {modal && <PopUpOverlay onClick={toggleModal}></PopUpOverlay>}
+      {modal && <PopUpOverlay />}
       <OverallContainer>
         <HeaderContainer>
           <WelcomeCenter>
@@ -137,12 +134,44 @@ const EventHome = () => {
 
         <WelcomeContainer>
           <EditPen>
-            <TbEdit
-              size="1.5rem"
-              onClick={navitgateToEditOrganiserProfile}
-              style={{ cursor: "pointer" }}
-            />
+            <JointContainer>
+              <div className={`${showModal}`}>
+                <PopUpComponent>
+                  <img src={click} alt="" onClick={toggleModal} />
+                  <p>
+                    Optimize your profile now for effective engagements on King
+                    Cabana
+                  </p>
+                  <PrimaryButton
+                    onClick={() =>
+                      navigate("/dashboard/edit-organiser-profile")
+                    }
+                    style={{
+                      width: "93px",
+                      height: "30px",
+                      fontSize: "10px",
+                    }}
+                  >
+                    Okay, got it.
+                  </PrimaryButton>
+                </PopUpComponent>
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  backgroundColor: "#fff",
+                }}
+              >
+                <TbEdit
+                  size="1.7rem"
+                  onClick={() => navigate("/dashboard/edit-organiser-profile")}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            </JointContainer>
           </EditPen>
+
           <BioSection>
             <Bio>
               <Name>{state?.organizerName ? state?.organizerName : ""}</Name>
@@ -161,19 +190,19 @@ const EventHome = () => {
                   <PrimaryButton>Create event</PrimaryButton>
                 </ButtonLink>
               </Wrap>
-              <JointContainer>
-                <ButtonLink to="/event/create">
-                  <CustomAlt
-                    style={{
-                      color: "#FF2957",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Add event history
-                  </CustomAlt>
-                </ButtonLink>
+              {/* <JointContainer> */}
+              <ButtonLink to="/event/create">
+                <CustomAlt
+                  style={{
+                    color: "#FF2957",
+                    fontWeight: "600",
+                  }}
+                >
+                  Add event history
+                </CustomAlt>
+              </ButtonLink>
 
-                <div className={`${showModal}`}>
+              {/* <div className={`${showModal}`}>
                   <PopUpComponent>
                     <img src={click} alt="" onClick={toggleModal} />
                     <p>Add your previously held event to event history</p>
@@ -188,8 +217,8 @@ const EventHome = () => {
                       Okay, got it
                     </PrimaryButton>
                   </PopUpComponent>
-                </div>
-              </JointContainer>
+                </div> */}
+              {/* </JointContainer> */}
             </ButtonsContainer>
           </BioSection>
 

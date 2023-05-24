@@ -21,6 +21,7 @@ import ForgotPassword from "./auth/forgotPassword/ForgotPassword";
 import ResetPassword from "./auth/signIn/ResetPassword";
 import Sidebar from "./userFlows/Dashboard/Sidebar";
 import DashboardHome from "./userFlows/pages/DashboardHome";
+import EditOrganiserProfile from "./pages/profile/EditOrganiserProfile/EditOrganiserProfile";
 
 // const Events = lazy(() => import("./pages/events/Events"));
 
@@ -48,6 +49,10 @@ function App() {
             element={<EventPlanPreview />}
           />
           <Route path="/createEvent/submitted" element={<Submitted />} />
+          <Route
+            path="/dashboard/edit-organiser-profile"
+            element={<EditOrganiserProfile />}
+          />
 
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

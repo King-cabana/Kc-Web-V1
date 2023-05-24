@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfileSlice";
+import { setEventOrganizerProfile } from "../../../redux/slices/eventOrganizerProfileSlice";
 import {
   ModalButtonContainer,
   ModalText,
   PopUpComponent,
   PopUpOverlay,
   BtnHolderLink,
-} from "../../event/budgetInventory/InventoryStyled";
+} from "../../../userFlows/createEvent/budgetInventory/InventoryStyled";
 import {
   Input,
   InputText,
@@ -17,7 +17,7 @@ import {
   InputBoxOther,
   CheckBoxInput,
   Supported,
-} from "../../event/createEvent/FirstCreateEventStyled";
+} from "../../../userFlows/createEvent/FirstCreateEventStyled";
 import {
   InputSeg,
   Asterix,
@@ -41,21 +41,21 @@ import {
 } from "./EditOrganiserProfileStyled";
 import { BsArrowLeft, BsPencilSquare } from "react-icons/bs";
 import { ImSpinner6 } from "react-icons/im";
-import kingCabanaLogo from "../../images/kingCabanaLogo.svg";
+import kingCabanaLogo from "../../../assets/images/kingCabanaLogo.svg";
 import {
   WelcomeText,
   ImagesContainer,
-} from "../../event/eventHome/EventHomeStyled";
-import backgroundPicture from "../../images/dashboardBackgroundPicture.png";
-import logo from "../../images/dashboardLogo.png";
+} from "../../../userFlows/eventHome/EventHomeStyled";
+import backgroundPicture from "../../../assets/images/dashboardBackgroundPicture.png";
+import logo from "../../../assets/images/dashboardLogo.png";
 import {
   ModalPrimaryButton,
   AlternativeButton2,
   AbsolutePrimaryButton,
-} from "../../components/button/button";
+} from "../../../components/buttons/button";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { API_URL_2 } from "../../redux/service/authService";
+import { API_URL_2 } from "../../../redux/services/authService";
 
 const EditOrganiserProfile = () => {
   const [modal, setModal] = useState(false);
@@ -99,6 +99,7 @@ const EditOrganiserProfile = () => {
         });
         dispatch(setEventOrganizerProfile(data));
         setIncomingData(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
         // handle error here
@@ -116,7 +117,6 @@ const EditOrganiserProfile = () => {
     setIncomingData({ ...incomingData, [e.target.name]: e.target.value });
   };
   const addressChange = (e) => {
-    // const { name, value } = e.target;
     setIncomingData({
       ...incomingData,
       address: { ...incomingData.address, [e.target.name]: e.target.value },
@@ -265,118 +265,119 @@ const EditOrganiserProfile = () => {
     e.preventDefault();
     setSending(true);
     setIsDisabled(true);
+    // var npatchData = []
     const patchData = [
       {
         op: "replace",
         path: "/backgroundPictureUrl",
-        value: incomingData.backgroundPictureUrl,
+        value: incomingData?.backgroundPictureUrl,
       },
       {
         op: "replace",
         path: "/logoUrl",
-        value: incomingData.logoUrl,
+        value: incomingData?.logoUrl,
       },
       {
         op: "replace",
         path: "/organizerName",
-        value: incomingData.organizerName,
+        value: incomingData?.organizerName,
       },
       {
         op: "replace",
         path: "/profileEmail",
-        value: incomingData.profileEmail,
+        value: incomingData?.profileEmail,
       },
-      { op: "replace", path: "/phoneNumber", value: incomingData.phoneNumber },
+      { op: "replace", path: "/phoneNumber", value: incomingData?.phoneNumber },
       {
         op: "replace",
         path: "/address/houseNo",
-        value: incomingData.address.houseNo,
+        value: incomingData?.address?.houseNo,
       },
       {
         op: "replace",
         path: "/address/street",
-        value: incomingData.address.street,
+        value: incomingData?.address?.street,
       },
       {
         op: "replace",
         path: "/address/city",
-        value: incomingData.address.city,
+        value: incomingData?.address?.city,
       },
       {
         op: "replace",
         path: "/address/state",
-        value: incomingData.address.state,
+        value: incomingData?.address?.state,
       },
       {
         op: "replace",
         path: "/address/country",
-        value: incomingData.address.country,
+        value: incomingData?.address?.country,
       },
       {
         op: "replace",
         path: "/organizerDetails",
-        value: incomingData.organizerDetails,
+        value: incomingData?.organizerDetails,
       },
-      { op: "replace", path: "/website", value: incomingData.website },
-      { op: "replace", path: "/linkedIn", value: incomingData.linkedIn },
-      { op: "replace", path: "/instagram", value: incomingData.instagram },
-      { op: "replace", path: "/twitter", value: incomingData.twitter },
-      { op: "replace", path: "/faceBook", value: incomingData.faceBook },
-      { op: "replace", path: "/otherHandle", value: incomingData.otherHandle },
+      { op: "replace", path: "/website", value: incomingData?.website },
+      { op: "replace", path: "/linkedIn", value: incomingData?.linkedIn },
+      { op: "replace", path: "/instagram", value: incomingData?.instagram },
+      { op: "replace", path: "/twitter", value: incomingData?.twitter },
+      { op: "replace", path: "/faceBook", value: incomingData?.faceBook },
+      { op: "replace", path: "/otherHandle", value: incomingData?.otherHandle },
       {
         op: "replace",
         path: "/guarantorRole",
-        value: incomingData.guarantorRole,
+        value: incomingData?.guarantorRole,
       },
       {
         op: "replace",
         path: "/guarantor/secondaryContactFullName",
-        value: incomingData.guarantor.secondaryContactFullName,
+        value: incomingData?.guarantor?.secondaryContactFullName,
       },
       {
         op: "replace",
         path: "/guarantor/companyName",
-        value: incomingData.guarantor.companyName,
+        value: incomingData?.guarantor?.companyName,
       },
       {
         op: "replace",
         path: "/guarantor/jobRole",
-        value: incomingData.guarantor.jobRole,
+        value: incomingData?.guarantor?.jobRole,
       },
       {
         op: "replace",
         path: "/guarantor/officeAddress/houseNo",
-        value: incomingData.guarantor.officeAddress.houseNo,
+        value: incomingData?.guarantor?.officeAddress?.houseNo,
       },
       {
         op: "replace",
         path: "/guarantor/officeAddress/street",
-        value: incomingData.guarantor.officeAddress.street,
+        value: incomingData?.guarantor?.officeAddress?.street,
       },
       {
         op: "replace",
         path: "/guarantor/officeAddress/city",
-        value: incomingData.guarantor.officeAddress.city,
+        value: incomingData?.guarantor?.officeAddress?.city,
       },
       {
         op: "replace",
         path: "/guarantor/officeAddress/state",
-        value: incomingData.guarantor.officeAddress.state,
+        value: incomingData?.guarantor?.officeAddress?.state,
       },
       {
         op: "replace",
         path: "/guarantor/officeAddress/country",
-        value: incomingData.guarantor.officeAddress.country,
+        value: incomingData?.guarantor?.officeAddress?.country,
       },
       {
         op: "replace",
         path: "/guarantor/secondaryContactPhoneNumber",
-        value: incomingData.guarantor.secondaryContactPhoneNumber,
+        value: incomingData?.guarantor?.secondaryContactPhoneNumber,
       },
       {
         op: "replace",
         path: "/guarantor/secondaryContactEmail",
-        value: incomingData.guarantor.secondaryContactEmail,
+        value: incomingData?.guarantor?.secondaryContactEmail,
       },
     ];
     try {
@@ -403,7 +404,12 @@ const EditOrganiserProfile = () => {
   };
   return (
     <>
-      {modal && <PopUpOverlay onClick={toggleModal}></PopUpOverlay>}
+      {modal && (
+        <PopUpOverlay
+          // style={{ zIndex: 10 }}
+          onClick={toggleModal}
+        ></PopUpOverlay>
+      )}
       <OverallContainer>
         <EditSection>
           <EditHeader>
@@ -911,7 +917,10 @@ const EditOrganiserProfile = () => {
               </AbsolutePrimaryButton>
             </ButtonWrapper>
           </EditForm>
-          <div className={`${showModal}`}>
+          <div
+            style={{ zIndex: 99999, position: "fixed" }}
+            className={`${showModal}`}
+          >
             <PopUpComponent>
               <ModalText>
                 This is going to disrupt all unsaved changes. Are you sure you

@@ -56,7 +56,7 @@ const libraries = ["places"];
 
 const TimeLineEvent = ({ padding }) => {
   const [newTag, setNewTag] = useState("");
-  const [locationType, setLocationType] = useState("physical");
+  const [locationType, setLocationType] = useState("");
   const dispatch = useDispatch();
   const location = useLocation();
   const state = useSelector((state) => state.createEvent);
@@ -226,7 +226,12 @@ const TimeLineEvent = ({ padding }) => {
             </EventInput>
 
             <div style={{ margin: "1rem 0rem" }}>
-              <InputText>Event Location</InputText>
+              <InputText>
+                Event Location <br />
+                <span style={{ fontSize: "14px", fontWeight: "400" }}>
+                  Select location category for your event
+                </span>
+              </InputText>
             </div>
             <ButtonBox>
               <div onClick={() => setLocationType("virtual")}>
