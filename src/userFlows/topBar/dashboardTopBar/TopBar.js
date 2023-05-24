@@ -18,7 +18,7 @@ import { SlBell } from "react-icons/sl";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { KBTextM } from "../../../components/fonts/Fonts";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserDetails, fetchUserDetails} from "../../../redux/slices/userDetailsSlice";
+import { clearUserDetails } from "../../../redux/slices/userDetailsSlice";
 import { clearEventOrganizerProfile } from "../../../redux/slices/eventOrganizerProfileSlice";
 import { toast } from "react-toastify";
 import {
@@ -45,25 +45,25 @@ const TopBar = () => {
   }
   const showModal = !modal && "notShown";
 
-
   const userDetails = useSelector((state) => state.userDetails);
 
   useEffect(() => {
-    if (userDetails && userDetails.details.firstname && userDetails.details.lastname) {
+    if (
+      userDetails &&
+      userDetails.details.firstname &&
+      userDetails.details.lastname
+    ) {
       const firstname = userDetails.details.firstname;
       const lastname = userDetails.details.lastname;
       const initials = `${firstname.charAt(0)}${lastname.charAt(0)}`;
       setUserInitials(initials);
     }
-    
-  }, [userDetails]);  
+  }, [userDetails]);
   const dispatch = useDispatch();
 
   function showDropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
   }
-
- 
 
   const handleLogout = () => {
     dispatch(clearUserDetails());
@@ -106,17 +106,27 @@ const TopBar = () => {
                     alignItems: "center",
                   }}
                 >
-                  {userInitials && <span>{userInitials}</span>}
+                  {userInitials ? (
+                    <img
+                      src={userDetails.details.profilePicture}
+                      alt={userInitials}
+                    />
+                  ) : (
+                    <span>{userInitials}</span>
+                  )}
                 </ProfilePicture>
 
-                <KBTextM>{userDetails?.details?.firstname} {userDetails?.details?.lastname} </KBTextM>
+                <KBTextM>
+                  {userDetails?.details?.firstname}{" "}
+                  {userDetails?.details?.lastname}{" "}
+                </KBTextM>
 
                 <Dropdown>
                   {/* <DropDownBtn onClick={showDropDown} className="dropbtn">
                     <RiArrowDownSLine />
                   </DropDownBtn> */}
                   <DropDownBtn onClick={showDropDown} className="dropbtn">
-                        <RiArrowDownSLine />
+                    <RiArrowDownSLine />
                   </DropDownBtn>
                   <DropdownContent id="myDropdown" className="dropdown-content">
                     <div
@@ -142,12 +152,20 @@ const TopBar = () => {
                             alignItems: "center",
                           }}
                         >
-                           {userInitials && <span>{userInitials}</span>}
+                          {userInitials ? (
+                            <img
+                              src={userDetails.details.profilePicture}
+                              alt={userInitials}
+                            />
+                          ) : (
+                            <span>{userInitials}</span>
+                          )}
                         </ProfilePicture>
                       </div>
                       <div>
                         <p style={{ fontWeight: "500" }}>
-                          {userDetails?.details?.firstname}  {userDetails?.details?.lastname}
+                          {userDetails?.details?.firstname}{" "}
+                          {userDetails?.details?.lastname}
                         </p>
                         <p
                           style={{

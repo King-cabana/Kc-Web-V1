@@ -151,6 +151,7 @@ const SignUp = () => {
     gapi.load("client:auth2", start);
   }, [clientId]);
 
+  //normal signup
   const handleSignUp = async (e) => {
     e.preventDefault();
     const errors = Validation(inputs);

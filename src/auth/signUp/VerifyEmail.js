@@ -26,7 +26,6 @@ const VerifyEmail = () => {
       console.log(res);
       const userToken = localStorage.getItem("userToken") || "";
       dispatch(setUserToken({ name: "token", value: userToken }));
-      // console.log(vToken);
       // toast.success("Email Successfully verified!")
       navigate("/signupsuccess")
 

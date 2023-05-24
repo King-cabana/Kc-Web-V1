@@ -8,7 +8,6 @@ import {
   CETopBarLogo,
   PPAndArrowHolder,
 } from "./CreateEventTopBarStyled";
-// import Profile from "../../../assets/images/pexels-george-ikwegbu-2379429.jpg";
 import Logo from "../../../assets/images/kingCabanaLogo.svg";
 
 const CreateEventTopBar = () => {
@@ -17,13 +16,12 @@ const CreateEventTopBar = () => {
 
   const email = localStorage.getItem("email");
   const token = localStorage.getItem("userToken");
-  console.log(email, token)
+  // console.log(email, token)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = dispatch(fetchUserDetails(email, token));
-        console.log(data)
+        dispatch(fetchUserDetails(email, token));
       } catch (error) {
         console.error("Failed to fetch user details: ", error);
       }
@@ -35,7 +33,11 @@ const CreateEventTopBar = () => {
   console.log(userDetails.details);
 
   useEffect(() => {
-    if (userDetails && userDetails?.details?.firstname && userDetails?.details?.lastname) {
+    if (
+      userDetails &&
+      userDetails?.details?.firstname &&
+      userDetails?.details?.lastname
+    ) {
       const firstname = userDetails?.details?.firstname;
       const lastname = userDetails?.details?.lastname;
       const initials = `${firstname.charAt(0)}${lastname.charAt(0)}`;
@@ -52,7 +54,11 @@ const CreateEventTopBar = () => {
       </CETopBarLogo>
       <PPAndArrowHolder>
         <ProfilePicture>
-          {userInitials && <span>{userInitials}</span>}
+          {userInitials ? (
+            <img src={userDetails.details.profilePicture} alt={userInitials} />
+          ) : (
+            <span>{userInitials}</span>
+          )}
         </ProfilePicture>
       </PPAndArrowHolder>
     </CETopBarContainer>
