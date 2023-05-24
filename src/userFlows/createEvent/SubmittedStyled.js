@@ -18,4 +18,4 @@ export const SubmittedButtons = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
+`

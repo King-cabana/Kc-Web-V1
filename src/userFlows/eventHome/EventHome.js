@@ -51,7 +51,10 @@ const EventHome = () => {
   const user = useSelector((state) => state?.userDetails);
   const [modal, setModal] = useState(true);
   const navigate = useNavigate();
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = user.details.email;
+
+console.log(user);
+console.log(user.details.email);
 
   useEffect(() => {
     let data = null;
@@ -81,7 +84,7 @@ const EventHome = () => {
         // console.log(data);
         // console.log(user);
         dispatch(setEventOrganizerProfile(data));
-        console.log(state);
+        // console.log(state);
       } catch (error) {
         if (error?.message === "Network Error") {
           toast.error("Error retrieving data, reload page.");
@@ -91,6 +94,7 @@ const EventHome = () => {
     };
     fetchOrganizerProfile();
   }, [state?.id, userEmail]);
+  // console.log(userEmail);
 
   const toggleModal = () => {
     setModal(!modal);

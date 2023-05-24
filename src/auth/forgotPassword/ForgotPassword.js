@@ -33,7 +33,7 @@ const ForgotPassword = () => {
     } finally{
       setEmail("");
     }
-    sessionStorage.setItem("email", email);
+    localStorage.setItem("email", email);
   };
 
   return (

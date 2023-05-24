@@ -81,7 +81,7 @@ const Footer = () => {
             <ul>
               <li>How it works</li>
               <li>Partners</li>
-              <li>Help center</li>
+              <li><a style={{color:'white', textDecoration:'none'}} href="/help" >Help center</a></li>
             </ul>
           </FooterLinksHolder>
       

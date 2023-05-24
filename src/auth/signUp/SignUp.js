@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { ErrorText, KBDisplayXs, KBTextXs } from "../../components/fonts/Fonts";
 import {
@@ -13,7 +13,11 @@ import {
 } from "../../globalStyles";
 import google from "../../assets/images/Google.svg";
 import Logo from "../../assets/images/Logo.svg";
-import { register } from "../../redux/services/authService";
+import {
+  googleSignIn,
+  googleSignin,
+  register,
+} from "../../redux/services/authService";
 import {
   LogInLink,
   SignUpBody,
@@ -25,6 +29,13 @@ import { Validation } from "../Validation";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
+import { gapi } from "gapi-script";
+import GoogleLogin from "react-google-login";
+import {
+  setUserDetails,
+  setUserToken,
+} from "../../redux/slices/userDetailsSlice";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const [click, setClick] = useState(false);
@@ -87,7 +98,60 @@ const SignUp = () => {
   const ConfrimType = confirm ? "text" : "password";
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  //signup with google
+  const [userObject, setUserObject] = useState({});
+  const [email, setEmail] = useState(null);
+
+  const clientId =
+    "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com";
+  const onSuccess = async (res) => {
+    const { email, googleId, familyName, givenName, imageUrl } = res.profileObj;
+    const user = {
+      email,
+      googleId,
+      familyName,
+      givenName,
+      imageUrl,
+    };
+    setUserObject(user);
+    try {
+      const res = await googleSignIn(user);
+      dispatch(setUserDetails(email));
+      setEmail(email);
+      localStorage.setItem("email", email);
+      const headers = res.headers;
+      const token = headers.get("authorization");
+      const tokenWithoutBearer = token ? token.replace("Bearer ", "") : "";
+      const userToken = tokenWithoutBearer || "";
+      dispatch(setUserToken({ name: "token", value: userToken }));
+      localStorage.setItem("userToken", userToken);
+      localStorage.setItem("email", email);
+      navigate("/createEvent/eventDetails");
+    } catch (error) {
+      error?.response
+        ? toast.error(error?.response?.data?.message)
+        : toast.error(error.message);
+    }
+  };
+
+  const onFailure = (res) => {
+    console.log("LOGIN FAILED! res: ", res);
+  };
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope:
+          "email profile openid https://www.googleapis.com/auth/userinfo.email",
+      });
+    }
+    gapi.load("client:auth2", start);
+  }, [clientId]);
+
+  //normal signup
   const handleSignUp = async (e) => {
     e.preventDefault();
     const errors = Validation(inputs);
@@ -114,7 +178,7 @@ const SignUp = () => {
         confirmPassword: "",
       });
     }
-    sessionStorage.setItem("email", inputs.email);
+    localStorage.setItem("email", inputs.email);
   };
 
   return (
@@ -138,29 +202,55 @@ const SignUp = () => {
               marginBottom: "3%",
             }}
           >
-            <div style={{ width: "100%" }}>
-              <InputFieldWrapper
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <SocialIconsHolder style={{ border: "transparent" }}>
-                  <img src={google} alt="google" />
-                </SocialIconsHolder>
-                <p
-                  style={{
-                    marginBottom: "0",
-                    fontWeight: "600",
-                    fontSize: "12px",
-                  }}
-                >
-                  Continue with Google
-                </p>
-              </InputFieldWrapper>
+            <div
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="Continue with Google"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={"single_host_origin"}
+                isSignedIn={false}
+                render={(renderProps) => (
+                  <div
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{ width: "100%" }}
+                  >
+                    <div style={{ width: "100%" }}>
+                      <InputFieldWrapper
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <SocialIconsHolder style={{ border: "transparent" }}>
+                          <img src={google} alt="google" />
+                        </SocialIconsHolder>
+                        <p
+                          style={{
+                            marginBottom: "0",
+                            fontWeight: "600",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Continue with Google
+                        </p>
+                      </InputFieldWrapper>
+                    </div>
+                  </div>
+                )}
+              />
             </div>
+
             <Div width="60%" style={{ marginTop: "3%" }}>
               <Horizontal />
               <Or>Or Signup with</Or>

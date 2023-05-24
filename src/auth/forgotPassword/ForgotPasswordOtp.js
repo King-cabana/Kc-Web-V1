@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import OtpInput from "react-otp-input";
 import { LongButton, Form, AuthBackground } from "../../globalStyles";
-import { VerifyBody } from "./../signup/SignUpStyled";
-import Logo from "../../images/Logo.svg";
-import { forgotPasswordOtp } from "../../redux/service/authService";
+import { VerifyBody } from "../signUp/SignUpStyled";
+import Logo from "../../assets/images/Logo.svg";
+import { forgotPasswordOtp } from "../../redux/services/authService";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
@@ -21,7 +21,7 @@ const ForgotPasswordOtp = () => {
     try {
       setLoading(true)
       await forgotPasswordOtp(otp);
-      sessionStorage.setItem("otp", otp);
+      localStorage.setItem("otp", otp);
       toast.success("Otp Successfully Verified!");
       navigate("/resetpassword");
     } catch (error) {
@@ -32,6 +32,11 @@ const ForgotPasswordOtp = () => {
     }
   };
 
+  const renderInput = (inputProps, index) => {
+    return <input className="otp-input" {...inputProps} key={index} />;
+  };
+
+
   return (
     <AuthBackground>
       <VerifyBody>
@@ -41,8 +46,8 @@ const ForgotPasswordOtp = () => {
         </h5>
         <p style={{ textAlign: "center", fontSize: "12px" }}>
          {"Enter the verification code sent to" + " "}
-         {setEmail ? (sessionStorage.getItem("email",email))
-          : setEmail(sessionStorage.getItem("email"))}
+         {setEmail ? (localStorage.getItem("email",email))
+          : setEmail(localStorage.getItem("email"))}
         </p>
 
         <Form onSubmit={handleSubmit}>
@@ -69,6 +74,7 @@ const ForgotPasswordOtp = () => {
             }}
             // isInputSecure
             separator={<span> </span>}
+            renderInput={renderInput}
           />
           <LongButton style={{ marginTop: "5%" }} type="submit">
            {loading ?<ImSpinner6 size={"1.5rem"} /> : "Verify"}
