@@ -13,27 +13,35 @@ import Logo from "../../../assets/images/kingCabanaLogo.svg";
 
 const CreateEventTopBar = () => {
   const [userInitials, setUserInitials] = useState("");
+  const dispatch = useDispatch();
 
   const email = localStorage.getItem("email");
   const token = localStorage.getItem("userToken");
-
-  const dispatch = useDispatch();
-
-  const data = fetchUserDetails(email, token);
-
-  const userDetails = useSelector((state) => state.userDetails);
-  // console.log(userDetails.details)
+  console.log(email, token)
 
   useEffect(() => {
-    if (userDetails && userDetails.details.firstname && userDetails.details.lastname) {
-      const firstname = userDetails.details.firstname;
-      const lastname = userDetails.details.lastname;
+    const fetchData = async () => {
+      try {
+        const data = dispatch(fetchUserDetails(email, token));
+        console.log(data)
+      } catch (error) {
+        console.error("Failed to fetch user details: ", error);
+      }
+    };
+    fetchData();
+  }, [dispatch, email, token]);
+
+  const userDetails = useSelector((state) => state.userDetails);
+  console.log(userDetails.details);
+
+  useEffect(() => {
+    if (userDetails && userDetails?.details?.firstname && userDetails?.details?.lastname) {
+      const firstname = userDetails?.details?.firstname;
+      const lastname = userDetails?.details?.lastname;
       const initials = `${firstname.charAt(0)}${lastname.charAt(0)}`;
       setUserInitials(initials);
     }
-    
   }, [userDetails]);
-  
 
   return (
     <CETopBarContainer>

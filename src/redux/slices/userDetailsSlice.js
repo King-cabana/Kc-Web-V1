@@ -16,10 +16,10 @@ export const fetchUserDetails = (email, token) => async (dispatch) => {
     );
     const data = await response.json();
     dispatch(setUserDetails(data));
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.error("Failed to fetch user details: ", error);
-    throw error;
+    // throw error;
   }
 };
 

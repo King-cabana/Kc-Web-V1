@@ -48,8 +48,9 @@ const FirstCreateEvent = ({ padding }) => {
   const location = useLocation();
   const state = useSelector((state) => state.createEvent);
 
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = localStorage.getItem("email");
   console.log(userEmail)
+  console.log(userEmail);
   dispatch(editGenerally({ name: "keyContactEmail", value: userEmail }));
 
   const change = (e) => {

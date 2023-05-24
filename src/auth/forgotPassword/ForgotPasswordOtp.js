@@ -21,7 +21,7 @@ const ForgotPasswordOtp = () => {
     try {
       setLoading(true)
       await forgotPasswordOtp(otp);
-      sessionStorage.setItem("otp", otp);
+      localStorage.setItem("otp", otp);
       toast.success("Otp Successfully Verified!");
       navigate("/resetpassword");
     } catch (error) {
@@ -46,8 +46,8 @@ const ForgotPasswordOtp = () => {
         </h5>
         <p style={{ textAlign: "center", fontSize: "12px" }}>
          {"Enter the verification code sent to" + " "}
-         {setEmail ? (sessionStorage.getItem("email",email))
-          : setEmail(sessionStorage.getItem("email"))}
+         {setEmail ? (localStorage.getItem("email",email))
+          : setEmail(localStorage.getItem("email"))}
         </p>
 
         <Form onSubmit={handleSubmit}>

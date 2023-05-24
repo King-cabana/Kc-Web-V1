@@ -24,9 +24,9 @@ const VerifyEmail = () => {
       setLoading(true);
       const res = await verifyEmail(otp);
       console.log(res);
-      const vToken = localStorage.getItem("vToken") || "{}";
-      dispatch(setUserToken({ name: "token", value: vToken }));
-      console.log(vToken);
+      const userToken = localStorage.getItem("userToken") || "";
+      dispatch(setUserToken({ name: "token", value: userToken }));
+      // console.log(vToken);
       // toast.success("Email Successfully verified!")
       navigate("/signupsuccess")
 
@@ -55,8 +55,8 @@ const VerifyEmail = () => {
         <p style={{ textAlign: "center", fontSize: "12px" }}>
           {"Enter the verification code sent to" + " "}
           {setEmail
-            ? sessionStorage.getItem("email", email)
-            : setEmail(sessionStorage.getItem("email"))}
+            ? localStorage.getItem("email", email)
+            : setEmail(localStorage.getItem("email"))}
         </p>
 
         <Form onSubmit={handleSubmit}>

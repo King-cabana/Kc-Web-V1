@@ -45,8 +45,9 @@ const TopBar = () => {
   }
   const showModal = !modal && "notShown";
 
+
   const userDetails = useSelector((state) => state.userDetails);
-  // console.log(user)
+
   useEffect(() => {
     if (userDetails && userDetails.details.firstname && userDetails.details.lastname) {
       const firstname = userDetails.details.firstname;

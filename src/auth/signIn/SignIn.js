@@ -18,10 +18,8 @@ import google from "../../assets/images/Google.svg";
 import { googleSignIn, login } from "../../redux/services/authService";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
-import { setUserDetails } from "../../redux/slices/userDetailsSlice";
+import { fetchUserDetails, setUserDetails } from "../../redux/slices/userDetailsSlice";
 import { setUserToken } from "../../redux/slices/userDetailsSlice";
-import axios from "axios";
-import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfileSlice";
 import { SignInBg, SignInBody } from "./SignInStyled";
 import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
@@ -50,22 +48,22 @@ const SignIn = () => {
 
   const dispatch = useDispatch();
 
-  const checkProfile = async (email, token) => {
-    try {
-      const { data } = await axios(
-        `https://api.kingcabana.com/eventuser/email?email=${email}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(data?.myProfile);
-      return { state: Boolean(data?.myProfile?.id), value: data?.myProfile };
-    } catch (error) {
-      throw error;
-    }
-  };
+  // const checkProfile = async (email, token) => {
+  //   try {
+  //     const { data } = await axios(
+  //       `https://api.kingcabana.com/eventuser/email?email=${email}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(data?.myProfile);
+  //     return { state: Boolean(data?.myProfile?.id), value: data?.myProfile };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // };
 
   //signin with google
   const [userObject, setUserObject] = useState({});
@@ -73,7 +71,7 @@ const SignIn = () => {
   const clientId =
     "165428537567-6riht3rvf7u0b3rennij863hfr6g674g.apps.googleusercontent.com";
   const onSuccess = async (res) => {
-    console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
+    // console.log("LOGIN SUCCESS! Current user: ", res.profileObj);
     const { email, googleId, familyName, givenName, imageUrl } = res.profileObj;
     const user = {
       email,
@@ -85,6 +83,13 @@ const SignIn = () => {
     setUserObject(user);
     try {
       await googleSignIn(user);
+      const userToken = localStorage.getItem("userToken") || "";
+      dispatch(fetchUserDetails(user.email, userToken));
+      dispatch(setUserDetails(user.email, userToken));
+      console.log(user.email, userToken)
+      // const userToken = localStorage.getItem("userToken") || "{}";
+      // dispatch(setUserToken({ name: "token", value: userToken }));
+      // dispatch(fetchUserDetails(email,userToken));
       navigate("/dashboard");
     } catch (error) {
       error?.response
@@ -116,16 +121,19 @@ const SignIn = () => {
       dispatch(setUserDetails(data?.data));
       console.log(data?.data);
       toast.success("login successfully!");
-      const userToken = localStorage.getItem("bearerToken") || "{}";
+      sessionStorage.setItem("email", email);
+      // localStorage.setItem("userToken", userToken);
+      const userToken = localStorage.getItem("userToken") || "{}";
       dispatch(setUserToken({ name: "token", value: userToken }));
-      const hasProfile = await checkProfile(email, userToken);
-      console.log(hasProfile);
-      if (hasProfile?.state) {
-        dispatch(setEventOrganizerProfile(hasProfile?.value));
-        navigate("/dashboard");
-      } else {
-        navigate("/createProfile");
-      }
+      // const hasProfile = await checkProfile(email, userToken);
+      // console.log(hasProfile);
+      // if (hasProfile?.state) {
+        // dispatch(setEventOrganizerProfile(hasProfile?.value));
+        // navigate("/dashboard");
+      // } else {
+        // navigate("/createProfile");
+      // }
+      navigate("/dashboard");
     } catch (error) {
       setLoading(false);
       if (error?.response?.status === 401) {

@@ -120,7 +120,7 @@ const SignUp = () => {
       const res = await googleSignIn(user);
       dispatch(setUserDetails(email));
       setEmail(email);
-      sessionStorage.setItem("email", email);
+      localStorage.setItem("email", email);
       const headers = res.headers;
       const token = headers.get("authorization");
       const tokenWithoutBearer = token ? token.replace("Bearer ", "") : "";
@@ -128,7 +128,6 @@ const SignUp = () => {
       dispatch(setUserToken({ name: "token", value: userToken }));
       localStorage.setItem("userToken", userToken);
       localStorage.setItem("email", email);
-
       navigate("/createEvent/eventDetails");
     } catch (error) {
       error?.response
@@ -178,7 +177,7 @@ const SignUp = () => {
         confirmPassword: "",
       });
     }
-    sessionStorage.setItem("email", inputs.email);
+    localStorage.setItem("email", inputs.email);
   };
 
   return (

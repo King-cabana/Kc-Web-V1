@@ -35,9 +35,9 @@ const verifyEmail = async (otp) => {
       return response.data;
     }
     const authHeader = response.headers.get("Authorization");
-    const vToken = authHeader.split(" ")[1];
+    const userToken = authHeader.split(" ")[1];
     // console.log(vToken);
-    localStorage.setItem("vToken", vToken);
+    localStorage.setItem("userToken", userToken);
     return response;
   } catch (error) {
     throw error;
@@ -69,8 +69,8 @@ const login = async (email, password, final = () => null) => {
       localStorage.setItem("user", JSON.stringify(response.data.data));
     }
     const authorizationHeader = response.headers.get("Authorization");
-    const bearerToken = authorizationHeader.split(" ")[1];
-    localStorage.setItem("bearerToken", bearerToken);
+    const userToken = authorizationHeader.split(" ")[1];
+    localStorage.setItem("userToken", userToken);
 
     return response;
   } catch (error) {

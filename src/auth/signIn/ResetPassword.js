@@ -30,8 +30,8 @@ const ResetPassword = () => {
   };
 
   // useEffect(()=>{
-  //   if(sessionStorage.getItem("otp")){
-  //       setOtp(sessionStorage.getItem("otp"))
+  //   if(localStorage.getItem("otp")){
+  //       setOtp(localStorage.getItem("otp"))
   //   } else{
   //     toast.error('You do not have access to this page')
   //     window.history.back()
