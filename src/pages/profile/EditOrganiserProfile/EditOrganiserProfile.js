@@ -917,10 +917,7 @@ const EditOrganiserProfile = () => {
               </AbsolutePrimaryButton>
             </ButtonWrapper>
           </EditForm>
-          <div
-            style={{ zIndex: 99999, position: "fixed" }}
-            className={`${showModal}`}
-          >
+          <div className={`${showModal}`}>
             <PopUpComponent>
               <ModalText>
                 This is going to disrupt all unsaved changes. Are you sure you
