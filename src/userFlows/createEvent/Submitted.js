@@ -23,7 +23,7 @@ const Submitted = () => {
   const event = useSelector((state) => state.eventCreated);
   const shareDetails = {
     title: event?.eventName,
-    url: `/guestView/${event?.id}`,
+    url: `/guestRegistration/${event?.id}`,
     text: event?.eventTheme,
   };
 

@@ -53,8 +53,8 @@ const EventHome = () => {
   const navigate = useNavigate();
   const userEmail = user.details.email;
 
-console.log(user);
-console.log(user.details.email);
+  // console.log(user);
+  // console.log(user.details.email);
 
   useEffect(() => {
     let data = null;
@@ -105,6 +105,28 @@ console.log(user.details.email);
     document.body.classList.remove("active-modal");
   }
   const showModal = !modal && "notShown";
+
+  useEffect(() => {
+    if (
+      state?.organizerName &&
+      state?.profileEmail &&
+      state?.phoneNumber &&
+      state?.address?.state &&
+      state?.address?.country &&
+      state?.organizerDetails
+    ) {
+      setModal(false);
+    } else {
+      setModal(true);
+    }
+  }, [
+    state?.organizerName,
+    state?.profileEmail,
+    state?.phoneNumber,
+    state?.address.state,
+    state?.address.country,
+    state?.organizerDetails,
+  ]);
 
   return (
     <EventOrganizerContext.Provider
@@ -190,7 +212,7 @@ console.log(user.details.email);
 
             <ButtonsContainer>
               <Wrap>
-                <ButtonLink to="/createevent/eventdetails/1">
+                <ButtonLink to="/createEvent/eventDetails">
                   <PrimaryButton>Create event</PrimaryButton>
                 </ButtonLink>
               </Wrap>
@@ -201,28 +223,11 @@ console.log(user.details.email);
                     color: "#FF2957",
                     fontWeight: "600",
                   }}
+                  disabled
                 >
                   Add event history
                 </CustomAlt>
               </ButtonLink>
-
-              {/* <div className={`${showModal}`}>
-                  <PopUpComponent>
-                    <img src={click} alt="" onClick={toggleModal} />
-                    <p>Add your previously held event to event history</p>
-                    <PrimaryButton
-                      onClick={toggleModal}
-                      style={{
-                        width: "93px",
-                        height: "30px",
-                        fontSize: "10px",
-                      }}
-                    >
-                      Okay, got it
-                    </PrimaryButton>
-                  </PopUpComponent>
-                </div> */}
-              {/* </JointContainer> */}
             </ButtonsContainer>
           </BioSection>
 

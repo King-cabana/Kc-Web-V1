@@ -5,7 +5,7 @@ import { setEventOrganizerProfile } from "../../../redux/slices/eventOrganizerPr
 import {
   ModalButtonContainer,
   ModalText,
-  PopUpComponent,
+  NPopUpComponent,
   PopUpOverlay,
   BtnHolderLink,
 } from "../../../userFlows/createEvent/budgetInventory/InventoryStyled";
@@ -402,14 +402,55 @@ const EditOrganiserProfile = () => {
       setIsDisabled(false);
     }
   };
+
+  useEffect(() => {
+    if (
+      incomingData?.organizerName &&
+      incomingData?.profileEmail &&
+      incomingData?.phoneNumber &&
+      incomingData?.address?.state &&
+      incomingData?.address?.country &&
+      incomingData?.organizerDetails
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [
+    incomingData?.organizerName,
+    incomingData?.profileEmail,
+    incomingData?.phoneNumber,
+    incomingData?.address.state,
+    incomingData?.address.country,
+    incomingData?.organizerDetails,
+  ]);
+
   return (
-    <>
-      {modal && (
-        <PopUpOverlay
-          // style={{ zIndex: 10 }}
-          onClick={toggleModal}
-        ></PopUpOverlay>
-      )}
+    <div>
+      {modal && <PopUpOverlay onClick={toggleModal} />}
+      <div className={`${showModal}`}>
+        <NPopUpComponent>
+          <ModalText>
+            This is going to disrupt all unsaved changes. Are you sure you want
+            to continue?
+          </ModalText>
+          <ModalButtonContainer>
+            <BtnHolderLink>
+              <AlternativeButton2
+                onClick={() => setModal(!modal)}
+                style={{
+                  color: "#FF2957",
+                }}
+              >
+                Continue Editing
+              </AlternativeButton2>
+            </BtnHolderLink>
+            <ModalPrimaryButton onClick={discardNavigate}>
+              Yes, Discard
+            </ModalPrimaryButton>
+          </ModalButtonContainer>
+        </NPopUpComponent>
+      </div>
       <OverallContainer>
         <EditSection>
           <EditHeader>
@@ -510,18 +551,23 @@ const EditOrganiserProfile = () => {
             </ImagesContainer>
 
             <InputSeg style={{ marginTop: "1rem" }}>
-              <InputText>Organizer's Name</InputText>
+              <InputText>
+                Organizer's Name <Asterix>*</Asterix>
+              </InputText>
               <Input
                 type="text"
                 placeholder="Enter name"
                 name="organizerName"
                 onChange={change}
                 defaultValue={incomingData?.organizerName}
+                required
               />
             </InputSeg>
 
             <InputSeg>
-              <InputText>Organizer's Email address</InputText>
+              <InputText>
+                Organizer's Email address <Asterix>*</Asterix>
+              </InputText>
               <Input
                 type="email"
                 placeholder="E.g: email@example.com"
@@ -530,11 +576,14 @@ const EditOrganiserProfile = () => {
                 defaultValue={incomingData?.profileEmail}
                 title="Email format: xxx@xxxx.xxx)"
                 pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                required
               />
             </InputSeg>
 
             <InputSeg>
-              <InputText>Organizer's Phone Number</InputText>
+              <InputText>
+                Organizer's Phone Number <Asterix>*</Asterix>
+              </InputText>
               <Input
                 type="tel"
                 placeholder="E.g: +2348022345661"
@@ -542,6 +591,7 @@ const EditOrganiserProfile = () => {
                 onChange={change}
                 defaultValue={incomingData?.phoneNumber}
                 minLength={5}
+                required
               />
             </InputSeg>
 
@@ -583,24 +633,30 @@ const EditOrganiserProfile = () => {
               </InputSeg>
 
               <InputSeg>
-                <InputText fontSize="13px">State</InputText>
+                <InputText fontSize="13px">
+                  State <Asterix>*</Asterix>
+                </InputText>
                 <Input
                   type="text"
                   placeholder="E.g: Kaduna State"
                   name="state"
                   onChange={addressChange}
                   defaultValue={incomingData?.address?.state}
+                  required
                 />
               </InputSeg>
 
               <InputSeg>
-                <InputText fontSize="13px">Country</InputText>
+                <InputText fontSize="13px">
+                  Country <Asterix>*</Asterix>
+                </InputText>
                 <Input
                   type="text"
                   placeholder="E.g: Nigeria"
                   name="country"
                   onChange={addressChange}
                   defaultValue={incomingData?.address?.country}
+                  required
                 />
               </InputSeg>
             </Wrapper>
@@ -917,34 +973,9 @@ const EditOrganiserProfile = () => {
               </AbsolutePrimaryButton>
             </ButtonWrapper>
           </EditForm>
-          <div className={`${showModal}`}>
-            <PopUpComponent>
-              <ModalText>
-                This is going to disrupt all unsaved changes. Are you sure you
-                want to continue?
-              </ModalText>
-
-              <ModalButtonContainer>
-                <BtnHolderLink>
-                  <AlternativeButton2
-                    onClick={() => setModal(!modal)}
-                    style={{
-                      color: "#FF2957",
-                    }}
-                  >
-                    Continue Editing
-                  </AlternativeButton2>
-                </BtnHolderLink>
-
-                <ModalPrimaryButton onClick={discardNavigate}>
-                  Yes, Discard
-                </ModalPrimaryButton>
-              </ModalButtonContainer>
-            </PopUpComponent>
-          </div>
         </EditSection>
       </OverallContainer>
-    </>
+    </div>
   );
 };
 
