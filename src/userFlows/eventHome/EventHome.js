@@ -123,8 +123,8 @@ const EventHome = () => {
     state?.organizerName,
     state?.profileEmail,
     state?.phoneNumber,
-    state?.address.state,
-    state?.address.country,
+    state?.address?.state,
+    state?.address?.country,
     state?.organizerDetails,
   ]);
 

@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // const API_URL = "https://api.kingcabana.com/eventuser/";
-const API_URL = "http://localhost:8080/eventuser/";
+const API_URL = "http://localhost:8081/eventuser/";
 // export const API_URL_2 = "https://api.kingcabana.com/";
-export const API_URL_2 = "http://localhost:8080/";
-export const GOOGLE_URL = "http://localhost:8080/login/google";
+export const API_URL_2 = "http://localhost:8081/";
+export const GOOGLE_URL = "http://localhost:8081/login/google";
 
 const register = async (payload) => {
   try {
@@ -146,7 +146,7 @@ const googleSignIn = async (user) => {
       isVerified: true,
     };
     const response = await axios.post(
-      "http://localhost:8080/login/google",
+      "http://localhost:8081/login/google",
       payload
     );
     // console.log('Response:', response.data);

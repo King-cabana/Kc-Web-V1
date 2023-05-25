@@ -56,7 +56,6 @@ const CreateEventTopBar = () => {
         <ProfilePicture>
           {userDetails.details.profilePicture ? (
             <img src={userDetails.details.profilePicture} alt="" />
-
           ) : (
             <span>{userInitials}</span>
           )}

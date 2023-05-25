@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_URL_3 = "https://api.kingcabana.com/attendee/";
-const API_URL_3 = "http://localhost:8080/attendee/";
+const API_URL_3 = "http://localhost:8081/attendee/";
 
 const guestRegister = async (payload) => {
   try {
