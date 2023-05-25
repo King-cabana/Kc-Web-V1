@@ -106,6 +106,11 @@ export const ProfilePicture = styled.div`
   height: 35px;
   width: 35px;
   border-radius: 50%;
+  border: 1px solid green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 
   img {
     width: 100%;

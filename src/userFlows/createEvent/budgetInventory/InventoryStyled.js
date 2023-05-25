@@ -53,6 +53,46 @@ export const PopUpComponent = styled.div`
     width: 100%;
   }
 `;
+export const NPopUpComponent = styled.div`
+  z-index: 99999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 25%;
+  height: 30%;
+  border: 1px solid rgba(0, 104, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  @media screen and (max-width: 1400px) {
+    width: 50%;
+    height: 40%;
+  }
+  @media screen and (max-width: 960px) {
+    width: 40%;
+    /*height: 30%; */
+  }
+  @media screen and (max-width: 769px) {
+    /* width: 40%;
+    padding: none;*/
+    height: 25%;
+  }
+  @media screen and (max-width: 670px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 375px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 320px) {
+    width: 100%;
+  }
+`;
 
 export const ModalText = styled.p`
   font-weight: 400;

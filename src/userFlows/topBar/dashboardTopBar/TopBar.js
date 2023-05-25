@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LogoLink } from "../../../components/navbar/Navbar.styled";
 import {
   TopBarContainer,
@@ -18,7 +18,7 @@ import { SlBell } from "react-icons/sl";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { KBTextM } from "../../../components/fonts/Fonts";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserDetails} from "../../../redux/slices/userDetailsSlice";
+import { clearUserDetails } from "../../../redux/slices/userDetailsSlice";
 import { clearEventOrganizerProfile } from "../../../redux/slices/eventOrganizerProfileSlice";
 import { toast } from "react-toastify";
 import {
@@ -35,6 +35,7 @@ import {
 
 const TopBar = () => {
   const [modal, setModal] = useState(false);
+  const [userInitials, setUserInitials] = useState("");
 
   // Modal Contitions
   if (modal) {
@@ -44,15 +45,25 @@ const TopBar = () => {
   }
   const showModal = !modal && "notShown";
 
-  const user = useSelector((state) => state.userDetails);
+  const userDetails = useSelector((state) => state.userDetails);
 
-  
+  useEffect(() => {
+    if (
+      userDetails &&
+      userDetails.details.firstname &&
+      userDetails.details.lastname
+    ) {
+      const firstname = userDetails.details.firstname;
+      const lastname = userDetails.details.lastname;
+      const initials = `${firstname.charAt(0)}${lastname.charAt(0)}`;
+      setUserInitials(initials);
+    }
+  }, [userDetails]);
   const dispatch = useDispatch();
 
   function showDropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
   }
-
 
   const handleLogout = () => {
     dispatch(clearUserDetails());
@@ -95,20 +106,27 @@ const TopBar = () => {
                     alignItems: "center",
                   }}
                 >
-                  {user?.details?.fullName
-                    ?.split(" ")
-                    ?.map((x) => x && x[0])
-                    ?.join("")}
+                  {userInitials ? (
+                    <img
+                      src={userDetails.details.profilePicture}
+                      alt={userInitials}
+                    />
+                  ) : (
+                    <span>{userInitials}</span>
+                  )}
                 </ProfilePicture>
 
-                <KBTextM>{user?.details?.fullName}</KBTextM>
+                <KBTextM>
+                  {userDetails?.details?.firstname}{" "}
+                  {userDetails?.details?.lastname}{" "}
+                </KBTextM>
 
                 <Dropdown>
                   {/* <DropDownBtn onClick={showDropDown} className="dropbtn">
                     <RiArrowDownSLine />
                   </DropDownBtn> */}
                   <DropDownBtn onClick={showDropDown} className="dropbtn">
-                        <RiArrowDownSLine />
+                    <RiArrowDownSLine />
                   </DropDownBtn>
                   <DropdownContent id="myDropdown" className="dropdown-content">
                     <div
@@ -134,15 +152,20 @@ const TopBar = () => {
                             alignItems: "center",
                           }}
                         >
-                          {user?.details?.fullName
-                            ?.split(" ")
-                            ?.map((x) => x && x[0])
-                            ?.join("")}
+                          {userInitials ? (
+                            <img
+                              src={userDetails.details.profilePicture}
+                              alt={userInitials}
+                            />
+                          ) : (
+                            <span>{userInitials}</span>
+                          )}
                         </ProfilePicture>
                       </div>
                       <div>
                         <p style={{ fontWeight: "500" }}>
-                          {user?.details?.fullName}
+                          {userDetails?.details?.firstname}{" "}
+                          {userDetails?.details?.lastname}
                         </p>
                         <p
                           style={{
@@ -152,7 +175,7 @@ const TopBar = () => {
                             whiteSpace: "pre-wrap",
                           }}
                         >
-                          {user?.details?.email}
+                          {userDetails?.details?.email}
                         </p>
                       </div>
                     </div>
