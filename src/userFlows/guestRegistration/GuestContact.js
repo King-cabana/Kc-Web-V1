@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   GCBody,
   GCFormPart,
-  GCPicPart,
-  GuestContactBg,
   TagHolder,
+  GuestContactBg,
+  TagDisplay,
 } from "./GuestContactStyled";
 import { Form, InputFieldWrapper } from "../../globalStyles";
 import TopBar from "../../components/topBar/TopBar";
@@ -44,7 +44,7 @@ const GuestContact = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const token = localStorage.getItem("userToken");
+      // const token = localStorage.getItem("userToken");
       try {
         const { data } = await axios.get(API_URL_2 + `events/${id}`);
         setEvent(data);
@@ -89,15 +89,15 @@ const GuestContact = () => {
       <GuestContactBg>
         <GCBody>
           <GCFormPart>
-            <p style={{ fontSize: "22px", fontWeight: "bold" }}>
+            <p style={{ fontSize: "22px", fontWeight: "bold", textAlign:"center" }}>
               Guest Contact Information
             </p>
-            <p style={{ fontSize: "12px" }}>
+            <p style={{ fontSize: "13px" , textAlign:"center" }}>
               Please provide contact information for a more enjoyable
               experience.
             </p>
             <Form style={{ marginTop: "5%" }} onSubmit={handleRegister}>
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label style={{ marginBottom: "2%", fontSize: "14px", fontWeight:"500" }}>
                 First Name
               </label>
               <InputFieldWrapper>
@@ -108,7 +108,7 @@ const GuestContact = () => {
                 />
               </InputFieldWrapper>
 
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label style={{ marginBottom: "2%", fontSize: "14px", fontWeight:"500" }}>
                 Last Name
               </label>
               <InputFieldWrapper>
@@ -119,7 +119,7 @@ const GuestContact = () => {
                 />
               </InputFieldWrapper>
 
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label style={{ marginBottom: "2%", fontSize: "14px", fontWeight:"500" }}>
                 E-mail
               </label>
               <InputFieldWrapper>
@@ -130,7 +130,7 @@ const GuestContact = () => {
                 />
               </InputFieldWrapper>
 
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label style={{ marginBottom: "2%", fontSize: "14px", fontWeight:"500" }}>
                 Confirm E-mail
               </label>
               <InputFieldWrapper>
@@ -142,15 +142,19 @@ const GuestContact = () => {
               </InputFieldWrapper>
             </Form>
           </GCFormPart>
-          <GCPicPart />
-        </GCBody>
 
-        <TagHolder>
-          <BudgetTitle2>Tags</BudgetTitle2>
+          <TagHolder>
+          <BudgetTitle2>Event Tags</BudgetTitle2>
+          <TagDisplay>
           <Tags style={{ padding: "1% 0%" }}>
             {event?.tags ? eventTags : "---"}
           </Tags>
+          </TagDisplay>
         </TagHolder>
+          {/* <GCPicPart /> */}
+        </GCBody>
+
+        
       </GuestContactBg>
 
       <ButtonContainer style={{ margin: "0rem" }}>

@@ -15,7 +15,6 @@ import google from "../../assets/images/Google.svg";
 import Logo from "../../assets/images/Logo.svg";
 import {
   googleSignIn,
-  googleSignin,
   register,
 } from "../../redux/services/authService";
 import {

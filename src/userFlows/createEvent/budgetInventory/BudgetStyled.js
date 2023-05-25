@@ -54,8 +54,9 @@ export const BudgetTitle1 = styled.h1`
 
 export const BudgetTitle2 = styled.h1`
   font-weight: 600;
-  font-size: 21px;
+  font-size: 18px;
   line-height: 32px;
+  margin-bottom: 2%;
   color: #484848;
 
   @media screen and (max-width: 960px) {
