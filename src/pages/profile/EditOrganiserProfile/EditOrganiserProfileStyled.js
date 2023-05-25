@@ -2,12 +2,15 @@ import styled from "styled-components";
 import {
   LogoPicture,
   BackgroundPicture,
-} from "../../event/eventHome/EventHomeStyled";
+} from "../../../userFlows/eventHome/EventHomeStyled";
+import background from "../../../assets/images/evie-s-uuCjYxJVf4o-unsplash.jpg";
 
 export const OverallContainer = styled.div`
   width: 100%;
   height: 100%;
-  background: #fffcfc;
+  background-image: url(${background});
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,6 +24,7 @@ export const EditSection = styled.div`
   position: relative;
   width: 40%;
   height: 88%;
+  opacity: 0.98;
   background: #fff;
   border: 2px solid rgba(0, 104, 255, 0.1);
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);

@@ -21,7 +21,7 @@ const SignUpSuccess = () => {
         <p style={{ fontWeight: "bold", fontSize: "20px" }}>Success!</p>
         <p>Your Email has been verified</p>
         <Form>
-          <LongButton style={{ marginTop: "2%" }}>Proceed</LongButton>
+          {/* <LongButton style={{ marginTop: "2%" }}>Proceed</LongButton> */}
         </Form>
       </SuccessBody>
     </AuthBackground>

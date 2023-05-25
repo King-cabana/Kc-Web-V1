@@ -134,7 +134,6 @@ const resetPassword = async (password, confirmPassword, otp) => {
   }
 };
 
-
 const googleSignIn = async (user) => {
   try {
     const { email, googleId, familyName, givenName, imageUrl } = user;
@@ -146,16 +145,17 @@ const googleSignIn = async (user) => {
       imageUrl,
       isVerified: true,
     };
-    const response = await axios.post('http://localhost:8081/login/google', payload);
+    const response = await axios.post(
+      "http://localhost:8081/login/google",
+      payload
+    );
     // console.log('Response:', response.data);
-    return response; 
+    return response;
   } catch (error) {
-    console.error('Request error:', error);
-    // throw error; 
+    console.error("Request error:", error);
+    // throw error;
   }
 };
-
-
 
 const logout = () => {
   localStorage.removeItem("user");

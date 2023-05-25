@@ -100,7 +100,11 @@ const InnerContainerData = () => {
           <Row1>
             <Text>{data.title}</Text>
             {data.options ? (
-              <Select name="list" id="list">
+              <Select
+                name="list"
+                id="list"
+                onClick={(e) => e.stopPropagation()}
+              >
                 {data.options.map((option, index) => (
                   <Option key={index}>{option}</Option>
                 ))}
