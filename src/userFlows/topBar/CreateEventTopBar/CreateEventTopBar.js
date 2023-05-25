@@ -54,8 +54,9 @@ const CreateEventTopBar = () => {
       </CETopBarLogo>
       <PPAndArrowHolder>
         <ProfilePicture>
-          {userInitials ? (
-            <img src={userDetails.details?.profilePicture} alt={userInitials} />
+          {userDetails.details.profilePicture ? (
+            <img src={userDetails.details.profilePicture} alt="" />
+
           ) : (
             <span>{userInitials}</span>
           )}
