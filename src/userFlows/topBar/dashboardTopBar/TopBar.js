@@ -65,11 +65,25 @@ const TopBar = () => {
     document.getElementById("myDropdown").classList.toggle("show");
   }
 
+ 
   const handleLogout = () => {
-    dispatch(clearUserDetails());
-    dispatch(clearEventOrganizerProfile());
-    toast.success("Logout!");
+  
+    const googleLogout = () => {
+      // Manually trigger Google logout process using Google API
+      const auth2 = window.gapi.auth2.getAuthInstance();
+      if (auth2) {
+        auth2.signOut().then(() => {
+          dispatch(clearUserDetails());
+          // dispatch(clearEventOrganizerProfile());
+          toast.success("Logout!");
+        });
+      }
+    };
+  
+    // Call the Google logout function
+    googleLogout();
   };
+  
 
   window.onclick = function (event) {
     if (!event.target.matches(".dropbtn")) {
@@ -106,11 +120,8 @@ const TopBar = () => {
                     alignItems: "center",
                   }}
                 >
-                  {userInitials ? (
-                    <img
-                      src={userDetails.details.profilePicture}
-                      alt={userInitials}
-                    />
+                  {userDetails.details.profilePicture ? (
+                    <img src={userDetails.details.profilePicture} alt="" />
                   ) : (
                     <span>{userInitials}</span>
                   )}
@@ -152,10 +163,10 @@ const TopBar = () => {
                             alignItems: "center",
                           }}
                         >
-                          {userInitials ? (
+                          {userDetails.details.profilePicture ? (
                             <img
                               src={userDetails.details.profilePicture}
-                              alt={userInitials}
+                              alt=""
                             />
                           ) : (
                             <span>{userInitials}</span>

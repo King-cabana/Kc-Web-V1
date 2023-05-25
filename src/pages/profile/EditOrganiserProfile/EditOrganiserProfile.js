@@ -420,8 +420,8 @@ const EditOrganiserProfile = () => {
     incomingData?.organizerName,
     incomingData?.profileEmail,
     incomingData?.phoneNumber,
-    incomingData?.address.state,
-    incomingData?.address.country,
+    incomingData?.address?.state,
+    incomingData?.address?.country,
     incomingData?.organizerDetails,
   ]);
 
