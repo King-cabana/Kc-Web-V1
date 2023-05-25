@@ -99,7 +99,7 @@ const EditOrganiserProfile = () => {
         });
         dispatch(setEventOrganizerProfile(data));
         setIncomingData(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.log(error);
         // handle error here
@@ -391,7 +391,7 @@ const EditOrganiserProfile = () => {
           },
         }
       );
-      console.log(data);
+      // console.log(data);
       dispatch(setEventOrganizerProfile(data));
       toast.success("Profile Updated Successfully");
       navigate("/dashboard");
