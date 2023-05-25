@@ -48,9 +48,20 @@ const FirstCreateEvent = ({ padding }) => {
   const location = useLocation();
   const state = useSelector((state) => state.createEvent);
 
+  const profileEmail = localStorage.getItem("profileEmail");
   const userEmail = localStorage.getItem("email");
-  // console.log(userEmail)
-  dispatch(editGenerally({ name: "keyContactEmail", value: userEmail }));
+  // console.log(userEmail);
+  // console.log(profileEmail);
+  dispatch(editGenerally({ name: "keyContactEmail", value: email }));
+
+  useEffect(() => {
+    if (profileEmail) {
+      setEmail(profileEmail);
+    } else {
+      setEmail(userEmail);
+    }
+    // console.log(email);
+  }, [profileEmail, userEmail]);
 
   const change = (e) => {
     dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
@@ -141,7 +152,7 @@ const FirstCreateEvent = ({ padding }) => {
   const handleSubmit = async function (e) {
     e.preventDefault();
     navigate("/createEvent/tagsTimelines");
-    console.log(state);
+    // console.log(state);
   };
 
   return (

@@ -34,8 +34,8 @@ import {
   EditPen,
 } from "./EventHomeStyled";
 import click from "../../assets/images/click.png";
-import backgroundPicture from "../../assets/images/dashboardBackgroundPicture.png";
-import logo from "../../assets/images/dashboardLogo.png";
+import backgroundPicture from "../../assets/images/bgImg.png";
+import logo from "../../assets/images/logoImg.png";
 import "../../modal.css";
 import { TbEdit } from "react-icons/tb";
 import { useNavigate } from "react-router";
@@ -85,6 +85,8 @@ const EventHome = () => {
         // console.log(user);
         dispatch(setEventOrganizerProfile(data));
         // console.log(state);
+        localStorage.setItem("profileEmail", state?.profileEmail);
+        // console.log(state?.profileEmail);
       } catch (error) {
         if (error?.message === "Network Error") {
           toast.error("Error retrieving data, reload page.");
@@ -123,8 +125,8 @@ const EventHome = () => {
     state?.organizerName,
     state?.profileEmail,
     state?.phoneNumber,
-    state?.address.state,
-    state?.address.country,
+    state?.address?.state,
+    state?.address?.country,
     state?.organizerDetails,
   ]);
 

@@ -59,6 +59,7 @@ const TimeLineEvent = ({ padding }) => {
   // const [locationType, setLocationType] = useState("");
   const state = useSelector((state) => state.createEvent);
   const [locationType, setLocationType] = useState(state?.eventLocation);
+  const [isDisabled, setIsDisabled] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -107,8 +108,16 @@ const TimeLineEvent = ({ padding }) => {
   };
   const navigateNext = () => {
     navigate("/createEvent/eventPlanPreview");
-    console.log(state);
+    // console.log(state);
   };
+
+  useEffect(() => {
+    if (state?.eventLocation) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [state?.eventLocation]);
 
   return (
     <>
@@ -339,7 +348,7 @@ const TimeLineEvent = ({ padding }) => {
             >
               Back
             </AlternativeButton2>
-            <AbsolutePrimaryButton onClick={navigateNext}>
+            <AbsolutePrimaryButton onClick={navigateNext} disabled={isDisabled}>
               Save & Continue
             </AbsolutePrimaryButton>
           </ButtonContainer>
