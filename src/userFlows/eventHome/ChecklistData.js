@@ -41,7 +41,7 @@ const ChecklistData = ({ heading, subHeading, buttonText }) => {
           <ChecklistSubHeading>{subHeading}</ChecklistSubHeading>
         </Wrapper>
         {buttonText ? (
-          <ButtonLink to="/createevent/eventdetails/1">
+          <ButtonLink to="/createEvent/eventDetails">
             <PrimaryButton2>{buttonText}</PrimaryButton2>
           </ButtonLink>
         ) : null}

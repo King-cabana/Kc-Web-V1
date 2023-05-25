@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, lazy } from "react";
-import {LoadScript, StandaloneSearchBox} from "@react-google-maps/api"
+import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
 import {
   editGenerally,
@@ -56,10 +56,11 @@ const libraries = ["places"];
 
 const TimeLineEvent = ({ padding }) => {
   const [newTag, setNewTag] = useState("");
-  const [locationType, setLocationType] = useState("physical");
+  // const [locationType, setLocationType] = useState("");
+  const state = useSelector((state) => state.createEvent);
+  const [locationType, setLocationType] = useState(state?.eventLocation);
   const dispatch = useDispatch();
   const location = useLocation();
-  const state = useSelector((state) => state.createEvent);
   const navigate = useNavigate();
   const inputRef = useRef();
 
@@ -226,13 +227,18 @@ const TimeLineEvent = ({ padding }) => {
             </EventInput>
 
             <div style={{ margin: "1rem 0rem" }}>
-              <InputText>Event Location</InputText>
+              <InputText>
+                Event Location <br />
+                <span style={{ fontSize: "14px", fontWeight: "400" }}>
+                  Select location category for your event
+                </span>
+              </InputText>
             </div>
             <ButtonBox>
-              <div onClick={() => setLocationType("virtual")}>
+              <div onClick={() => setLocationType("Virtual")}>
                 <ButtonOutline
-                  bgcolor={locationType === "virtual" ? "#0068FF" : undefined}
-                  color={locationType === "virtual" ? "white" : undefined}
+                  bgcolor={locationType === "Virtual" ? "#0068FF" : undefined}
+                  color={locationType === "Virtual" ? "white" : undefined}
                   name="eventLocation"
                   value="Virtual"
                   onClick={change}
@@ -240,10 +246,10 @@ const TimeLineEvent = ({ padding }) => {
                   Virtual
                 </ButtonOutline>
               </div>
-              <div onClick={() => setLocationType("physical")}>
+              <div onClick={() => setLocationType("Physical")}>
                 <ButtonOutline
-                  bgcolor={locationType === "physical" ? "#0068FF" : undefined}
-                  color={locationType === "physical" ? "white" : undefined}
+                  bgcolor={locationType === "Physical" ? "#0068FF" : undefined}
+                  color={locationType === "Physical" ? "white" : undefined}
                   name="eventLocation"
                   value="Physical"
                   onClick={change}
@@ -251,10 +257,10 @@ const TimeLineEvent = ({ padding }) => {
                   Physical
                 </ButtonOutline>
               </div>
-              <div onClick={() => setLocationType("hybrid")}>
+              <div onClick={() => setLocationType("Hybrid")}>
                 <ButtonOutline
-                  bgcolor={locationType === "hybrid" ? "#0068FF" : undefined}
-                  color={locationType === "hybrid" ? "white" : undefined}
+                  bgcolor={locationType === "Hybrid" ? "#0068FF" : undefined}
+                  color={locationType === "Hybrid" ? "white" : undefined}
                   name="eventLocation"
                   value="Hybrid"
                   onClick={change}
@@ -264,7 +270,7 @@ const TimeLineEvent = ({ padding }) => {
               </div>
             </ButtonBox>
 
-            {(locationType === "virtual" || locationType === "hybrid") && (
+            {(locationType === "Virtual" || locationType === "Hybrid") && (
               <EventLink visibility="visible">
                 <InputText style={{ marginBottom: "0rem" }}>
                   Virtual Link
@@ -297,7 +303,7 @@ const TimeLineEvent = ({ padding }) => {
                 onLoad={(ref) => (inputRef.current = ref)}
                 onPlacesChanged={handlePlaceChanged}
               > */}
-            {locationType === "physical" || locationType === "hybrid" ? (
+            {locationType === "Physical" || locationType === "Hybrid" ? (
               <EventPhysical visibility="visible">
                 <InputText style={{ marginBottom: "0rem" }}>
                   Venue address

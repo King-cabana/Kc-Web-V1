@@ -3,5 +3,6 @@ body.active-modal {
 }
 
 div.notShown {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
 }

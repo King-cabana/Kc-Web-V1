@@ -53,8 +53,8 @@ const EventHome = () => {
   const navigate = useNavigate();
   const userEmail = user.details.email;
 
-console.log(user);
-console.log(user.details.email);
+  // console.log(user);
+  // console.log(user.details.email);
 
   useEffect(() => {
     let data = null;
@@ -96,9 +96,6 @@ console.log(user.details.email);
   }, [state?.id, userEmail]);
   // console.log(userEmail);
 
-  const navitgateToEditOrganiserProfile = () => {
-    navigate("/organiserProfile/home/edit");
-  };
   const toggleModal = () => {
     setModal(!modal);
   };
@@ -109,11 +106,33 @@ console.log(user.details.email);
   }
   const showModal = !modal && "notShown";
 
+  useEffect(() => {
+    if (
+      state?.organizerName &&
+      state?.profileEmail &&
+      state?.phoneNumber &&
+      state?.address?.state &&
+      state?.address?.country &&
+      state?.organizerDetails
+    ) {
+      setModal(false);
+    } else {
+      setModal(true);
+    }
+  }, [
+    state?.organizerName,
+    state?.profileEmail,
+    state?.phoneNumber,
+    state?.address.state,
+    state?.address.country,
+    state?.organizerDetails,
+  ]);
+
   return (
     <EventOrganizerContext.Provider
       value={{ state, axios, user, API_URL_2, navigate, userEmail }}
     >
-      {modal && <PopUpOverlay onClick={toggleModal}></PopUpOverlay>}
+      {modal && <PopUpOverlay />}
       <OverallContainer>
         <HeaderContainer>
           <WelcomeCenter>
@@ -141,12 +160,44 @@ console.log(user.details.email);
 
         <WelcomeContainer>
           <EditPen>
-            <TbEdit
-              size="1.5rem"
-              onClick={navitgateToEditOrganiserProfile}
-              style={{ cursor: "pointer" }}
-            />
+            <JointContainer>
+              <div className={`${showModal}`}>
+                <PopUpComponent>
+                  <img src={click} alt="" onClick={toggleModal} />
+                  <p>
+                    Optimize your profile now for effective engagements on King
+                    Cabana
+                  </p>
+                  <PrimaryButton
+                    onClick={() =>
+                      navigate("/dashboard/edit-organiser-profile")
+                    }
+                    style={{
+                      width: "93px",
+                      height: "30px",
+                      fontSize: "10px",
+                    }}
+                  >
+                    Okay, got it.
+                  </PrimaryButton>
+                </PopUpComponent>
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  backgroundColor: "#fff",
+                }}
+              >
+                <TbEdit
+                  size="1.7rem"
+                  onClick={() => navigate("/dashboard/edit-organiser-profile")}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            </JointContainer>
           </EditPen>
+
           <BioSection>
             <Bio>
               <Name>{state?.organizerName ? state?.organizerName : ""}</Name>
@@ -161,39 +212,22 @@ console.log(user.details.email);
 
             <ButtonsContainer>
               <Wrap>
-                <ButtonLink to="/createevent/eventdetails/1">
+                <ButtonLink to="/createEvent/eventDetails">
                   <PrimaryButton>Create event</PrimaryButton>
                 </ButtonLink>
               </Wrap>
-              <JointContainer>
-                <ButtonLink to="/event/create">
-                  <CustomAlt
-                    style={{
-                      color: "#FF2957",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Add event history
-                  </CustomAlt>
-                </ButtonLink>
-
-                <div className={`${showModal}`}>
-                  <PopUpComponent>
-                    <img src={click} alt="" onClick={toggleModal} />
-                    <p>Add your previously held event to event history</p>
-                    <PrimaryButton
-                      onClick={toggleModal}
-                      style={{
-                        width: "93px",
-                        height: "30px",
-                        fontSize: "10px",
-                      }}
-                    >
-                      Okay, got it
-                    </PrimaryButton>
-                  </PopUpComponent>
-                </div>
-              </JointContainer>
+              {/* <JointContainer> */}
+              <ButtonLink to="/event/create">
+                <CustomAlt
+                  style={{
+                    color: "#FF2957",
+                    fontWeight: "600",
+                  }}
+                  disabled
+                >
+                  Add event history
+                </CustomAlt>
+              </ButtonLink>
             </ButtonsContainer>
           </BioSection>
 
