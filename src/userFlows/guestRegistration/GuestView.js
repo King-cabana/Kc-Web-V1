@@ -90,7 +90,7 @@ const GuestView = () => {
               <Container>
                 Event Organizer: {event?.fullName ? event?.fullName : ""}
               </Container>
-              <IconsContainer>
+              {/* <IconsContainer>
                 <Like marginRight="1rem" onClick={() => setLike(!like)}>
                   <FcLike display={like === true ? "flex" : "none"} />
                   <AiOutlineHeart display={like === false ? "flex" : "none"} />
@@ -98,7 +98,7 @@ const GuestView = () => {
                 <Like>
                   <BsUpload cursor="pointer" />
                 </Like>
-              </IconsContainer>
+              </IconsContainer> */}
             </BudgetTitle2>
             <HR />
 

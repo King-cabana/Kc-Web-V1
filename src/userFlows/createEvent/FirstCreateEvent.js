@@ -117,20 +117,20 @@ const FirstCreateEvent = ({ padding }) => {
   }, []);
   useEffect(() => {
     if (
-      state.eventName &&
-      state.eventTheme &&
-      state.estimatedAttendance &&
-      state.eventDescription
+      state?.eventName &&
+      state?.eventTheme &&
+      state?.estimatedAttendance &&
+      state?.eventDescription
     ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   }, [
-    state.eventName,
-    state.eventTheme,
-    state.estimatedAttendance,
-    state.eventDescription,
+    state?.eventName,
+    state?.eventTheme,
+    state?.estimatedAttendance,
+    state?.eventDescription,
   ]);
   useEffect(() => {
     // console.log(state);
@@ -351,10 +351,7 @@ const FirstCreateEvent = ({ padding }) => {
 
         {location.pathname === "/createEvent/eventPlanPreview" ? null : (
           <ButtonContainer style={{ margin: "0rem" }}>
-            <AbsolutePrimaryButton
-              onClick={handleSubmit}
-              // disabled={isDisabled}
-            >
+            <AbsolutePrimaryButton onClick={handleSubmit} disabled={isDisabled}>
               Save & Continue
             </AbsolutePrimaryButton>
           </ButtonContainer>
