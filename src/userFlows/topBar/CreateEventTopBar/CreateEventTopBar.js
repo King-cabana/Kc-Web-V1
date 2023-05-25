@@ -30,7 +30,7 @@ const CreateEventTopBar = () => {
   }, [dispatch, email, token]);
 
   const userDetails = useSelector((state) => state.userDetails);
-  console.log(userDetails.details);
+  // console.log(userDetails.details);
 
   useEffect(() => {
     if (
@@ -54,8 +54,8 @@ const CreateEventTopBar = () => {
       </CETopBarLogo>
       <PPAndArrowHolder>
         <ProfilePicture>
-          {userInitials ? (
-            <img src={userDetails.details.profilePicture} alt={userInitials} />
+          {userDetails.details.profilePicture ? (
+            <img src={userDetails.details.profilePicture} alt="" />
           ) : (
             <span>{userInitials}</span>
           )}
