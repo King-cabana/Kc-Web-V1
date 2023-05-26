@@ -90,7 +90,7 @@ const EventPlanPreview = () => {
       // console.log(data);
       dispatch(setEventCreated(data));
       navigate("/createEvent/submitted");
-      toast.success("You have created event Successfully");
+      // toast.success("You have created event Successfully");
       dispatch(clearEvent());
       localStorage.removeItem("banner");
       // localStorage.removeItem("budget");
