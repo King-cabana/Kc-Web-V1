@@ -4,7 +4,7 @@ import EventPlanning from "../eventPlanning/EventPlanning";
 import EmptyEvent from "../emptyEvent/EmptyEvent";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { API_URL_2 } from "../../redux/service/authService";
+import { API_URL_2 } from "../../redux/services/authService";
 import LoadingScreen from "../../LoadingScreen";
 
 const Event = () => {

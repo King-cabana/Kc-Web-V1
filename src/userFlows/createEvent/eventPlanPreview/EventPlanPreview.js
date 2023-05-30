@@ -77,7 +77,7 @@ const EventPlanPreview = () => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-    console.log(state);
+    // console.log(state);
     try {
       setSending(true);
       setIsDisabled(true);
@@ -87,10 +87,10 @@ const EventPlanPreview = () => {
           Authorization: `Bearer ${user?.token}`,
         },
       });
-      console.log(data);
+      // console.log(data);
       dispatch(setEventCreated(data));
       navigate("/createEvent/submitted");
-      toast.success("You have created event Successfully");
+      // toast.success("You have created event Successfully");
       dispatch(clearEvent());
       localStorage.removeItem("banner");
       // localStorage.removeItem("budget");

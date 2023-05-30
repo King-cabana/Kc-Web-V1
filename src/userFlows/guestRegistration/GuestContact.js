@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   GCBody,
   GCFormPart,
-  GCPicPart,
-  GuestContactBg,
   TagHolder,
+  GuestContactBg,
+  TagDisplay,
 } from "./GuestContactStyled";
 import { Form, InputFieldWrapper } from "../../globalStyles";
 import TopBar from "../../components/topBar/TopBar";
@@ -20,15 +20,19 @@ import axios from "axios";
 import { guestRegister } from "../../redux/services/GuestContactRegister";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
+import { decryptId } from "../../utils";
 
 const GuestContact = () => {
   const [event, setEvent] = useState();
   const [sending, setSending] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const { id } = useParams();
+  // console.log(id);
+  const decryptedId = decryptId(id);
+  // console.log(decryptedId);
 
   const [inputs, setInput] = useState({
-    eventId: id,
+    eventId: decryptedId,
     firstName: "",
     lastName: "",
     email: "",
@@ -44,9 +48,9 @@ const GuestContact = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const token = localStorage.getItem("userToken");
+      // const token = localStorage.getItem("userToken");
       try {
-        const { data } = await axios.get(API_URL_2 + `events/${id}`);
+        const { data } = await axios.get(API_URL_2 + `events/${decryptedId}`);
         setEvent(data);
       } catch (error) {
         if (error?.response?.status === 400) {
@@ -57,7 +61,7 @@ const GuestContact = () => {
     };
     fetchEvent();
     return () => {};
-  }, [event?.id]);
+  }, [decryptedId]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -66,7 +70,7 @@ const GuestContact = () => {
     try {
       await guestRegister(inputs);
       navigate("/guestRegistration/contactInformation/registered");
-      toast.success("You have successfully registered for this event");
+      // toast.success("You have successfully registered for this event");
     } catch (error) {
       error?.response
         ? toast.error(error?.response?.data?.message)
@@ -89,15 +93,27 @@ const GuestContact = () => {
       <GuestContactBg>
         <GCBody>
           <GCFormPart>
-            <p style={{ fontSize: "22px", fontWeight: "bold" }}>
+            <p
+              style={{
+                fontSize: "22px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
               Guest Contact Information
             </p>
-            <p style={{ fontSize: "12px" }}>
+            <p style={{ fontSize: "13px", textAlign: "center" }}>
               Please provide contact information for a more enjoyable
               experience.
             </p>
             <Form style={{ marginTop: "5%" }} onSubmit={handleRegister}>
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label
+                style={{
+                  marginBottom: "2%",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                }}
+              >
                 First Name
               </label>
               <InputFieldWrapper>
@@ -108,7 +124,13 @@ const GuestContact = () => {
                 />
               </InputFieldWrapper>
 
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label
+                style={{
+                  marginBottom: "2%",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                }}
+              >
                 Last Name
               </label>
               <InputFieldWrapper>
@@ -119,7 +141,13 @@ const GuestContact = () => {
                 />
               </InputFieldWrapper>
 
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label
+                style={{
+                  marginBottom: "2%",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                }}
+              >
                 E-mail
               </label>
               <InputFieldWrapper>
@@ -130,7 +158,13 @@ const GuestContact = () => {
                 />
               </InputFieldWrapper>
 
-              <label style={{ marginBottom: "2%", fontSize: "14px" }}>
+              <label
+                style={{
+                  marginBottom: "2%",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                }}
+              >
                 Confirm E-mail
               </label>
               <InputFieldWrapper>
@@ -142,15 +176,19 @@ const GuestContact = () => {
               </InputFieldWrapper>
             </Form>
           </GCFormPart>
-          <GCPicPart />
-        </GCBody>
 
-        <TagHolder>
-          <BudgetTitle2>Tags</BudgetTitle2>
-          <Tags style={{ padding: "1% 0%" }}>
-            {event?.tags ? eventTags : "---"}
-          </Tags>
-        </TagHolder>
+          <TagHolder>
+            <BudgetTitle2 style={{ marginBottom: "2%" }}>
+              Event Tags
+            </BudgetTitle2>
+            <TagDisplay>
+              <Tags style={{ padding: "1% 0%" }}>
+                {event?.tags ? eventTags : "---"}
+              </Tags>
+            </TagDisplay>
+          </TagHolder>
+          {/* <GCPicPart /> */}
+        </GCBody>
       </GuestContactBg>
 
       <ButtonContainer style={{ margin: "0rem" }}>

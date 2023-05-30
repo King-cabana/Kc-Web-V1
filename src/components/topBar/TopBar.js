@@ -25,9 +25,9 @@ const TopBar = ({ marginBottom }) => {
               fontWeight: "600",
               marginRight: "1rem",
             }}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/signin")}
           >
-            Login
+            Sign In
           </AlternativeButton2>
           <AbsolutePrimaryButton onClick={() => navigate("/signUp")}>
             Sign Up

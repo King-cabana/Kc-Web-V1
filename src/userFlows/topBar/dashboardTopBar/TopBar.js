@@ -65,12 +65,10 @@ const TopBar = () => {
     document.getElementById("myDropdown").classList.toggle("show");
   }
 
- 
   const handleLogout = () => {
-  
     const googleLogout = () => {
       // Manually trigger Google logout process using Google API
-      const auth2 = window.gapi.auth2.getAuthInstance();
+      const auth2 = window?.gapi?.auth2.getAuthInstance();
       if (auth2) {
         auth2.signOut().then(() => {
           dispatch(clearUserDetails());
@@ -79,11 +77,10 @@ const TopBar = () => {
         });
       }
     };
-  
+
     // Call the Google logout function
     googleLogout();
   };
-  
 
   window.onclick = function (event) {
     if (!event.target.matches(".dropbtn")) {

@@ -59,6 +59,7 @@ const TimeLineEvent = ({ padding }) => {
   // const [locationType, setLocationType] = useState("");
   const state = useSelector((state) => state.createEvent);
   const [locationType, setLocationType] = useState(state?.eventLocation);
+  const [isDisabled, setIsDisabled] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -107,8 +108,20 @@ const TimeLineEvent = ({ padding }) => {
   };
   const navigateNext = () => {
     navigate("/createEvent/eventPlanPreview");
-    console.log(state);
+    // console.log(state);
   };
+
+  useEffect(() => {
+    if (
+      state?.eventLocation &&
+      state?.eventStartTime &&
+      state?.eventStartDate
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [state?.eventLocation, state?.eventStartTime, state?.eventStartDate]);
 
   return (
     <>
@@ -235,34 +248,34 @@ const TimeLineEvent = ({ padding }) => {
               </InputText>
             </div>
             <ButtonBox>
-              <div onClick={() => setLocationType("Virtual")}>
+              <div onClick={() => setLocationType("virtual")}>
                 <ButtonOutline
-                  bgcolor={locationType === "Virtual" ? "#0068FF" : undefined}
-                  color={locationType === "Virtual" ? "white" : undefined}
+                  bgcolor={locationType === "virtual" ? "#0068FF" : undefined}
+                  color={locationType === "virtual" ? "white" : undefined}
                   name="eventLocation"
-                  value="Virtual"
+                  value="virtual"
                   onClick={change}
                 >
                   Virtual
                 </ButtonOutline>
               </div>
-              <div onClick={() => setLocationType("Physical")}>
+              <div onClick={() => setLocationType("physical")}>
                 <ButtonOutline
-                  bgcolor={locationType === "Physical" ? "#0068FF" : undefined}
-                  color={locationType === "Physical" ? "white" : undefined}
+                  bgcolor={locationType === "physical" ? "#0068FF" : undefined}
+                  color={locationType === "physical" ? "white" : undefined}
                   name="eventLocation"
-                  value="Physical"
+                  value="physical"
                   onClick={change}
                 >
                   Physical
                 </ButtonOutline>
               </div>
-              <div onClick={() => setLocationType("Hybrid")}>
+              <div onClick={() => setLocationType("hybrid")}>
                 <ButtonOutline
-                  bgcolor={locationType === "Hybrid" ? "#0068FF" : undefined}
-                  color={locationType === "Hybrid" ? "white" : undefined}
+                  bgcolor={locationType === "hybrid" ? "#0068FF" : undefined}
+                  color={locationType === "hybrid" ? "white" : undefined}
                   name="eventLocation"
-                  value="Hybrid"
+                  value="hybrid"
                   onClick={change}
                 >
                   Hybrid
@@ -270,7 +283,7 @@ const TimeLineEvent = ({ padding }) => {
               </div>
             </ButtonBox>
 
-            {(locationType === "Virtual" || locationType === "Hybrid") && (
+            {(locationType === "virtual" || locationType === "hybrid") && (
               <EventLink visibility="visible">
                 <InputText style={{ marginBottom: "0rem" }}>
                   Virtual Link
@@ -303,7 +316,7 @@ const TimeLineEvent = ({ padding }) => {
                 onLoad={(ref) => (inputRef.current = ref)}
                 onPlacesChanged={handlePlaceChanged}
               > */}
-            {locationType === "Physical" || locationType === "Hybrid" ? (
+            {locationType === "physical" || locationType === "hybrid" ? (
               <EventPhysical visibility="visible">
                 <InputText style={{ marginBottom: "0rem" }}>
                   Venue address
@@ -339,7 +352,7 @@ const TimeLineEvent = ({ padding }) => {
             >
               Back
             </AlternativeButton2>
-            <AbsolutePrimaryButton onClick={navigateNext}>
+            <AbsolutePrimaryButton onClick={navigateNext} disabled={isDisabled}>
               Save & Continue
             </AbsolutePrimaryButton>
           </ButtonContainer>

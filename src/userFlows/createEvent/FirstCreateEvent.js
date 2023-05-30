@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { ButtonContainer, Label } from "./DefineAudienceStyled";
 import {
   AbsolutePrimaryButton,
@@ -48,12 +48,40 @@ const FirstCreateEvent = ({ padding }) => {
   const location = useLocation();
   const state = useSelector((state) => state.createEvent);
 
+  const profileEmail = localStorage.getItem("profileEmail");
   const userEmail = localStorage.getItem("email");
-  // console.log(userEmail)
-  dispatch(editGenerally({ name: "keyContactEmail", value: userEmail }));
+  // console.log(userEmail);
+  // console.log(profileEmail);
+  dispatch(editGenerally({ name: "keyContactEmail", value: email }));
+
+  useEffect(() => {
+    if (profileEmail) {
+      setEmail(profileEmail);
+    } else {
+      setEmail(userEmail);
+    }
+    // console.log(email);
+  }, [profileEmail, userEmail]);
 
   const change = (e) => {
     dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
+  };
+  const handlePaste = (e) => {
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData("text");
+    if (
+      pastedText.includes("-") ||
+      pastedText.includes("+") ||
+      pastedText.includes("e") ||
+      pastedText.includes(".")
+    ) {
+      e.preventDefault();
+    }
+  };
+  const preventNegativeValues = (e) => {
+    if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === ".") {
+      e.preventDefault();
+    }
   };
 
   const handleFileChange = async (e) => {
@@ -106,20 +134,20 @@ const FirstCreateEvent = ({ padding }) => {
   }, []);
   useEffect(() => {
     if (
-      state.eventName &&
-      state.eventTheme &&
-      state.estimatedAttendance &&
-      state.eventDescription
+      state?.eventName &&
+      state?.eventTheme &&
+      state?.estimatedAttendance &&
+      state?.eventDescription
     ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   }, [
-    state.eventName,
-    state.eventTheme,
-    state.estimatedAttendance,
-    state.eventDescription,
+    state?.eventName,
+    state?.eventTheme,
+    state?.estimatedAttendance,
+    state?.eventDescription,
   ]);
   useEffect(() => {
     // console.log(state);
@@ -141,7 +169,7 @@ const FirstCreateEvent = ({ padding }) => {
   const handleSubmit = async function (e) {
     e.preventDefault();
     navigate("/createEvent/tagsTimelines");
-    console.log(state);
+    // console.log(state);
   };
 
   return (
@@ -187,6 +215,7 @@ const FirstCreateEvent = ({ padding }) => {
                     onChange={handleFileChange}
                     name="eventBannerUrl"
                     defaultValue={file}
+                    accept="image/png, image/jpeg, image/jpg"
                     // defaultValue={state?.eventBannerUrl}
                   />
                 </CustomWrapper>
@@ -196,7 +225,7 @@ const FirstCreateEvent = ({ padding }) => {
               {isSuccess ? null : (
                 <>
                   <Supported>
-                    Support files; JPG, PNG, JPEG, DOCX, PDF, CSV
+                    Support files; JPG, PNG, JPEG, *IMG files
                   </Supported>
                   <Supported
                     style={{
@@ -311,6 +340,9 @@ const FirstCreateEvent = ({ padding }) => {
                 name="estimatedAttendance"
                 onChange={change}
                 defaultValue={state?.estimatedAttendance}
+                min="1"
+                onKeyDown={preventNegativeValues}
+                onPaste={handlePaste}
               />
             </EventSubSection>
             {/* input section  */}
@@ -340,10 +372,7 @@ const FirstCreateEvent = ({ padding }) => {
 
         {location.pathname === "/createEvent/eventPlanPreview" ? null : (
           <ButtonContainer style={{ margin: "0rem" }}>
-            <AbsolutePrimaryButton
-              onClick={handleSubmit}
-              // disabled={isDisabled}
-            >
+            <AbsolutePrimaryButton onClick={handleSubmit} disabled={isDisabled}>
               Save & Continue
             </AbsolutePrimaryButton>
           </ButtonContainer>

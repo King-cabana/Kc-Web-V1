@@ -16,11 +16,15 @@ import Sidebar from "./userFlows/Dashboard/Sidebar";
 import DashboardHome from "./userFlows/pages/DashboardHome";
 import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
+import Event from "./userFlows/pages/Event";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
 );
 const GuestView = lazy(() => import("./userFlows/guestRegistration/GuestView"));
+const ViewCompletedEvent = lazy(() =>
+  import("./userFlows/eventPlanning/ViewCompletedEvent")
+);
 const Events = lazy(() => import("./pages/events/Events"));
 const Sponsor = lazy(() => import("./pages/sponsor/Sponsor"));
 const Vendor = lazy(() => import("./pages/vendor/Vendor"));
@@ -69,6 +73,10 @@ function App() {
           <Route path="/guestRegistration/" element={<GuestView />} />
           <Route path="/guestRegistration/:id" element={<GuestView />} />
           <Route
+            path="/event/planning/view-completed-event/:id"
+            element={<ViewCompletedEvent />}
+          />
+          <Route
             path="/guestRegistration/contactInformation/:id"
             element={<GuestContact />}
           />
@@ -93,12 +101,20 @@ function App() {
             path="/dashboard/edit-organiser-profile"
             element={<EditOrganiserProfile />}
           />
-
+          {/* SIDEBAR */}
           <Route
             path="/dashboard"
             element={
               <Sidebar>
                 <DashboardHome />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/event/planning"
+            element={
+              <Sidebar>
+                <Event />
               </Sidebar>
             }
           />

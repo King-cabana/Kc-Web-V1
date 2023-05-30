@@ -11,9 +11,7 @@ import {
 } from "./GuestRegistrationStyled";
 import { useNavigate, useParams } from "react-router";
 import banner from "../../../src/assets/images/bgBanner.jpg";
-import { AiTwotoneCalendar, AiOutlineHeart } from "react-icons/ai";
-import { FcLike } from "react-icons/fc";
-import { BsUpload } from "react-icons/bs";
+import { AiTwotoneCalendar } from "react-icons/ai";
 import {
   BackgroundPicture,
   ImagesContainer,
@@ -31,12 +29,17 @@ import { API_URL_2 } from "../../redux/services/authService";
 import { ImLocation, ImLink } from "react-icons/im";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../LoadingScreen";
+import { decryptId, encryptId, formatDate, formatTime } from "../../utils";
 
 const GuestView = () => {
   const [event, setEvent] = useState();
   const { id } = useParams();
+  // console.log(id);
+  const decryptedId = decryptId(id);
+  const encryptedId = encryptId(decryptedId);
+  // console.log(decryptedId);
   const navigate = useNavigate();
-  const [like, setLike] = useState(false);
+  // const [like, setLike] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const eventTags = event?.tags.map((tag) => <ul key={tag}>{tag}</ul>);
@@ -44,7 +47,7 @@ const GuestView = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const { data } = await axios.get(API_URL_2 + `events/${id}`);
+        const { data } = await axios.get(API_URL_2 + `events/${decryptedId}`);
         setEvent(data);
       } catch (error) {
         if (error?.response?.status === 400) {
@@ -58,7 +61,7 @@ const GuestView = () => {
       }
     };
     fetchEvent();
-  }, [event?.id]);
+  }, [decryptedId]);
 
   return (
     <>
@@ -90,7 +93,7 @@ const GuestView = () => {
               <Container>
                 Event Organizer: {event?.fullName ? event?.fullName : ""}
               </Container>
-              <IconsContainer>
+              {/* <IconsContainer>
                 <Like marginRight="1rem" onClick={() => setLike(!like)}>
                   <FcLike display={like === true ? "flex" : "none"} />
                   <AiOutlineHeart display={like === false ? "flex" : "none"} />
@@ -98,7 +101,7 @@ const GuestView = () => {
                 <Like>
                   <BsUpload cursor="pointer" />
                 </Like>
-              </IconsContainer>
+              </IconsContainer> */}
             </BudgetTitle2>
             <HR />
 
@@ -120,8 +123,8 @@ const GuestView = () => {
                   <BudgetTitle2>Date and Time</BudgetTitle2>
                 </Wrapper>
                 <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-                  (yyyy-mm-dd, 24hours format) <br />
-                  {event?.eventStartDate} --- {event?.eventStartTime}
+                  {formatDate(event?.eventStartDate) + ". "}
+                  {formatTime(event?.eventStartTime)}
                 </BudgetInventorySubtitle>
               </>
             ) : null}
@@ -162,7 +165,7 @@ const GuestView = () => {
           <ButtonContainer style={{ margin: "0rem" }}>
             <AbsolutePrimaryButton
               onClick={() =>
-                navigate(`/guestRegistration/contactInformation/${id}`)
+                navigate(`/guestRegistration/contactInformation/${encryptedId}`)
               }
             >
               Register
