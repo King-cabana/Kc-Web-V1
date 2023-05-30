@@ -20,7 +20,7 @@ import axios from "axios";
 import { guestRegister } from "../../redux/services/GuestContactRegister";
 import { toast } from "react-toastify";
 import { ImSpinner6 } from "react-icons/im";
-import { decryptId } from "../createEvent/utils";
+import { decryptId } from "../../utils";
 
 const GuestContact = () => {
   const [event, setEvent] = useState();
@@ -178,7 +178,9 @@ const GuestContact = () => {
           </GCFormPart>
 
           <TagHolder>
-            <BudgetTitle2>Event Tags</BudgetTitle2>
+            <BudgetTitle2 style={{ marginBottom: "2%" }}>
+              Event Tags
+            </BudgetTitle2>
             <TagDisplay>
               <Tags style={{ padding: "1% 0%" }}>
                 {event?.tags ? eventTags : "---"}

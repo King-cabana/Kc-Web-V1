@@ -44,7 +44,7 @@ export const Tags = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  padding : 18%;
+  padding: 18%;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -69,7 +69,6 @@ export const Tags = styled.div`
     border-radius: 15px;
   }
 
-  
   @media screen and (max-width: 480px) {
     width: fit-content;
     font-size: 12px;

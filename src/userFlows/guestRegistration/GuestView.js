@@ -29,7 +29,7 @@ import { API_URL_2 } from "../../redux/services/authService";
 import { ImLocation, ImLink } from "react-icons/im";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../LoadingScreen";
-import { decryptId, encryptId } from "../createEvent/utils";
+import { decryptId, encryptId, formatDate, formatTime } from "../../utils";
 
 const GuestView = () => {
   const [event, setEvent] = useState();
@@ -123,8 +123,8 @@ const GuestView = () => {
                   <BudgetTitle2>Date and Time</BudgetTitle2>
                 </Wrapper>
                 <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-                  (yyyy-mm-dd, 24hours format) <br />
-                  {event?.eventStartDate} --- {event?.eventStartTime}
+                  {formatDate(event?.eventStartDate) + ". "}
+                  {formatTime(event?.eventStartTime)}
                 </BudgetInventorySubtitle>
               </>
             ) : null}

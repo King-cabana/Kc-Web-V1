@@ -56,7 +56,6 @@ export const BudgetTitle2 = styled.h1`
   font-weight: 600;
   font-size: 18px;
   line-height: 32px;
-  margin-bottom: 2%;
   color: #484848;
 
   @media screen and (max-width: 960px) {
@@ -72,7 +71,7 @@ export const BudgetInventorySubtitle = styled.p`
   font-size: 16px;
   line-height: 24px;
   color: #484848;
-  margin-top: 8px;
+  margin-top: 5px;
 
   @media screen and (max-width: 960px) {
     font-size: 12px;

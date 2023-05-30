@@ -1,6 +1,6 @@
 import React from "react";
 import Lottie from "lottie-react";
-import animationData from "../../lotties/lf20_uqlolnxx-shaking-calendar.json";
+import animationData from "../../assets/lotties/lf20_uqlolnxx-shaking-calendar.json";
 import {
   NoEventContainer,
   WelcomeHeader,

@@ -15,7 +15,7 @@ import animationData from "../../assets/lotties/102001-success-icon.json";
 import { AnimationContainer } from "../../globalStyles";
 import { useNavigate } from "react-router";
 import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
-import { encryptId, decryptId } from "./utils";
+import { encryptId, decryptId } from "../../utils";
 // import TopBar from "../../components/createEventTopBar/TopBar";
 
 const Submitted = () => {
@@ -24,8 +24,8 @@ const Submitted = () => {
   const event = useSelector((state) => state.eventCreated);
   const encryptedId = encryptId(event?.id);
   const decryptedId = decryptId(encryptedId);
-  console.log(encryptedId);
-  console.log(decryptedId);
+  // console.log(encryptedId);
+  // console.log(decryptedId);
 
   const shareDetails = {
     title: event?.eventName,
