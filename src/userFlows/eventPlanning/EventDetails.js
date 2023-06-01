@@ -14,25 +14,26 @@ import {
   LoadingSection,
 } from "./EventPlanningStyled";
 import { SlOptionsVertical } from "react-icons/sl";
-import { formatDate, formatTime } from "../../utils";
+import { encryptId, formatDate, formatTime } from "../../utils";
 
 const EventDetails = () => {
   const navigate = useNavigate();
 
-  const navigateViewEvent = (data) => {
-    // if (data?.status === "Draft") {
-    //   navigate(`/event/planning/view-draft-event/${data?.id}`);
-    // } else if (data?.status === "Completed") {
-    //   navigate(`/event/planning/view-completed-event/${data?.id}`);
-    // } else {
-    //   navigate(`/event/planning/view-draft-event/${data?.id}`);
-    // }
-    navigate(`/event/planning/view-completed-event/${data?.id}`);
-  };
+  // const navigateViewEvent = (data) => {
+  //   // if (data?.status === "Draft") {
+  //   //   navigate(`/event/planning/view-draft-event/${data?.id}`);
+  //   // } else if (data?.status === "Completed") {
+  //   //   navigate(`/event/planning/view-completed-event/${data?.id}`);
+  //   // } else {
+  //   //   navigate(`/event/planning/view-draft-event/${data?.id}`);
+  //   // }
+  //   navigate(`/event/planning/view-completed-event/${data?.id}`);
+  // };
 
   const handleViewButtonClick = (event, data) => {
     event.stopPropagation();
-    navigateViewEvent(data);
+    const encryptedId = encryptId(data?.id);
+    navigate(`/event/planning/view-completed-event/${encryptedId}`);
   };
 
   const { active, handleApiClick, loading } = useContext(EventContext);

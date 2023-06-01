@@ -9,26 +9,27 @@ import {
   AbsolutePrimaryButton,
   AlternativeButton2,
 } from "../../components/buttons/button";
-import { formatDate, formatTime } from "../../utils";
+import { encryptId, formatDate, formatTime } from "../../utils";
 
 const EventDetailsSidebar = () => {
   const navigate = useNavigate();
   const { selectedEvent, shareDetails } = useContext(EventContext);
 
-  const navigateViewEvent = (selectedEvent) => {
-    // if (selectedEvent?.status === "Draft") {
-    //   navigate(`/event/planning/view-draft-event/${selectedEvent?.id}`);
-    // } else if (selectedEvent?.status === "Completed") {
-    //   navigate(`/event/planning/view-completed-event/${selectedEvent?.id}`);
-    // } else {
-    //   navigate(`/event/planning/view-draft-event/${selectedEvent?.id}`);
-    // }
-    navigate(`/event/planning/view-completed-event/${selectedEvent?.id}`);
-  };
+  // const navigateViewEvent = (selectedEvent) => {
+  //   // if (selectedEvent?.status === "Draft") {
+  //   //   navigate(`/event/planning/view-draft-event/${selectedEvent?.id}`);
+  //   // } else if (selectedEvent?.status === "Completed") {
+  //   //   navigate(`/event/planning/view-completed-event/${selectedEvent?.id}`);
+  //   // } else {
+  //   //   navigate(`/event/planning/view-draft-event/${selectedEvent?.id}`);
+  //   // }
+  //   navigate(`/event/planning/view-completed-event/${selectedEvent?.id}`);
+  // };
 
   const handleViewButtonClick = (event, selectedEvent) => {
     event.stopPropagation();
-    navigateViewEvent(selectedEvent);
+    const encryptedId = encryptId(selectedEvent?.id);
+    navigate(`/event/planning/view-completed-event/${encryptedId}`);
   };
 
   return (

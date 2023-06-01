@@ -36,7 +36,7 @@ import TopBar from "../topBar/dashboardTopBar/TopBar";
 import { Txt, WelcomeHeader } from "../emptyEvent/EmptyEventStyled";
 import { EditEventSpan, SECTION } from "./EventPlanningStyled";
 import LoadingScreen from "../../LoadingScreen";
-import { encryptId, formatDate, formatTime } from "../../utils";
+import { encryptId, decryptId, formatDate, formatTime } from "../../utils";
 
 const ViewEvent = () => {
   const [event, setEvent] = useState();
@@ -46,6 +46,8 @@ const ViewEvent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const encryptedId = encryptId(event?.id);
+  const decryptedId = decryptId(id);
+  // console.log(decryptedId);
   const shareDetails = {
     title: event?.eventName,
     url: `/guestRegistration/${encryptedId}`,
@@ -57,11 +59,11 @@ const ViewEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const { data } = await axios.get(API_URL_2 + `events/${id}`);
+        const { data } = await axios.get(API_URL_2 + `events/${decryptedId}`);
         setEvent(data);
 
         const response2 = await axios.get(
-          API_URL_2 + `attendee/event/size?id=${id}`
+          API_URL_2 + `attendee/event/size?id=${decryptedId}`
         );
         // console.log(response2.data);
         setAttendees(response2.data);
@@ -77,7 +79,7 @@ const ViewEvent = () => {
       }
     };
     fetchEvent();
-  }, [event?.id]);
+  }, [decryptedId]);
 
   return (
     <>
@@ -104,17 +106,17 @@ const ViewEvent = () => {
             <EditEventSpan>Edit Event</EditEventSpan>
           </BudgetInventorySubtitle>
         ) : null} */}
-          {location.pathname ===
-          `/event/planning/view-completed-event/${id}` ? (
-            <Container
-              style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}
-            >
-              {/* <BudgetInventorySubtitle style={{ color: "#0068FF" }}>
+          {/* {location.pathname ===
+          `/event/planning/view-completed-event/${id}` ? ( */}
+          <Container
+            style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}
+          >
+            {/* <BudgetInventorySubtitle style={{ color: "#0068FF" }}>
                 Completed Event
               </BudgetInventorySubtitle> */}
-              <AlternativeButton2>Generate Proposal</AlternativeButton2>
-            </Container>
-          ) : null}
+            <AlternativeButton2>Generate Proposal</AlternativeButton2>
+          </Container>
+          {/* ) : null} */}
 
           <ImagesContainer>
             <BackgroundPicture
@@ -144,16 +146,16 @@ const ViewEvent = () => {
                 <Like marginRight="1rem">
                   <AiOutlineEdit />
                 </Like>
-                {location.pathname ===
-                `/event/planning/view-completed-event/${id}` ? (
-                  <Like marginRight="1rem">
-                    <BsUpload
-                      onClick={() => {
-                        window.navigator.share(shareDetails);
-                      }}
-                    />
-                  </Like>
-                ) : null}
+                {/* {location.pathname ===
+                `/event/planning/view-completed-event/${id}` ? ( */}
+                <Like marginRight="1rem">
+                  <BsUpload
+                    onClick={() => {
+                      window.navigator.share(shareDetails);
+                    }}
+                  />
+                </Like>
+                {/* ) : null} */}
                 <Like>
                   <RiDeleteBin5Line />
                 </Like>
@@ -170,15 +172,15 @@ const ViewEvent = () => {
                     : "---"}
                 </BudgetInventorySubtitle>
               </div>
-              {location.pathname ===
-                `/event/planning/view-completed-event/${id}` && (
-                <div>
-                  <BudgetTitle2>Number of Registered Guests</BudgetTitle2>
-                  <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-                    {attendees}
-                  </BudgetInventorySubtitle>
-                </div>
-              )}
+              {/* {location.pathname ===
+                `/event/planning/view-completed-event/${id}` && ( */}
+              <div>
+                <BudgetTitle2>Number of Registered Guests</BudgetTitle2>
+                <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
+                  {attendees}
+                </BudgetInventorySubtitle>
+              </div>
+              {/* )} */}
             </SECTION>
 
             <Wrapper>
