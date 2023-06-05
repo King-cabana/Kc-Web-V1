@@ -222,10 +222,10 @@ export const SECTION = styled.section`
   display: flex;
   justify-content: space-between;
   margin-top: 0.8rem;
-  width: 80%;
+  /* width: 60%; */
   /* align-items: center; */
 
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: 768px) {
     flex-direction: column;
   }
 `;
@@ -234,4 +234,41 @@ export const LoadingSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Partition = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0rem 1.5rem;
+  position: relative;
+`;
+
+export const Partition1 = styled.div`
+  width: 60%;
+
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
+`;
+
+export const Partition2 = styled.div`
+  border-left: 2px solid #d2cedc;
+  width: 40%;
+  padding: 0.5rem 0rem 0.5rem 1rem;
+  position: sticky;
+  margin-top: 1rem;
+  top: 80px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const Display = styled.div`
+  display: none;
+
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
 `;

@@ -14,7 +14,7 @@ import {
   LoadingSection,
 } from "./EventPlanningStyled";
 import { SlOptionsVertical } from "react-icons/sl";
-import { encryptId, formatDate, formatTime } from "../../utils";
+import { encryptId, formatDate, formatTime, getEventStatus } from "../../utils";
 
 const EventDetails = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const EventDetails = () => {
               <TableHead>
                 <TdLarge style={{ fontWeight: "600" }}>Name and Date</TdLarge>
                 {/* <TdMedium style={{ fontWeight: "600" }}>Last updated</TdMedium> */}
-                {/* <TdMedium style={{ fontWeight: "600" }}>Status</TdMedium> */}
+                <TdMedium style={{ fontWeight: "600" }}>Status</TdMedium>
                 <TdMedium style={{ border: "none" }}>{""}</TdMedium>
               </TableHead>
 
@@ -63,14 +63,16 @@ const EventDetails = () => {
                   <TdLarge>
                     {data.eventName} <br />
                     <SM>
-                      {formatDate(data.eventStartDate)} at{" "}
-                      {formatTime(data.eventStartTime)}
+                      {formatDate(data?.eventStartDate)} at{" "}
+                      {formatTime(data?.eventStartTime)}
                     </SM>
                   </TdLarge>
                   {/* <TdMedium>
                   {data.dateTimeUpdated ? data.dateTimeUpdated : "---"}
-                </TdMedium>
-                <TdMedium style={{ color: "#0068FF" }}>{data.status}</TdMedium> */}
+                </TdMedium> */}
+                  <TdMedium>
+                    {getEventStatus(data?.eventStartDate, data?.eventEndDate)}
+                  </TdMedium>
                   <TdSmall style={{ position: "relative" }}>
                     <div
                       style={{

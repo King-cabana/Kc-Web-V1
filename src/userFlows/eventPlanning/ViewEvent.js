@@ -4,12 +4,11 @@ import {
   Page,
   Tags,
   Wrapper,
-  HR,
   Like,
   Container,
   IconsContainer,
 } from "../guestRegistration/GuestRegistrationStyled";
-import { useNavigate, useParams, useLocation } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import banner from "../../../src/assets/images/bgBanner.jpg";
 import { AiTwotoneCalendar, AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -34,7 +33,13 @@ import { ImLocation, ImLink } from "react-icons/im";
 import { toast } from "react-toastify";
 import TopBar from "../topBar/dashboardTopBar/TopBar";
 import { Txt, WelcomeHeader } from "../emptyEvent/EmptyEventStyled";
-import { EditEventSpan, SECTION } from "./EventPlanningStyled";
+import {
+  Partition,
+  Partition1,
+  Partition2,
+  SECTION,
+  Display,
+} from "./EventPlanningStyled";
 import LoadingScreen from "../../LoadingScreen";
 import { encryptId, decryptId, formatDate, formatTime } from "../../utils";
 
@@ -44,7 +49,6 @@ const ViewEvent = () => {
   const [attendees, setAttendees] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const encryptedId = encryptId(event?.id);
   const decryptedId = decryptId(id);
   // console.log(decryptedId);
@@ -61,6 +65,7 @@ const ViewEvent = () => {
       try {
         const { data } = await axios.get(API_URL_2 + `events/${decryptedId}`);
         setEvent(data);
+        console.log(data);
 
         const response2 = await axios.get(
           API_URL_2 + `attendee/event/size?id=${decryptedId}`
@@ -87,7 +92,7 @@ const ViewEvent = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <Page style={{ marginTop: "5rem" }}>
+        <Page style={{ marginTop: "4.2rem" }}>
           <WelcomeHeader style={{ marginBottom: "0.2rem" }}>
             <Txt>Event</Txt>
             <BsChevronRight style={{ marginRight: "0.5rem" }} />
@@ -99,24 +104,11 @@ const ViewEvent = () => {
               View Event
             </Txt>
           </WelcomeHeader>
-
-          {/* {location.pathname === `/event/planning/view-draft-event/${id}` ? (
-          <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
-            Your event is still a draft. Would you like to make updates?{" "}
-            <EditEventSpan>Edit Event</EditEventSpan>
-          </BudgetInventorySubtitle>
-        ) : null} */}
-          {/* {location.pathname ===
-          `/event/planning/view-completed-event/${id}` ? ( */}
           <Container
             style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}
           >
-            {/* <BudgetInventorySubtitle style={{ color: "#0068FF" }}>
-                Completed Event
-              </BudgetInventorySubtitle> */}
             <AlternativeButton2>Generate Proposal</AlternativeButton2>
           </Container>
-          {/* ) : null} */}
 
           <ImagesContainer>
             <BackgroundPicture
@@ -126,103 +118,142 @@ const ViewEvent = () => {
           </ImagesContainer>
 
           <BudgetSection>
-            <BudgetTitle1>
-              {event?.eventName ? event?.eventName : "Event Name"}
-            </BudgetTitle1>
+            <IconsContainer>
+              <Like marginRight="1rem">
+                <AiOutlineEdit />
+              </Like>
 
-            <BudgetInventorySubtitle>
-              Theme: {event?.eventTheme ? event?.eventTheme : ""}
-            </BudgetInventorySubtitle>
-            <BudgetTitle2>Event description</BudgetTitle2>
-            <BudgetInventorySubtitle style={{ marginBottom: "0.8rem" }}>
-              {event?.eventDescription ? event?.eventDescription : ""}
-            </BudgetInventorySubtitle>
+              <Like marginRight="1rem">
+                <BsUpload
+                  onClick={() => {
+                    window.navigator.share(shareDetails);
+                  }}
+                />
+              </Like>
+              <Like>
+                <RiDeleteBin5Line />
+              </Like>
+            </IconsContainer>
 
-            <BudgetTitle2 style={{ marginBottom: "0.8rem" }}>
-              <Container>
-                Event Organizer: {event?.fullName ? event?.fullName : ""}
-              </Container>
-              <IconsContainer>
-                <Like marginRight="1rem">
-                  <AiOutlineEdit />
-                </Like>
-                {/* {location.pathname ===
-                `/event/planning/view-completed-event/${id}` ? ( */}
-                <Like marginRight="1rem">
-                  <BsUpload
-                    onClick={() => {
-                      window.navigator.share(shareDetails);
-                    }}
-                  />
-                </Like>
-                {/* ) : null} */}
-                <Like>
-                  <RiDeleteBin5Line />
-                </Like>
-              </IconsContainer>
-            </BudgetTitle2>
-            <HR />
+            <Partition>
+              <Partition1>
+                <BudgetTitle1>Event Name</BudgetTitle1>
+                <BudgetInventorySubtitle style={{ marginBottom: "0.3rem" }}>
+                  {event?.eventName ? event?.eventName : "Event Name"}
+                </BudgetInventorySubtitle>
 
-            <SECTION>
-              <div>
-                <BudgetTitle2>Estimated Attendance</BudgetTitle2>
-                <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-                  {event?.estimatedAttendance
-                    ? event?.estimatedAttendance
+                <BudgetTitle2>Theme</BudgetTitle2>
+                <BudgetInventorySubtitle style={{ marginBottom: "0.3rem" }}>
+                  {event?.eventTheme ? event?.eventTheme : ""}
+                </BudgetInventorySubtitle>
+                <BudgetTitle2>Description</BudgetTitle2>
+                <BudgetInventorySubtitle style={{ marginBottom: "0.3rem" }}>
+                  {event?.eventDescription ? event?.eventDescription : ""}
+                </BudgetInventorySubtitle>
+                <BudgetTitle2>Organiser</BudgetTitle2>
+                <BudgetInventorySubtitle style={{ marginBottom: "0.3rem" }}>
+                  {event?.fullName ? event?.fullName : ""}
+                </BudgetInventorySubtitle>
+
+                <SECTION>
+                  <div>
+                    <BudgetTitle2>Estimated Attendance</BudgetTitle2>
+                    <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                      {event?.estimatedAttendance
+                        ? event?.estimatedAttendance
+                        : "---"}
+                    </BudgetInventorySubtitle>
+                  </div>
+                  <div>
+                    <BudgetTitle2>Registered Guests</BudgetTitle2>
+                    <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                      {attendees}
+                    </BudgetInventorySubtitle>
+                  </div>
+                </SECTION>
+
+                <Display>
+                  <Wrapper>
+                    <AiTwotoneCalendar color="#FF2957" size="1.5em" />
+                    <BudgetTitle2>Date and Time</BudgetTitle2>
+                  </Wrapper>
+                  <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                    {event?.eventStartDate
+                      ? formatDate(event?.eventStartDate) + ". "
+                      : "---"}
+                    {event?.eventStartTime
+                      ? formatTime(event?.eventStartTime)
+                      : "---"}
+                  </BudgetInventorySubtitle>
+
+                  <Wrapper>
+                    <ImLocation color="#FF2957" size="1.5em" />
+                    <BudgetTitle2>Address</BudgetTitle2>
+                  </Wrapper>
+                  {event?.eventAddress ? (
+                    <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                      {event?.eventAddress?.houseNo},
+                      {event?.eventAddress?.street},{event?.eventAddress?.city},
+                      {event?.eventAddress?.state}.
+                      {event?.eventAddress?.country}.
+                    </BudgetInventorySubtitle>
+                  ) : (
+                    "---"
+                  )}
+
+                  <Wrapper>
+                    <ImLink color="#FF2957" size="1.5em" />
+                    <BudgetTitle2>Virtual Link</BudgetTitle2>
+                  </Wrapper>
+                  <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                    {event?.eventLink ? event.eventLink : "---"}
+                  </BudgetInventorySubtitle>
+                </Display>
+
+                <BudgetTitle2>Tags</BudgetTitle2>
+
+                <Tags style={{ padding: "1% 0%" }}>
+                  {event?.tags?.length > 0 ? eventTags : "---"}
+                </Tags>
+              </Partition1>
+
+              <Partition2>
+                <Wrapper>
+                  <AiTwotoneCalendar color="#FF2957" size="1.5em" />
+                  <BudgetTitle2>Date and Time</BudgetTitle2>
+                </Wrapper>
+                <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                  {event?.eventStartDate
+                    ? formatDate(event?.eventStartDate) + ". "
+                    : "---"}
+                  {event?.eventStartTime
+                    ? formatTime(event?.eventStartTime)
                     : "---"}
                 </BudgetInventorySubtitle>
-              </div>
-              {/* {location.pathname ===
-                `/event/planning/view-completed-event/${id}` && ( */}
-              <div>
-                <BudgetTitle2>Number of Registered Guests</BudgetTitle2>
-                <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-                  {attendees}
+
+                <Wrapper>
+                  <ImLocation color="#FF2957" size="1.5em" />
+                  <BudgetTitle2>Address</BudgetTitle2>
+                </Wrapper>
+                {event?.eventAddress ? (
+                  <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                    {event?.eventAddress?.houseNo},{event?.eventAddress?.street}
+                    ,{event?.eventAddress?.city},{event?.eventAddress?.state}.
+                    {event?.eventAddress?.country}.
+                  </BudgetInventorySubtitle>
+                ) : (
+                  "---"
+                )}
+
+                <Wrapper>
+                  <ImLink color="#FF2957" size="1.5em" />
+                  <BudgetTitle2>Virtual Link</BudgetTitle2>
+                </Wrapper>
+                <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
+                  {event?.eventLink ? event.eventLink : "---"}
                 </BudgetInventorySubtitle>
-              </div>
-              {/* )} */}
-            </SECTION>
-
-            <Wrapper>
-              <AiTwotoneCalendar color="#FF2957" size="1.5em" />
-              <BudgetTitle2>Date and Time</BudgetTitle2>
-            </Wrapper>
-            <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-              {event?.eventStartDate
-                ? formatDate(event?.eventStartDate) + ". "
-                : "---"}
-              {event?.eventStartTime
-                ? formatTime(event?.eventStartTime)
-                : "---"}
-            </BudgetInventorySubtitle>
-
-            <Wrapper>
-              <ImLocation color="#FF2957" size="1.5em" />
-              <BudgetTitle2>Location</BudgetTitle2>
-            </Wrapper>
-            {event?.eventAddress ? (
-              <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-                {event?.eventAddress?.houseNo},{event?.eventAddress?.street},
-                {event?.eventAddress?.city},{event?.eventAddress?.state}.
-                {event?.eventAddress?.country}.
-              </BudgetInventorySubtitle>
-            ) : (
-              "---"
-            )}
-
-            <Wrapper>
-              <ImLink color="#FF2957" size="1.5em" />
-              <BudgetTitle2>Event Link</BudgetTitle2>
-            </Wrapper>
-            <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-              {event?.eventLink ? event.eventLink : "---"}
-            </BudgetInventorySubtitle>
-
-            <BudgetTitle2>Tags</BudgetTitle2>
-
-            <Tags style={{ padding: "1% 0%" }}>
-              {event?.tags?.length > 0 ? eventTags : "---"}
-            </Tags>
+              </Partition2>
+            </Partition>
           </BudgetSection>
 
           <ButtonContainer style={{ margin: "0rem" }}>
