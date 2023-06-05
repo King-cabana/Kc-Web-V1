@@ -1004,7 +1004,7 @@ const Inventory = ({ padding }) => {
                 Back
               </AlternativeButton2>
               <AbsolutePrimaryButton onClick={handleSubmit}>
-                Save & Submit
+                Next
               </AbsolutePrimaryButton>
             </ButtonContainer>
           </BudgetUpload>
