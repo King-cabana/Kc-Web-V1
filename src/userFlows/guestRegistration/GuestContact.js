@@ -11,7 +11,7 @@ import TopBar from "../../components/topBar/TopBar";
 import {
   BudgetTitle2,
   ButtonContainer,
-} from "../createEvent/budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { AbsolutePrimaryButton } from "../../components/buttons/button";
 import { useNavigate, useParams } from "react-router";
 import { Tags } from "./GuestRegistrationStyled";

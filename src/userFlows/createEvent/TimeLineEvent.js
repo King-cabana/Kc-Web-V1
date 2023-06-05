@@ -14,7 +14,7 @@ import {
   BudgetTitle1,
   BudgetTitle2,
   ButtonContainer,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import {
   EventBox,
   EventInputBox,

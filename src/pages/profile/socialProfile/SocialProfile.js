@@ -25,7 +25,7 @@ import { clearProfile, editProfile } from "../../redux/slices/profileSlice";
 import axios from "axios";
 import { ImSpinner6 } from "react-icons/im";
 import { setEventOrganizerProfile } from "../../redux/slices/eventOrganizerProfileSlice";
-import { ButtonContainer } from "../../event/budgetInventory/BudgetStyled";
+import { ButtonContainer } from "../../../userFlows/createProposal/budgetInventory/BudgetStyled";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,

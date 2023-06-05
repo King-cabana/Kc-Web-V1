@@ -21,7 +21,7 @@ import {
   BudgetTitle1,
   BudgetTitle2,
   ButtonContainer,
-} from "../createEvent/budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { AbsolutePrimaryButton } from "../../components/buttons/button";
 import TopBar from "../../components/topBar/TopBar";
 import { API_URL_2 } from "../../redux/services/authService";

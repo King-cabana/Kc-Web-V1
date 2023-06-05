@@ -7,10 +7,10 @@ import { Paragraph } from "./RegisteredStyled";
 import {
   BudgetTitle1,
   ButtonContainer,
-} from "../createEvent/budgetInventory/BudgetStyled";
-import { SubmittedContainer } from "../createEvent/budgetInventory/SubmittedStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
+import { SubmittedContainer } from "../createProposal/budgetInventory/SubmittedStyled";
 import { AbsolutePrimaryButton } from "../../components/buttons/button";
-import { BtnHolderLink } from "../createEvent/budgetInventory/InventoryStyled";
+import { BtnHolderLink } from "../createProposal/budgetInventory/InventoryStyled";
 
 const Registered = () => {
   return (

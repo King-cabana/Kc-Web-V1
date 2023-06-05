@@ -19,10 +19,7 @@ import {
   Supported,
   UploadBtn,
 } from "../../event/createEvent/FirstCreateEventStyled";
-import {
-  ButtonContainer,
-  FileWrapper,
-} from "../../event/budgetInventory/BudgetStyled";
+import { ButtonContainer, FileWrapper } from "../budgetInventory/BudgetStyled";
 import { useNavigate } from "react-router";
 import {
   AddButton,

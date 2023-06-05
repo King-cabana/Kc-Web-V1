@@ -23,7 +23,7 @@ import {
   BudgetTitle1,
   BudgetTitle2,
   ButtonContainer,
-} from "../createEvent/budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,

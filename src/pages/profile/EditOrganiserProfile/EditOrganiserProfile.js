@@ -8,7 +8,7 @@ import {
   NPopUpComponent,
   PopUpOverlay,
   BtnHolderLink,
-} from "../../../userFlows/createEvent/budgetInventory/InventoryStyled";
+} from "../../../userFlows/createProposal/budgetInventory/InventoryStyled";
 import {
   Input,
   InputText,

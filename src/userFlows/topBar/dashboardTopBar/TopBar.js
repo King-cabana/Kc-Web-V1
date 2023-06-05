@@ -27,7 +27,7 @@ import {
   ModalText,
   PopUpComponent,
   PopUpOverlay,
-} from "../../../userFlows/createEvent/budgetInventory/InventoryStyled";
+} from "../../../userFlows/createProposal/budgetInventory/InventoryStyled";
 import {
   AlternativeButton2,
   ModalPrimaryButton,

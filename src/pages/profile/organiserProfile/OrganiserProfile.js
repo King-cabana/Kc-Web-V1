@@ -25,7 +25,7 @@ import {
 } from "../createProfile/CreateProfileStyled";
 import { InputSeg, Asterix, Wrapper } from "./OrganiserProfileStyled";
 import { ImSpinner6 } from "react-icons/im";
-import { ButtonContainer } from "../../event/budgetInventory/BudgetStyled";
+import { ButtonContainer } from "../../../userFlows/createProposal/budgetInventory/BudgetStyled";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
@@ -106,7 +106,7 @@ const OrganiserProfile = () => {
     setErrorMsg("");
     setIsSuccess(true);
   }, [file]);
-  
+
   const handleLogoFileChange = async (e) => {
     const MAX_FILE_SIZE = 1024; // 1MB
     const logoFile = e.target.files[0];

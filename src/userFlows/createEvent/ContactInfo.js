@@ -21,7 +21,7 @@ import {
   PopUpComponent,
   ModalText,
   ModalButtonContainer,
-} from "../budgetInventory/InventoryStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import {
   ModalPrimaryButton,
   AlternativeButton2,

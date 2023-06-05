@@ -22,7 +22,7 @@ import {
   FileWrapper,
   CustomWrapper,
   Supported,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { editGenerally } from "../../redux/slices/createEventSlice";
 import {
   RadioButton,
