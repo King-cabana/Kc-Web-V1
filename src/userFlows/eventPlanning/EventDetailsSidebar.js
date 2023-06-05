@@ -4,7 +4,7 @@ import { EventDetailsSide, ViewButton } from "./EventPlanningStyled";
 import { useNavigate } from "react-router";
 import { Txt } from "../emptyEvent/EmptyEventStyled";
 import { FaTimes } from "react-icons/fa";
-import { BudgetInventorySubtitle } from "../../userFlows/createEvent/budgetInventory/BudgetStyled";
+import { BudgetInventorySubtitle } from "../../userFlows/createProposal/budgetInventory/BudgetStyled";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,

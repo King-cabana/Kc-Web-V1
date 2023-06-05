@@ -2,7 +2,7 @@ import React from "react";
 import {
   BudgetInventorySubtitle,
   ButtonContainer,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { SubmittedContainer, SubmittedButtons } from "./SubmittedStyled";
