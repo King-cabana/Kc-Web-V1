@@ -25,6 +25,7 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 import { AbsolutePrimaryButton } from "../../../components/buttons/button";
 import { API_URL_2 } from "../../../redux/services/authService";
 import { setEventCreated } from "../../../redux/slices/eventCreatedSlice";
+import { formatDate, formatTime } from "../../../utils";
 
 const ProposalDetails = () => {
   const navigate = useNavigate();
@@ -143,7 +144,8 @@ const ProposalDetails = () => {
                   <TdLarge style={{ fontWeight: "600", padding: "1rem" }}>
                     Proposal for {data.eventName} <br />
                     <SM>
-                      {data.eventStartDate} at {data.eventStartTime} {data.id}
+                      {formatDate(data.eventStartDate)} at{" "}
+                      {formatTime(data.eventStartTime)}
                     </SM>
                   </TdLarge>
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
