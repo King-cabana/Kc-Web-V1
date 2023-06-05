@@ -18,6 +18,7 @@ import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
 import Proposal from "./userFlows/createProposal/Proposal";
+import Generated from "./userFlows/createProposal/Generated";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -98,6 +99,7 @@ function App() {
             element={<EventPlanPreview />}
           />
           <Route path="/createEvent/submitted" element={<Submitted />} />
+          <Route path="/create-proposal/generated" element={<Generated />} />
           <Route
             path="/dashboard/edit-organiser-profile"
             element={<EditOrganiserProfile />}

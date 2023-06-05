@@ -1,5 +1,5 @@
 import React from "react";
-import Submitted from "../event/budgetInventory/Submitted";
+import Submitted from "../createEvent/Submitted";
 
 const Generated = () => {
   return (

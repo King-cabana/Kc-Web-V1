@@ -140,9 +140,7 @@ const ProposalDetails = () => {
             <EventPlanningTable key={index}>
               <tbody>
                 <TableHead>
-                  <TdLarge
-                    style={{ fontWeight: "600", padding: "1.5rem 1rem" }}
-                  >
+                  <TdLarge style={{ fontWeight: "600", padding: "1rem" }}>
                     Proposal for {data.eventName} <br />
                     <SM>
                       {data.eventStartDate} at {data.eventStartTime} {data.id}

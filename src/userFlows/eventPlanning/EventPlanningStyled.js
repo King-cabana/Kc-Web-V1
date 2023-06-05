@@ -88,7 +88,7 @@ export const ViewButton = styled.button`
 export const TableHead = styled.tr`
   width: 100%;
   overflow-x: scroll;
-  padding: 0.7rem;
+  padding: 0.5rem;
   color: #484848;
   border: 1px solid rgba(0, 104, 255, 0.1);
 `;

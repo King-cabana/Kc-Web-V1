@@ -36,7 +36,7 @@ const Submitted = () => {
           {location.pathname === "/submitted"
             ? "Event created successfully."
             : null}
-          {location.pathname === "/proposal-generated"
+          {location.pathname === "/create-proposal/generated"
             ? "You have successfully generated a proposal"
             : null}
         </BudgetInventorySubtitle>
@@ -59,7 +59,7 @@ const Submitted = () => {
               Done
             </AbsolutePrimaryButton>
           ) : null}
-          {location.pathname === "/proposal-generated" ? (
+          {location.pathname === "/create-proposal/generated" ? (
             <AbsolutePrimaryButton onClick={() => navigate("/event/proposal")}>
               Done
             </AbsolutePrimaryButton>
