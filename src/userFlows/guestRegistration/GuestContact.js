@@ -66,7 +66,7 @@ const GuestContact = () => {
     try {
       await guestRegister(inputs);
       navigate("/guestRegistration/contactInformation/registered");
-      toast.success("You have successfully registered for this event");
+      // toast.success("You have successfully registered for this event");
     } catch (error) {
       error?.response
         ? toast.error(error?.response?.data?.message)
@@ -144,12 +144,12 @@ const GuestContact = () => {
           </GCFormPart>
 
           <TagHolder>
-          <BudgetTitle2>Event Tags</BudgetTitle2>
-          <TagDisplay>
+          {/* <BudgetTitle2>Event Tags</BudgetTitle2> */}
+          {/* <TagDisplay> */}
           <Tags style={{ padding: "1% 0%" }}>
             {event?.tags ? eventTags : "---"}
           </Tags>
-          </TagDisplay>
+          {/* </TagDisplay> */}
         </TagHolder>
           {/* <GCPicPart /> */}
         </GCBody>

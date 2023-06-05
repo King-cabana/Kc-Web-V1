@@ -46,8 +46,8 @@ import {
   WelcomeText,
   ImagesContainer,
 } from "../../../userFlows/eventHome/EventHomeStyled";
-import backgroundPicture from "../../../assets/images/dashboardBackgroundPicture.png";
-import logo from "../../../assets/images/dashboardLogo.png";
+import backgroundPicture from "../../../assets/images/bgImg.png";
+import logo from "../../../assets/images/logoImg.png";
 import {
   ModalPrimaryButton,
   AlternativeButton2,

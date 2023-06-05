@@ -73,8 +73,10 @@ const TopBar = () => {
       const auth2 = window.gapi.auth2.getAuthInstance();
       if (auth2) {
         auth2.signOut().then(() => {
-          dispatch(clearUserDetails());
-          // dispatch(clearEventOrganizerProfile());
+          const data = dispatch(clearUserDetails());
+          console.log(data)
+          const local = localStorage.clear();
+          console.log(local)
           toast.success("Logout!");
         });
       }
