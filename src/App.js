@@ -17,6 +17,7 @@ import DashboardHome from "./userFlows/pages/DashboardHome";
 import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
+import Proposal from "./userFlows/createProposal/Proposal";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -115,6 +116,14 @@ function App() {
             element={
               <Sidebar>
                 <Event />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/event/proposal"
+            element={
+              <Sidebar>
+                <Proposal />
               </Sidebar>
             }
           />
