@@ -42,3 +42,26 @@ export const formatTime = (time) => {
 
   return formattedTime;
 };
+
+// Upcoming, expiren and ongoing event check
+export const getEventStatus = (eventStartDate, eventEndDate) => {
+  const today = new Date()?.toISOString()?.split("T")[0]; // Get today's date in YYYY-MM-DD format
+  if (!eventStartDate && !eventEndDate) {
+    return "---"; // Return an error message if both dates are missing
+  }
+  if (eventStartDate && eventEndDate) {
+    if (eventStartDate <= today && eventEndDate >= today) {
+      return <span style={{ color: "#dfbf06" }}>ongoing</span>;
+    } else if (eventStartDate > today) {
+      return <span style={{ color: "green" }}>upcoming</span>;
+    } else {
+      return <span style={{ color: "red" }}>expired</span>;
+    }
+  } else if (eventStartDate && eventStartDate >= today) {
+    return <span style={{ color: "green" }}>upcoming</span>;
+  } else if (eventEndDate && eventEndDate >= today) {
+    return <span style={{ color: "green" }}>upcoming</span>;
+  } else {
+    return <span style={{ color: "red" }}>expired</span>;
+  }
+};

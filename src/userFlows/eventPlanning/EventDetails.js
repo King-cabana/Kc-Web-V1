@@ -14,25 +14,26 @@ import {
   LoadingSection,
 } from "./EventPlanningStyled";
 import { SlOptionsVertical } from "react-icons/sl";
-import { formatDate, formatTime } from "../../utils";
+import { encryptId, formatDate, formatTime, getEventStatus } from "../../utils";
 
 const EventDetails = () => {
   const navigate = useNavigate();
 
-  const navigateViewEvent = (data) => {
-    // if (data?.status === "Draft") {
-    //   navigate(`/event/planning/view-draft-event/${data?.id}`);
-    // } else if (data?.status === "Completed") {
-    //   navigate(`/event/planning/view-completed-event/${data?.id}`);
-    // } else {
-    //   navigate(`/event/planning/view-draft-event/${data?.id}`);
-    // }
-    navigate(`/event/planning/view-completed-event/${data?.id}`);
-  };
+  // const navigateViewEvent = (data) => {
+  //   // if (data?.status === "Draft") {
+  //   //   navigate(`/event/planning/view-draft-event/${data?.id}`);
+  //   // } else if (data?.status === "Completed") {
+  //   //   navigate(`/event/planning/view-completed-event/${data?.id}`);
+  //   // } else {
+  //   //   navigate(`/event/planning/view-draft-event/${data?.id}`);
+  //   // }
+  //   navigate(`/event/planning/view-completed-event/${data?.id}`);
+  // };
 
   const handleViewButtonClick = (event, data) => {
     event.stopPropagation();
-    navigateViewEvent(data);
+    const encryptedId = encryptId(data?.id);
+    navigate(`/event/planning/view-completed-event/${encryptedId}`);
   };
 
   const { active, handleApiClick, loading } = useContext(EventContext);
@@ -49,7 +50,7 @@ const EventDetails = () => {
               <TableHead>
                 <TdLarge style={{ fontWeight: "600" }}>Name and Date</TdLarge>
                 {/* <TdMedium style={{ fontWeight: "600" }}>Last updated</TdMedium> */}
-                {/* <TdMedium style={{ fontWeight: "600" }}>Status</TdMedium> */}
+                <TdMedium style={{ fontWeight: "600" }}>Status</TdMedium>
                 <TdMedium style={{ border: "none" }}>{""}</TdMedium>
               </TableHead>
 
@@ -62,14 +63,16 @@ const EventDetails = () => {
                   <TdLarge>
                     {data.eventName} <br />
                     <SM>
-                      {formatDate(data.eventStartDate)} at{" "}
-                      {formatTime(data.eventStartTime)}
+                      {formatDate(data?.eventStartDate)} at{" "}
+                      {formatTime(data?.eventStartTime)}
                     </SM>
                   </TdLarge>
                   {/* <TdMedium>
                   {data.dateTimeUpdated ? data.dateTimeUpdated : "---"}
-                </TdMedium>
-                <TdMedium style={{ color: "#0068FF" }}>{data.status}</TdMedium> */}
+                </TdMedium> */}
+                  <TdMedium>
+                    {getEventStatus(data?.eventStartDate, data?.eventEndDate)}
+                  </TdMedium>
                   <TdSmall style={{ position: "relative" }}>
                     <div
                       style={{

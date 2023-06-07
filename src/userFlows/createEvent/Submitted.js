@@ -2,7 +2,7 @@ import React from "react";
 import {
   BudgetInventorySubtitle,
   ButtonContainer,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { SubmittedContainer, SubmittedButtons } from "./SubmittedStyled";
@@ -45,7 +45,7 @@ const Submitted = () => {
           {location.pathname === "/createEvent/submitted"
             ? "Event created successfully."
             : null}
-          {location.pathname === "/proposal-generated"
+          {location.pathname === "/create-proposal/generated"
             ? "You have successfully generated a proposal"
             : null}
         </BudgetInventorySubtitle>
@@ -68,7 +68,7 @@ const Submitted = () => {
               Done
             </AbsolutePrimaryButton>
           ) : null}
-          {location.pathname === "/proposal-generated" ? (
+          {location.pathname === "/create-proposal/generated" ? (
             <AbsolutePrimaryButton onClick={() => navigate("/event/proposal")}>
               Done
             </AbsolutePrimaryButton>

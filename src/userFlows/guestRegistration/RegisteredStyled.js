@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BudgetInventorySubtitle } from "../createEvent/budgetInventory/BudgetStyled";
+import { BudgetInventorySubtitle } from "../createProposal/budgetInventory/BudgetStyled";
 
 export const Paragraph = styled(BudgetInventorySubtitle)`
   display: flex;

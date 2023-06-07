@@ -129,6 +129,7 @@ export const RadioButtonWrapper = styled.div`
   display: flex;
   height: 6vh;
   outline: 1px solid rgba(0, 104, 255, 0.1);
+  background : white;
   border-radius: 4px;
   align-items: center;
   padding: 1%;

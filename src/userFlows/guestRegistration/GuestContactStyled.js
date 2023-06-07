@@ -33,7 +33,7 @@ export const GCBody = styled.div`
   background: white;
 
   @media screen and (max-width: 960px) {
-    height: 90vh;
+    height: fit-content;
     width: 90vw;
     border-radius: 3px;
     box-shadow: none;

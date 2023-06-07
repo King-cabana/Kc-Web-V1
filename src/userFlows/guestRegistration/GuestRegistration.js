@@ -28,7 +28,7 @@ import {
   BudgetTitle1,
   BudgetTitle2,
   ButtonContainer,
-} from "../budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { AbsolutePrimaryButton } from "../../components/button/button";
 import { clearEvent } from "../../redux/slices/createEventSlice";
 import { ImSpinner6 } from "react-icons/im";

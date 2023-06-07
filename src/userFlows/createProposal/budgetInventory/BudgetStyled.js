@@ -41,8 +41,8 @@ export const BudgetTitle1 = styled.h1`
   /* width: 100%; */
   /* height: 100%; */
   font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 22px;
+  line-height: 30px;
 
   color: #484848;
 
@@ -53,7 +53,7 @@ export const BudgetTitle1 = styled.h1`
 `;
 
 export const BudgetTitle2 = styled.h1`
-  font-weight: 600;
+  font-weight: 700;
   font-size: 18px;
   line-height: 32px;
   color: #484848;
@@ -85,11 +85,11 @@ export const BudgetSection = styled.section`
   max-width: 100%;
   margin: 0 1rem;
   margin-bottom: 8rem;
-  padding: 2rem;
+  padding: 0 1rem;
   background: #fff;
 
   @media screen and (max-width: 960px) {
-    padding: 0.5rem;
+    padding: 0 0.5rem;
     margin-bottom: 5rem;
   }
   @media screen and (max-width: 300px) {

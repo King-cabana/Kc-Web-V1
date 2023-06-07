@@ -94,7 +94,11 @@ export const Page = styled.div`
   flex-direction: column;
   /* align-items: center; */
   width: 100%;
-  padding: 0 3%;
+  padding: 0 5%;
+
+  @media screen and (max-width: 960px) {
+    padding: 0 3%;
+  }
 `;
 
 export const HR = styled.hr`
@@ -118,7 +122,7 @@ export const Like = styled.section`
 
 export const Container = styled.section`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   gap: 0.5rem;
 
@@ -132,6 +136,12 @@ export const IconsContainer = styled.section`
   justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
+  margin: 0.5rem 0rem;
+
+  @media screen and (max-width: 960px) {
+    font-size: 12px;
+    line-height: 20px;
+  }
 
   @media screen and (max-width: 550px) {
     gap: 0rem;

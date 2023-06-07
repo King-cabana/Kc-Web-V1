@@ -519,7 +519,7 @@ export const BackgroundPicture = styled.img`
   left: 0;
   border-radius: 10px;
   width: 100%;
-  height: 240px;
+  height: 300px;
   object-fit: cover;
 
   @media screen and (max-width: 960px) {

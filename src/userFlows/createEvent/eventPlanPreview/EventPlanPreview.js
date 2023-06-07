@@ -14,7 +14,7 @@ import {
   BudgetTitle1,
   BudgetInventorySubtitle,
   ButtonContainer,
-} from "../budgetInventory/BudgetStyled";
+} from "../../createProposal/budgetInventory/BudgetStyled";
 import { Space } from "./EventPlanPreviewStyled";
 import { AbsolutePrimaryButton } from "../../../components/buttons/button";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";

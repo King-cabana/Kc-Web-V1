@@ -17,6 +17,12 @@ import DashboardHome from "./userFlows/pages/DashboardHome";
 import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
+import Proposal from "./userFlows/createProposal/Proposal";
+import Generated from "./userFlows/createProposal/Generated";
+import Inventory from "./userFlows/createProposal/budgetInventory/Inventory";
+import ProgressBar from "./userFlows/generateProposalFlow/progressBar/ProgressBar";
+import FlowBody from "./userFlows/generateProposalFlow/flowBody/FlowBody";
+import DefineAudience from "./userFlows/defineAudience/DefineAudience";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -98,6 +104,11 @@ function App() {
           />
           <Route path="/createEvent/submitted" element={<Submitted />} />
           <Route
+            path="/create-proposal/take-inventory"
+            element={<Inventory />}
+          />
+          <Route path="/create-proposal/generated" element={<Generated />} />
+          <Route
             path="/dashboard/edit-organiser-profile"
             element={<EditOrganiserProfile />}
           />
@@ -118,7 +129,19 @@ function App() {
               </Sidebar>
             }
           />
+          <Route
+            path="/event/proposal"
+            element={
+              <Sidebar>
+                <Proposal />
+              </Sidebar>
+            }
+          />
           <Route path="*" element={<NoPage />} />
+          <Route path="/progress" element={<FlowBody />} />
+          <Route path="/defineaudience" element={<DefineAudience />} />
+          
+
         </Routes>
       </>
     </Suspense>

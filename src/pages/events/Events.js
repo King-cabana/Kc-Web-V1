@@ -141,7 +141,7 @@ const Events = () => {
           </EventCard>
         </CardHolder>
         <NavButtonHolder>
-          <NavButtonLink to="/waitlist">
+          <NavButtonLink to="/signup">
             <AlternativeButton style={{ color: "black" }} fontWeight="600">
               Explore More
             </AlternativeButton>
@@ -163,7 +163,7 @@ const Events = () => {
           />)}
         </EventCardHolder>
         <NavButtonHolder>
-          <NavButtonLink to="">
+          <NavButtonLink to="/signup">
             <AlternativeButton style={{ color: "black" }} fontWeight="600">
               Explore More
             </AlternativeButton>
@@ -186,7 +186,7 @@ const Events = () => {
           />)}
         </EventCardHolder>
         <NavButtonHolder>
-          <NavButtonLink to="">
+          <NavButtonLink to="/signup">
             <AlternativeButton style={{ color: "black" }} fontWeight="600">
               Explore More
             </AlternativeButton>
