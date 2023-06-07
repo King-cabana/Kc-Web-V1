@@ -17,6 +17,7 @@ import DashboardHome from "./userFlows/pages/DashboardHome";
 import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
+import TestGenerated from "./userFlows/TestGenerated";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -47,6 +48,7 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Events />} />
+          <Route path="/proposalGenerated" element={<TestGenerated />} />
           <Route path="/sponsors" element={<Sponsor />} />
           <Route path="/vendors" element={<Vendor />} />
 
