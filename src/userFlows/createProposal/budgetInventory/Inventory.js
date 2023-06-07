@@ -12,6 +12,7 @@ import {
   ButtonContainer,
   BudgetUpload,
   BudgetSubtitle,
+  InventoryPopUpTitle,
 } from "./BudgetStyled";
 import {
   AbsolutePrimaryButton,
@@ -25,16 +26,47 @@ import {
   CheckLabel,
   CheckDetails,
   CheckSummary,
+  CheckDivWrap,
+  CheckDiv,
+  PopUpOverlay,
+  InventoryPopUp,
+  ButtonDiv,
+  InventoryProgressContainer,
 } from "./InventoryStyled";
 import "../../../App.css";
 import "../../../modal.css";
 import { BsChevronRight, BsChevronDown } from "react-icons/bs";
+import { inventoryData } from "./InventoryData";
+import { ViewButton } from "../../eventPlanning/EventPlanningStyled";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const Inventory = ({ padding }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.createEvent);
+  const [modal, setModal] = useState(false);
+  const [selectedInventoryIndex, setSelectedInventoryIndex] = useState(null);
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+  const handleInventoryClick = (index) => {
+    setSelectedInventoryIndex(index);
+    toggleModal();
+  };
+  const handleNextInventory = () => {
+    setSelectedInventoryIndex((prevIndex) => prevIndex + 1);
+  };
+  const handlePreviousInventory = () => {
+    setSelectedInventoryIndex((prevIndex) => prevIndex - 1);
+  };
+  // Modal Contitions
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
+  const showModal = !modal && "notShown";
 
   const navigateBack = () => {
     navigate("/createevent/budget&inventory/1");
@@ -67,6 +99,13 @@ const Inventory = ({ padding }) => {
   };
   return (
     <>
+      {modal && (
+        <PopUpOverlay
+          style={{ background: "rgba(246, 233, 236, 0.8)" }}
+          onClick={toggleModal}
+        />
+      )}
+      <div className={`${showModal}`}></div>
       <BudgetInventoryContainer style={{ padding: padding }}>
         {location.pathname === "/eventPlanPreview" ? null : (
           <BudgetInventoryHeader>
@@ -88,6 +127,104 @@ const Inventory = ({ padding }) => {
             </BudgetSubtitle>
 
             <InventorySection>
+              {inventoryData?.map((inventory, index) => (
+                <CheckDivWrap key={index}>
+                  <CheckDiv onClick={() => handleInventoryClick(index)}>
+                    {inventory?.title} <BsChevronDown />
+                  </CheckDiv>
+                  <div className={`${showModal}`}>
+                    {selectedInventoryIndex === index && (
+                      <InventoryPopUp style={{ height: "auto" }}>
+                        <InventoryProgressContainer>
+                          <input
+                            type="range"
+                            min="0"
+                            max={inventoryData?.length - 1}
+                            value={selectedInventoryIndex}
+                            style={{ width: "90%" }}
+                            readOnly
+                          />
+                          <AiOutlineCloseCircle
+                            size="1.5rem"
+                            onClick={toggleModal}
+                            cursor="pointer"
+                          />
+                        </InventoryProgressContainer>
+                        <div style={{ marginTop: "1rem" }}>
+                          {inventory?.gamificication
+                            ?.split(".")
+                            ?.map((part, index) => (
+                              <BudgetTitle2
+                                key={index}
+                                style={{ textAlign: "center" }}
+                              >
+                                {part}.
+                                <br />
+                              </BudgetTitle2>
+                            ))}
+                        </div>
+                        <InventoryPopUpTitle style={{ marginTop: "1rem" }}>
+                          {inventory?.title}
+                        </InventoryPopUpTitle>
+                        <BudgetInventorySubtitle
+                          style={{ textAlign: "center", marginTop: "0.5rem" }}
+                        >
+                          {inventory?.summary}
+                        </BudgetInventorySubtitle>
+                        <CheckboxWrapper
+                          style={{ margin: "1rem 0rem", width: "100%" }}
+                        >
+                          {inventory.items.map((item, itemIndex) => (
+                            <Check key={itemIndex}>
+                              <CheckInput
+                                type="checkbox"
+                                value={item}
+                                name={inventory?.inventoryName}
+                                id={itemIndex}
+                              />
+                              <CheckLabel htmlFor={itemIndex}>
+                                {item}
+                              </CheckLabel>
+                            </Check>
+                          ))}
+                        </CheckboxWrapper>
+
+                        <ButtonDiv>
+                          {index === 0 ? (
+                            ""
+                          ) : (
+                            <ViewButton onClick={handlePreviousInventory}>
+                              Back
+                            </ViewButton>
+                          )}
+
+                          {inventory?.title === "Cause Tie-in" ? (
+                            <ViewButton
+                              style={{
+                                backgroundColor: "#ff2957",
+                                color: "#fff",
+                              }}
+                            >
+                              Save & Continue
+                            </ViewButton>
+                          ) : (
+                            <ViewButton
+                              style={{
+                                backgroundColor: "#ff2957",
+                                color: "#fff",
+                              }}
+                              onClick={handleNextInventory}
+                            >
+                              Next
+                            </ViewButton>
+                          )}
+                        </ButtonDiv>
+                      </InventoryPopUp>
+                    )}
+                  </div>
+                </CheckDivWrap>
+              ))}
+
               <CheckDetails>
                 <CheckSummary onClick={() => setExclusive(!exclusive)}>
                   Exclusive Content

@@ -94,6 +94,20 @@ export const NPopUpComponent = styled.div`
   }
 `;
 
+export const InventoryPopUp = styled(NPopUpComponent)`
+  width: 55%;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 576px) {
+    width: 97%;
+  }
+`;
+
+export const ButtonDiv = styled.section`
+  display: flex;
+`;
+
 export const ModalText = styled.p`
   font-weight: 400;
   font-size: 16px;
@@ -129,7 +143,22 @@ export const Check = styled.div`
   }
 `;
 
+export const InventoryProgressContainer = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0rem 3rem;
+  width: 100%;
+`;
+
 export const CheckDetails = styled.details`
+  margin-bottom: 0.5rem;
+
+  @media screen and (max-width: 960px) {
+    margin-bottom: 0;
+  }
+`;
+export const CheckDivWrap = styled.div`
   margin-bottom: 0.5rem;
 
   @media screen and (max-width: 960px) {
@@ -138,6 +167,30 @@ export const CheckDetails = styled.details`
 `;
 
 export const CheckSummary = styled.summary`
+  border: 1px solid rgba(0, 104, 255, 0.1);
+  background-color: rgba(0, 104, 255, 0.1);
+  margin-bottom: 0.1rem;
+  border-radius: 10px;
+  padding: 8px;
+  padding-right: 40px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: black;
+
+  @media screen and (max-width: 960px) {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 5px 10px;
+    padding-right: 20px;
+  }
+`;
+
+export const CheckDiv = styled.div`
   border: 1px solid rgba(0, 104, 255, 0.1);
   background-color: rgba(0, 104, 255, 0.1);
   margin-bottom: 0.1rem;
@@ -180,13 +233,13 @@ export const CheckInput = styled.input`
 
 export const CheckLabel = styled.label`
   font-weight: 400;
-  font-size: 18px;
-  line-height: 25px;
+  font-size: 16px;
+  line-height: 22px;
   margin-left: 1.2rem;
 
   @media screen and (max-width: 960px) {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 17px;
     margin-left: 0.5rem;
   }
 `;
