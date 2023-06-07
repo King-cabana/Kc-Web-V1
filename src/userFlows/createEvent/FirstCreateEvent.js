@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { ButtonContainer, Label } from "./DefineAudienceStyled";
 import {
   AbsolutePrimaryButton,
@@ -22,7 +22,7 @@ import {
   FileWrapper,
   CustomWrapper,
   Supported,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { editGenerally } from "../../redux/slices/createEventSlice";
 import {
   RadioButton,
@@ -65,6 +65,23 @@ const FirstCreateEvent = ({ padding }) => {
 
   const change = (e) => {
     dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
+  };
+  const handlePaste = (e) => {
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData("text");
+    if (
+      pastedText.includes("-") ||
+      pastedText.includes("+") ||
+      pastedText.includes("e") ||
+      pastedText.includes(".")
+    ) {
+      e.preventDefault();
+    }
+  };
+  const preventNegativeValues = (e) => {
+    if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === ".") {
+      e.preventDefault();
+    }
   };
 
   const handleFileChange = async (e) => {
@@ -198,6 +215,7 @@ const FirstCreateEvent = ({ padding }) => {
                     onChange={handleFileChange}
                     name="eventBannerUrl"
                     defaultValue={file}
+                    accept="image/png, image/jpeg, image/jpg"
                     // defaultValue={state?.eventBannerUrl}
                   />
                 </CustomWrapper>
@@ -207,7 +225,7 @@ const FirstCreateEvent = ({ padding }) => {
               {isSuccess ? null : (
                 <>
                   <Supported>
-                    Support files; JPG, PNG, JPEG, DOCX, PDF, CSV
+                    Support files; JPG, PNG, JPEG, *IMG files
                   </Supported>
                   <Supported
                     style={{
@@ -322,6 +340,9 @@ const FirstCreateEvent = ({ padding }) => {
                 name="estimatedAttendance"
                 onChange={change}
                 defaultValue={state?.estimatedAttendance}
+                min="1"
+                onKeyDown={preventNegativeValues}
+                onPaste={handlePaste}
               />
             </EventSubSection>
             {/* input section  */}

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import EventPlanning from "../eventPlanning/EventPlanning";
-import EmptyEvent from "../emptyEvent/EmptyEvent";
-import axios from "axios";
 import { useSelector } from "react-redux";
+import axios from "axios";
 import { API_URL_2 } from "../../redux/services/authService";
 import LoadingScreen from "../../LoadingScreen";
+import EmptyProposal from "./NoProposal/EmptyProposal";
+import ProposalsList from "./ProposalsList/ProposalsList";
 
-const Event = () => {
+const Proposal = () => {
   const user = useSelector((state) => state.userDetails);
   const organizer = useSelector((state) => state.eventOrganizerProfile);
   const [active, setActive] = useState([]);
@@ -29,6 +29,7 @@ const Event = () => {
         if (error?.message === "Network Error") {
           toast.error("Error retrieving data, reload page.");
         }
+
         console.log(error);
       } finally {
         setIsLoading(false);
@@ -41,7 +42,12 @@ const Event = () => {
     return <LoadingScreen />;
   }
 
-  return <div>{active?.length > 0 ? <EventPlanning /> : <EmptyEvent />}</div>;
+  return (
+    <div>{active?.length > 0 ? <ProposalsList /> : <EmptyProposal />}</div>
+    // <div>
+    //   <ProposalsList />
+    // </div>
+  );
 };
 
-export default Event;
+export default Proposal;

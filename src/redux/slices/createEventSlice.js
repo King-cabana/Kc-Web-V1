@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { checkBox } from "../../event/pages/checkBoxData";
+import { checkBox } from "../../userFlows/defineAudience/CheckBoxData";
 
 const initialState = {
   tags: [],
-  //   genderList: [],
-  //   genderListNew: [],
-  //   religionList: [],
-  //   religionListNew: [],
-  //   educationLevelList: [],
-  //   educationLevelListNew: [],
-  //   maritalStatusList: [],
-  //   maritalStatusListNew: [],
-  //   employmentStatusList: [],
-  //   employmentStatusListNew: [],
+    ageList: [],
+    genderList: [],
+    genderListNew: [],
+    religionList: [],
+    religionListNew: [],
+    educationLevelList: [],
+    educationLevelListNew: [],
+    skillLevelList: [],
+    skillLevelListNew: [],
+    employmentStatusList: [],
+    employmentStatusListNew: [],
   //   exclusiveContent: [],
   //   otherOnline: [],
   //   signage: [],
@@ -51,20 +52,24 @@ export const createEventSlice = createSlice({
       Object.assign(state, { [category]: item });
       //   console.log(payload);
     },
-    // addToList: (state, action) => {
-    //   const { listType, newItem } = action.payload;
-    //   const newList = newItem
-    //     .trim()
-    //     .split(",")
-    //     .map((item) => item.trim());
-    //   const finalArray = [
-    //     ...[...state[listType]].filter((x) => checkBox[listType].includes(x)),
-    //     ...newList,
-    //   ];
-    //   // console.log(finalArray, newList);
-    //   state[listType] = finalArray.filter((x) => x !== "");
-    //   state[`${listType}New`] = newList.filter((x) => x !== "");
-    // },
+    addToList: (state, action) => {
+      const { listType, newItem } = action.payload;
+      const newList = newItem.trim().split(",").map((item) => item.trim());
+      
+      let finalArray;
+      if (Array.isArray(state[listType])) {
+        finalArray = [
+          ...[...state[listType]].filter((x) => checkBox[listType].includes(x)),
+          ...newList,
+        ];
+      } else {
+        finalArray = newList;
+      }
+      
+      state[listType] = finalArray.filter((x) => x !== "");
+      state[`${listType}New`] = newList.filter((x) => x !== "");
+    },
+    
     addTag: (state, action) => {
       if (state.tags.length < 5) {
         state.tags.push(action.payload);

@@ -1,6 +1,6 @@
 import React from "react";
 import Lottie from "lottie-react";
-import animationData from "../../assets/lotties/lf20_uqlolnxx-shaking-calendar.json";
+import animationData from "../../../assets/lotties/proposal-document.json";
 import {
   NoEventContainer,
   WelcomeHeader,
@@ -11,12 +11,12 @@ import {
   ButtonLink,
   LottieWrapper,
   PrimaryButton,
-} from "./EmptyEventStyled";
+} from "../../emptyEvent/EmptyEventStyled";
 // import { OverallContainer } from "../eventHome/EventHomeStyled";
 // import { WelcomeText } from "../eventHome/EventHomeStyled";
 import { BsChevronRight } from "react-icons/bs";
 
-const EmptyEvent = () => {
+const EmptyProposal = () => {
   return (
     <>
       <OverallContainer style={{ width: "100vw" }}>
@@ -25,7 +25,7 @@ const EmptyEvent = () => {
             <Txt>Event</Txt>
             <BsChevronRight style={{ marginRight: "0.5rem" }} />
             <Txt fontWeight="400" color="#FF2957">
-              Planning
+              Proposal
             </Txt>
           </WelcomeHeader>
           <NoEventCenter>
@@ -33,10 +33,12 @@ const EmptyEvent = () => {
               <Lottie
                 animationData={animationData}
                 loop={true}
-                style={{ width: "90px", height: "90px" }}
+                style={{ width: "100px", height: "100px" }}
               />
             </LottieWrapper>
-            <NoContentText>You have no event created yet.</NoContentText>
+            <NoContentText>
+              You have no event created yet to generate proposal.
+            </NoContentText>
           </NoEventCenter>
           <ButtonLink to="/createevent/eventdetails/1">
             <PrimaryButton>Create event</PrimaryButton>
@@ -47,4 +49,4 @@ const EmptyEvent = () => {
   );
 };
 
-export default EmptyEvent;
+export default EmptyProposal;

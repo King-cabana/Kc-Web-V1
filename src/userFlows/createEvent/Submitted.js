@@ -2,7 +2,7 @@ import React from "react";
 import {
   BudgetInventorySubtitle,
   ButtonContainer,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { SubmittedContainer, SubmittedButtons } from "./SubmittedStyled";
@@ -15,18 +15,23 @@ import animationData from "../../assets/lotties/102001-success-icon.json";
 import { AnimationContainer } from "../../globalStyles";
 import { useNavigate } from "react-router";
 import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
+import { encryptId, decryptId } from "../../utils";
 // import TopBar from "../../components/createEventTopBar/TopBar";
 
 const Submitted = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const event = useSelector((state) => state.eventCreated);
+  const encryptedId = encryptId(event?.id);
+  const decryptedId = decryptId(encryptedId);
+  // console.log(encryptedId);
+  // console.log(decryptedId);
+
   const shareDetails = {
     title: event?.eventName,
-    url: `/guestRegistration/${event?.id}`,
+    url: `/guestRegistration/${encryptedId}`,
     text: event?.eventTheme,
   };
-
   return (
     <>
       <CreateEventTopBar />
@@ -40,7 +45,7 @@ const Submitted = () => {
           {location.pathname === "/createEvent/submitted"
             ? "Event created successfully."
             : null}
-          {location.pathname === "/proposal-generated"
+          {location.pathname === "/create-proposal/generated"
             ? "You have successfully generated a proposal"
             : null}
         </BudgetInventorySubtitle>
@@ -63,7 +68,7 @@ const Submitted = () => {
               Done
             </AbsolutePrimaryButton>
           ) : null}
-          {location.pathname === "/proposal-generated" ? (
+          {location.pathname === "/create-proposal/generated" ? (
             <AbsolutePrimaryButton onClick={() => navigate("/event/proposal")}>
               Done
             </AbsolutePrimaryButton>

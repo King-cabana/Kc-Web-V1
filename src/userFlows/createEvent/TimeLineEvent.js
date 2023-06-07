@@ -14,7 +14,7 @@ import {
   BudgetTitle1,
   BudgetTitle2,
   ButtonContainer,
-} from "./budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import {
   EventBox,
   EventInputBox,
@@ -223,7 +223,8 @@ const TimeLineEvent = ({ padding }) => {
           {/* second section  */}
           <EventSubSection>
             <InputText>
-              Guest Registration <br />
+              Guest Registration Deadline
+              <br />
               <span style={{ fontSize: "14px", fontWeight: "400" }}>
                 Specify the deadline for guest registration
               </span>

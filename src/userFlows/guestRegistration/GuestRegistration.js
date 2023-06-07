@@ -28,13 +28,14 @@ import {
   BudgetTitle1,
   BudgetTitle2,
   ButtonContainer,
-} from "../budgetInventory/BudgetStyled";
+} from "../createProposal/budgetInventory/BudgetStyled";
 import { AbsolutePrimaryButton } from "../../components/button/button";
 import { clearEvent } from "../../redux/slices/createEventSlice";
 import { ImSpinner6 } from "react-icons/im";
 import { API_URL_2 } from "../../redux/service/authService";
 import TopBar from "../topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../LoadingScreen";
+import { formatDate, formatTime } from "../../utils";
 
 const GuestRegistration = () => {
   const state = useSelector((state) => state.createEvent);
@@ -189,9 +190,10 @@ const GuestRegistration = () => {
               <BudgetTitle2>Date and Time</BudgetTitle2>
             </Wrapper>
             <BudgetInventorySubtitle style={{ marginBottom: "1rem" }}>
-              (yyyy-mm-dd, 24hours format) <br />
-              {state?.eventStartDate ? state?.eventStartDate + ", " : ""}
-              {state?.eventStartTime ? state?.eventStartTime : ""}
+              {state?.eventStartDate
+                ? formatDate(state?.eventStartDate) + ". "
+                : ""}
+              {state?.eventStartTime ? formatTime(state?.eventStartTime) : ""}
             </BudgetInventorySubtitle>
 
             <Wrapper>

@@ -16,11 +16,21 @@ import Sidebar from "./userFlows/Dashboard/Sidebar";
 import DashboardHome from "./userFlows/pages/DashboardHome";
 import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
+import Event from "./userFlows/pages/Event";
+import Proposal from "./userFlows/createProposal/Proposal";
+import Generated from "./userFlows/createProposal/Generated";
+import Inventory from "./userFlows/createProposal/budgetInventory/Inventory";
+import ProgressBar from "./userFlows/generateProposalFlow/progressBar/ProgressBar";
+import FlowBody from "./userFlows/generateProposalFlow/flowBody/FlowBody";
+import DefineAudience from "./userFlows/defineAudience/DefineAudience";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
 );
 const GuestView = lazy(() => import("./userFlows/guestRegistration/GuestView"));
+const ViewCompletedEvent = lazy(() =>
+  import("./userFlows/eventPlanning/ViewCompletedEvent")
+);
 const Events = lazy(() => import("./pages/events/Events"));
 const Sponsor = lazy(() => import("./pages/sponsor/Sponsor"));
 const Vendor = lazy(() => import("./pages/vendor/Vendor"));
@@ -69,6 +79,10 @@ function App() {
           <Route path="/guestRegistration/" element={<GuestView />} />
           <Route path="/guestRegistration/:id" element={<GuestView />} />
           <Route
+            path="/event/planning/view-completed-event/:id"
+            element={<ViewCompletedEvent />}
+          />
+          <Route
             path="/guestRegistration/contactInformation/:id"
             element={<GuestContact />}
           />
@@ -90,10 +104,15 @@ function App() {
           />
           <Route path="/createEvent/submitted" element={<Submitted />} />
           <Route
+            path="/create-proposal/take-inventory"
+            element={<Inventory />}
+          />
+          <Route path="/create-proposal/generated" element={<Generated />} />
+          <Route
             path="/dashboard/edit-organiser-profile"
             element={<EditOrganiserProfile />}
           />
-
+          {/* SIDEBAR */}
           <Route
             path="/dashboard"
             element={
@@ -102,7 +121,27 @@ function App() {
               </Sidebar>
             }
           />
+          <Route
+            path="/event/planning"
+            element={
+              <Sidebar>
+                <Event />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/event/proposal"
+            element={
+              <Sidebar>
+                <Proposal />
+              </Sidebar>
+            }
+          />
           <Route path="*" element={<NoPage />} />
+          <Route path="/progress" element={<FlowBody />} />
+          <Route path="/defineaudience" element={<DefineAudience />} />
+          
+
         </Routes>
       </>
     </Suspense>

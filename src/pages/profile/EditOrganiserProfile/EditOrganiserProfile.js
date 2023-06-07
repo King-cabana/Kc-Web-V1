@@ -8,7 +8,7 @@ import {
   NPopUpComponent,
   PopUpOverlay,
   BtnHolderLink,
-} from "../../../userFlows/createEvent/budgetInventory/InventoryStyled";
+} from "../../../userFlows/createProposal/budgetInventory/InventoryStyled";
 import {
   Input,
   InputText,
@@ -143,7 +143,7 @@ const EditOrganiserProfile = () => {
   const handleFileChange = async (e) => {
     const MAX_FILE_SIZE = 1024; // 1MB
     const file = e.target.files[0];
-    const fileSizeKiloBytes = file.size / 1024;
+    const fileSizeKiloBytes = file?.size / 1024;
 
     if (fileSizeKiloBytes > MAX_FILE_SIZE) {
       setErrorMsg("Image size is greater than 1mb");
@@ -199,7 +199,7 @@ const EditOrganiserProfile = () => {
   const handleLogoFileChange = async (e) => {
     const MAX_FILE_SIZE = 1024; // 1MB
     const logoFile = e.target.files[0];
-    const logoFileSizeKiloBytes = logoFile.size / 1024;
+    const logoFileSizeKiloBytes = logoFile?.size / 1024;
 
     if (logoFileSizeKiloBytes > MAX_FILE_SIZE) {
       setLogoErrorMsg("Image size is greater than 1mb");
