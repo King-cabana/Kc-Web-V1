@@ -99,27 +99,27 @@ const ProposalDetails = () => {
               <tbody>
                 <TableHead>
                   <TdLarge style={{ fontWeight: "600", padding: "1rem" }}>
-                    Proposal for {data.eventName} <br />
+                    Proposal for {data?.eventName} <br />
                     <SM>
-                      {formatDate(data.eventStartDate)} at{" "}
-                      {formatTime(data.eventStartTime)}
+                      {formatDate(data?.eventStartDate)} at{" "}
+                      {formatTime(data?.eventStartTime)}
                     </SM>
                   </TdLarge>
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
                     <AbsolutePrimaryButton
                       onClick={() =>
-                        navigate(`/event/proposal/proposal-buildup/${data.id}`)
+                        navigate(`/event/proposal/proposal-buildup/${data?.id}`)
                       }
                     >
                       Generate Proposal
                     </AbsolutePrimaryButton>
                   </TdMedium>
                 </TableHead>
-                {Object.keys(data.proposals).map((sponsorKey) => (
+                {Object.keys(data?.proposals).map((sponsorKey) => (
                   <TableTr
                     key={sponsorKey}
-                    // backgroundColor={data.selected ? "#f9e6ea" : "white"}
-                    // onClick={() => handleApiClick(data, index)}
+                    backgroundColor={data?.selected ? "#f9e6ea" : "white"}
+                    onClick={() => toggleOptions(sponsorKey)}
                   >
                     <TdLarge style={{ padding: "1rem 0.5rem" }}>
                       <AlignCenter>
@@ -127,7 +127,7 @@ const ProposalDetails = () => {
                           style={{ marginRight: "0.5rem" }}
                           size="1.5rem"
                         />
-                        To {data.proposals[sponsorKey]}
+                        To {data?.proposals[sponsorKey]}
                       </AlignCenter>
                     </TdLarge>
 
@@ -161,8 +161,8 @@ const ProposalDetails = () => {
                           }}
                         />
                       </div>
-                      {optionsArr.some(
-                        (options) => options.id === sponsorKey && options.open
+                      {optionsArr?.some(
+                        (options) => options?.id === sponsorKey && options?.open
                       ) && (
                         <OptionsContainer>
                           <OptionsText>Edit</OptionsText>
