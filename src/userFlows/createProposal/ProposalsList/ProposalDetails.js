@@ -118,7 +118,7 @@ const ProposalDetails = () => {
                 {Object.keys(data?.proposals).map((sponsorKey) => (
                   <TableTr
                     key={sponsorKey}
-                    backgroundColor={data?.selected ? "#f9e6ea" : "white"}
+                    // backgroundColor={data?.selected ? "#f9e6ea" : "white"}
                     onClick={() => toggleOptions(sponsorKey)}
                   >
                     <TdLarge style={{ padding: "1rem 0.5rem" }}>
