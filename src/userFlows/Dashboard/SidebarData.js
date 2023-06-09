@@ -48,6 +48,12 @@ export const SidebarData = [
         path: "/event/proposal",
         icon: <BsIcons.BsDot />,
         cName: "sub-nav",
+        subNav: [
+          {
+            path: "/event/proposal/proposalbuildup",
+            cName: "sub-nav-child",
+          },
+        ],
       },
       {
         title: "History",

@@ -39,9 +39,12 @@ export const PrimaryButton = styled.button`
 `;
 
 export const AbsolutePrimaryButton = styled(PrimaryButton)`
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center; 
+  width: fit-content;
+  padding: 15px;
+
   @media screen and (max-width: 960px) {
     font-size: 10px;
     line-height: 12px;

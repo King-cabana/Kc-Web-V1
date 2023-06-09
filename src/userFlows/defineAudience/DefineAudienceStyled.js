@@ -6,7 +6,7 @@ export const ButtonContainer = styled.footer`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0px 100px;
+  padding: 0px 90px;
   width: 100%;
   height: 75px;
   border: 1px solid #d2cedc;

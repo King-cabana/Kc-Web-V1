@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "../../store";
 
-const API_URL_2 = "https://api.kingcabana.com/proposals/";
+const API_URL_2 = "http://localhost:8081/proposals/";
 export const createProposal = async(data, token) => {
     console.log(data)
   try {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BackgroundPicture } from "../../event/eventHome/EventHomeStyled";
+import { BackgroundPicture } from "../../eventHome/EventHomeStyled";
 
 export const ProposalDetails = styled.div`
   padding: 1rem 1rem;

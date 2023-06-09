@@ -42,7 +42,7 @@ const ProposalPreview = () => {
   };
 
   useEffect(() => {
-    // const API_URL_2 = "https://api.kingcabana.com/proposals/";
+    // const API_URL_2 = "http://localhost:8081/proposals/";
     const API_URL_2 = "https://localhost:8081/proposals/";
     const fetchProposalPreview = async () => {
       try {

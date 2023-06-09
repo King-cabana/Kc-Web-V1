@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Background from "../../images/budgetBackground.png";
+import Background from "../../../assets/images/budgetBackground.jpg";
  
 export const OverallContainer = styled.section`
   width: 100%;
@@ -7,9 +7,9 @@ export const OverallContainer = styled.section`
 `;
 
 export const ProposalContainer = styled.div`
-  padding: 1rem 3rem;
-  background-color: #fff;
+  padding: 1rem 5rem;
   width: 100%;
+  background: transparent;
 //   height: 100%;
 
   @media screen and (max-width: 769px) {
@@ -19,7 +19,7 @@ export const ProposalContainer = styled.div`
 `;
 
 export const Txt = styled.span`
-  font-size: 20px;
+  font-size: 16px;
   line-height: 32px;
   color: #484848;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "700")};
@@ -59,7 +59,7 @@ export const ProposalBackground = styled.div`
 
 export const ProposalInner = styled.form`
     width:100%;
-    background-color:white;
+    // background-color:white;
     padding:1rem;
 `
 
@@ -94,4 +94,11 @@ export const ProposalTagsWrapper = styled.section`
     /* flex-direction: column; */
     grid-template-columns: 1fr;
   }
+`;
+
+export const InputSeg = styled.section`
+  width: 100%;
+  /* height: 100%; */
+  margin-bottom: 2rem;
+
 `;

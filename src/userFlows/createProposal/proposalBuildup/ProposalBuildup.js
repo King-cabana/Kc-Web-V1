@@ -9,16 +9,16 @@ import {
   ProposalInner,
   BenefitsTag,
   ProposalTagsWrapper,
+  InputSeg,
 } from "./ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { InputSeg } from "../../profile/organiserProfile/OrganiserProfileStyled";
 import {
   CustomWrapper,
   FormContainer,
   Input,
   Supported,
   UploadBtn,
-} from "../../event/createEvent/FirstCreateEventStyled";
+} from "../../../userFlows/createEvent/FirstCreateEventStyled";
 import { ButtonContainer, FileWrapper } from "../budgetInventory/BudgetStyled";
 import { useNavigate } from "react-router";
 import {
@@ -26,13 +26,13 @@ import {
   Delete,
   EventSubSection,
   InputTagBox,
-} from "../../event/createEvent/TimeLineEventsStyled";
+} from "../../../userFlows/createEvent/TimeLineEventsStyled";
 import { AiOutlineClose } from "react-icons/ai";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
-} from "../../components/button/button";
-import createProposal from "../../redux/service/createProposal";
+} from "../../../components/buttons/Buttons";
+import createProposal from "../../../redux/services/createProposal";
 import { useParams } from "react-router-dom";
 import {
   addBenefitList,
@@ -40,7 +40,7 @@ import {
   addPotentialImpact,
   removeBLTag,
   removePITag,
-} from "../../redux/slices/proposalSlice";
+} from "../../../redux/slices/proposalSlice";
 
 const ProposalBuildup = () => {
   const [file, setFile] = useState("");
@@ -223,7 +223,7 @@ const ProposalBuildup = () => {
             <BsChevronRight style={{ marginRight: "0.5rem" }} />
             <Txt
               style={{ cursor: "pointer" }}
-              onclick={navigateBack}
+              onClick={navigateBack}
               fontWeight="400"
             >
               Proposal
@@ -237,8 +237,8 @@ const ProposalBuildup = () => {
 
         <ProposalBackground>
           <ProposalInner onSubmit={handleProposalPreview}>
-            <InputSeg>
-              <Txt>Event Banner</Txt>
+          <Txt>Proposal Banner</Txt>
+            <InputSeg style={{background:'white'}}>
               <FormContainer>
                 <FileWrapper style={{ width: "100%" }}>
                   <CustomWrapper>
@@ -296,7 +296,10 @@ const ProposalBuildup = () => {
                 ) : null}
               </FormContainer>
             </InputSeg>
+            <div style={{width:"100%", display:'flex', justifyContent:"center", alignItems:"center"}}>
             <Txt>Sponsorship Request</Txt>
+            </div>
+            
 
             <InputSeg style={{ marginTop: "2%" }}>
               <Txt>Name of Sponsor’s Organization</Txt>
@@ -309,7 +312,7 @@ const ProposalBuildup = () => {
               />
             </InputSeg>
 
-            <EventSubSection style={{ padding: "0" }}>
+            {/* <EventSubSection style={{ padding: "0" }}>
               <Txt>Benefits of sponsoring this event</Txt>
               <InputTagBox>
                 <Input
@@ -323,7 +326,7 @@ const ProposalBuildup = () => {
                 </AddButton>
               </InputTagBox>
               <ProposalTagsWrapper>{benefitTags}</ProposalTagsWrapper>
-            </EventSubSection>
+            </EventSubSection> */}
 
             <EventSubSection style={{ padding: "0" }}>
               <Txt>Impact of the event on the community</Txt>
@@ -342,11 +345,12 @@ const ProposalBuildup = () => {
             </EventSubSection>
 
             <InputSeg style={{ marginTop: "3%" }}>
-              <Txt>Event Budget</Txt>
+              <Txt>Event Organizer's Ask</Txt>
+              <p style={{marginBottom:"1%", fontSize:'14px'}}>Highlight the amount required from sponsor.</p>
               <Input
                 type="text"
                 name="eventBudgetAddOn"
-                placeholder="Add the estimated total of what you need and amount required (optional) "
+                placeholder="Amount required."
                 onChange={otherFields}
                 defaultValue={state?.eventBudgetAddOn}
                 // defaultValue
@@ -359,12 +363,16 @@ const ProposalBuildup = () => {
                   color: "#FF2957",
                   fontWeight: "600",
                   marginRight: "15px",
+                  width: "fit-content",
+                  padding: "15px",
+                  display: "flex",
+                  alignItems:"center",
                 }}
               >
                 Back
               </AlternativeButton2>
               <AbsolutePrimaryButton type="submit">
-                Preview Proposal
+                Proceed to Preview Proposal
               </AbsolutePrimaryButton>
             </ButtonContainer>
           </ProposalInner>

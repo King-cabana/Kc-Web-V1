@@ -20,9 +20,15 @@ import Event from "./userFlows/pages/Event";
 import Proposal from "./userFlows/createProposal/Proposal";
 import Generated from "./userFlows/createProposal/Generated";
 import Inventory from "./userFlows/createProposal/budgetInventory/Inventory";
-import ProgressBar from "./userFlows/generateProposalFlow/progressBar/ProgressBar";
 import FlowBody from "./userFlows/generateProposalFlow/flowBody/FlowBody";
 import DefineAudience from "./userFlows/defineAudience/DefineAudience";
+import ProposalBuildup from "./userFlows/createProposal/proposalBuildup/ProposalBuildup";
+import ProposalPreviewCover from "./userFlows/createProposal/proposalPreview/ProposalPreviewCover";
+import ProposalPreviewContent from "./userFlows/createProposal/proposalPreview/ProposalPreviewContent";
+import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/ProposalPreviewA"
+import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB"
+import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC"
+
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -137,10 +143,23 @@ function App() {
               </Sidebar>
             }
           />
+
+          <Route
+            path="/event/proposal/proposalbuildup"
+            element={
+              <Sidebar>
+                <ProposalBuildup />
+              </Sidebar>
+            }
+          />
           <Route path="*" element={<NoPage />} />
           <Route path="/progress" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
-          
+          <Route path="/event/proposal/proposalpreviewcover" element={<ProposalPreviewCover />} />
+          <Route path="/event/proposal/proposalpreviewcontent" element={<ProposalPreviewContent />} />
+          <Route path="/event/proposal/proposalpreviewpage1" element={<ProposalPreviewA/>} />
+          <Route path="/event/proposal/proposalpreviewpage2" element={<ProposalPreviewB/>} />
+          <Route path="/event/proposal/proposalpreviewpage3" element={<ProposalPreviewC/>} />
 
         </Routes>
       </>
