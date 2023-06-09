@@ -1129,7 +1129,7 @@ const Inventory = ({ padding }) => {
               </CheckDetails>
             </InventorySection>
 
-            <ButtonContainer>
+            {/* <ButtonContainer>
               <AlternativeButton2
                 onClick={navigateBack}
                 style={{
@@ -1143,7 +1143,7 @@ const Inventory = ({ padding }) => {
               <AbsolutePrimaryButton onClick={handleSubmit}>
                 Next
               </AbsolutePrimaryButton>
-            </ButtonContainer>
+            </ButtonContainer> */}
           </BudgetUpload>
         </BudgetSection>
       </BudgetInventoryContainer>
