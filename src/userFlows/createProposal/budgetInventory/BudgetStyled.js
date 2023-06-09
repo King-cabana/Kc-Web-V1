@@ -55,7 +55,7 @@ export const BudgetTitle1 = styled.h1`
 export const BudgetTitle2 = styled.h1`
   font-weight: 700;
   font-size: 18px;
-  line-height: 32px;
+  line-height: 28px;
   color: #484848;
 
   @media screen and (max-width: 960px) {
@@ -74,7 +74,7 @@ export const BudgetInventorySubtitle = styled.p`
   margin-top: 5px;
 
   @media screen and (max-width: 960px) {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 18px;
     margin-top: 3px;
   }
@@ -113,6 +113,20 @@ export const BudgetSubtitle = styled.p`
     line-height: 18px;
   }
 `;
+
+export const InventoryPopUpTitle = styled.p`
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  /* display: flex; */
+  color: #484848;
+
+  @media screen and (max-width: 960px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+`;
+
 export const BudgetUpload = styled.section`
   display: flex;
   flex-direction: column;

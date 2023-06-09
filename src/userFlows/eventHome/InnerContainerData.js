@@ -14,6 +14,8 @@ import {
 const InnerContainerData = () => {
   const dispatch = useDispatch();
   const [eventListLength, setEventListLength] = useState(0);
+  const [proposals, setProposals] = useState();
+  const [proposalList, setProposalList] = useState(0);
   const [attendees, setAttendees] = useState(0);
   const { state } = useContext(EventOrganizerContext) || { state: {} };
   const { userEmail, axios, user, API_URL_2, navigate } = useContext(
@@ -21,9 +23,7 @@ const InnerContainerData = () => {
   );
 
   useEffect(() => {
-    setEventListLength(state?.eventList?.length || 0);
-    // console.log(state);
-    // console.log(state?.profileEmail);
+    setEventListLength(state?.eventList?.length);
 
     const fetchAttendees = async () => {
       let data = null;
@@ -43,9 +43,7 @@ const InnerContainerData = () => {
           const response = await axios.get(
             API_URL_2 + `profiles/events/attendees?email=${userEmail}`,
             {
-              headers: {
-                Authorization: `Bearer ${user?.token}`,
-              },
+              headers: { Authorization: `Bearer ${user?.token}` },
             }
           );
           data = response.data;
@@ -56,8 +54,25 @@ const InnerContainerData = () => {
         console.log(error);
       }
     };
+
+    const proposalsGenerated = async () => {
+      try {
+        const { data } = await axios.get(
+          API_URL_2 + `proposals/profile?id=${state?.id}`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        );
+        setProposals(data);
+        setProposalList(proposals?.length);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchAttendees();
-  }, [state, userEmail]);
+    proposalsGenerated();
+  }, [state, userEmail, proposals]);
 
   const eventReportData = [
     {
@@ -68,7 +83,7 @@ const InnerContainerData = () => {
     },
     {
       title: "Proposals generated",
-      counter: 0,
+      counter: proposalList,
       to: "/event/proposal",
     },
     {
