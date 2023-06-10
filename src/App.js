@@ -22,6 +22,8 @@ import ResetPassword from "./auth/signIn/ResetPassword";
 import Sidebar from "./userFlows/Dashboard/Sidebar";
 import DashboardHome from "./userFlows/pages/DashboardHome";
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
+import Budget from "./pages/Budget/Budget";
+// import BudgetDraft from "./pages/BudgetDraft";
 
 // const Events = lazy(() => import("./pages/events/Events"));
 
@@ -50,31 +52,14 @@ function App() {
           <Route path="/vendors" element={<Vendor />} />
           <Route path="/aboutUs" element={<About />} />
           <Route path="/contactUs" element={<ContactUs />} />
-          <Route
-            path="/createEvent/eventDetails"
-            element={<FirstCreateEvent />}
-          />
-          <Route
-            path="/createEvent/tagsTimelines"
-            element={<TimeLineEvent />}
-          />
-          <Route
-            path="/createEvent/eventPlanPreview"
-            element={<EventPlanPreview />}
-          />
+          <Route path="/createEvent/eventDetails" element={<FirstCreateEvent />}/>
+          <Route path="/createEvent/tagsTimelines" element={<TimeLineEvent />} />
+          <Route path="/createEvent/eventPlanPreview" element={<EventPlanPreview />}/>
           <Route path="/createEvent/submitted" element={<Submitted />} />
-
-          <Route
-            path="/dashboard"
-            element={
-              <Sidebar>
-                <DashboardHome />
-              </Sidebar>
-            }
-          />
+          <Route path="/dashboard" element={<Sidebar><DashboardHome/></Sidebar>}/>
           <Route path="*" element={<NoPage />} />
-        </Routes>
-      </>
+          <Route path="/budget" element={<Budget />} />
+        </Routes></>
     </Suspense>
   );
 }
