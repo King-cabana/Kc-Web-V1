@@ -32,7 +32,7 @@ const DefineAudience = ({ padding }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state?.proposal?.demographyDto);
-  console.log(state);
+  // console.log(state);
   const location = useLocation();
   const [otherGender, setOtherGender] = useState(
     Boolean(state?.genderListNew?.length)
