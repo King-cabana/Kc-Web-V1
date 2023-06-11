@@ -37,7 +37,7 @@ const Inventory = ({ padding }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.proposal);
+  const state = useSelector((state) => state?.proposal?.takeInventory);
   const [modal, setModal] = useState(false);
   const [selectedInventoryIndex, setSelectedInventoryIndex] = useState(null);
   const toggleModal = () => {
@@ -63,10 +63,10 @@ const Inventory = ({ padding }) => {
 
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
-    const arr = state[name];
+    const arr = state?.[name];
     const updatedArr = checked
       ? [...arr, value]
-      : arr.filter((item) => item !== value);
+      : arr?.filter((item) => item !== value);
     console.log(updatedArr);
     dispatch(editInventoryCheckbox({ category: name, item: updatedArr }));
     console.log(state);
@@ -148,7 +148,7 @@ const Inventory = ({ padding }) => {
                         <CheckboxWrapper
                           style={{ margin: "1rem 0rem", width: "100%" }}
                         >
-                          {inventory.items.map((item, itemIndex) => (
+                          {inventory?.items.map((item, itemIndex) => (
                             <Check key={itemIndex}>
                               <CheckInput
                                 type="checkbox"
