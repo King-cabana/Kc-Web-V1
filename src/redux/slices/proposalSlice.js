@@ -3,6 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   potentialImpacts: [],
   benefitList: [],
+  exclusiveContent: [],
+  signage: [],
+  databaseMarketing: [],
+  otherPromotionalOpportunities: [],
+  mediaProfile: [],
+  research: [],
+  contra: [],
+  production: [],
+  causeTieIn: [],
 };
 
 const clearObject = (obj) => {
@@ -26,24 +35,33 @@ const proposalSlice = createSlice({
     addFields: (state, { payload }) => {
       Object.assign(state, { [payload.name]: payload.value });
     },
-    addPotentialImpact: (state, {payload}) => {
+    addPotentialImpact: (state, { payload }) => {
       if (state.potentialImpacts.length < 5) {
         state.potentialImpacts.push(payload);
       }
     },
+    editInventoryCheckbox: (state, { payload }) => {
+      const { category, item } = payload;
+      Object.assign(state, { [category]: item });
+      //   console.log(payload);
+    },
     removePITag: (state, action) => {
-      const index = state.potentialImpacts.findIndex((tag) => tag === action.payload);
+      const index = state.potentialImpacts.findIndex(
+        (tag) => tag === action.payload
+      );
       if (index !== -1) {
         state.potentialImpacts.splice(index, 1);
       }
-    }, 
-    addBenefitList: (state, {payload}) => {
+    },
+    addBenefitList: (state, { payload }) => {
       if (state.benefitList.length < 5) {
         state.benefitList.push(payload);
       }
     },
     removeBLTag: (state, action) => {
-      const index = state.benefitList.findIndex((tag) => tag === action.payload);
+      const index = state.benefitList.findIndex(
+        (tag) => tag === action.payload
+      );
       if (index !== -1) {
         state.benefitList.splice(index, 1);
       }
@@ -56,6 +74,7 @@ const proposalSlice = createSlice({
 
 export const {
   addFields,
+  editInventoryCheckbox,
   addBenefitList,
   addPotentialImpact,
   removeBLTag,
