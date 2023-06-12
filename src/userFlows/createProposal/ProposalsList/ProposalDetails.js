@@ -35,18 +35,16 @@ const ProposalDetails = () => {
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.userDetails);
   const organizer = useSelector((state) => state.eventOrganizerProfile);
-  const [createdProposal, setCreatedProposal] = useState([]);
-  const [fresh, setFresh] = useState([]);
   const [optionsArr, setOptionsArr] = useState([]);
 
-  const toggleOptions = (proposalId) => {
+  const toggleOptions = (sponsorKey) => {
     setOptionsArr((prevOptionsArr) => {
       const index = prevOptionsArr.findIndex(
-        (options) => options.id === proposalId
+        (options) => options.id === sponsorKey
       );
       if (index === -1) {
         // options state for this proposal not found, create new options state
-        return [...prevOptionsArr, { id: proposalId, open: true }];
+        return [...prevOptionsArr, { id: sponsorKey, open: true }];
       } else {
         // options state for this proposal found, toggle the open property
         const newOptionsArr = [...prevOptionsArr];
@@ -82,47 +80,6 @@ const ProposalDetails = () => {
         setLoading(false);
       }
     };
-
-    const fetchProposals = async () => {
-      try {
-        const { data } = await axios.get(
-          API_URL_2 + `proposals/profile?id=${organizer?.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user?.token}`,
-            },
-          }
-        );
-        setCreatedProposal(data);
-        // console.log(createdProposal);
-        console.log(data);
-
-        // Filter createdProposal for events that are active
-        // const filteredProposals = createdProposal.filter((proposal) =>
-        //   data.some((event) => event.id === proposal.eventId)
-        // );
-
-        // Push the matching id and eventId into active
-        //     const updatedActive = filteredProposals.map((proposal) => {
-        //       const matchingEvent = data.find(
-        //         (event) => event.id === proposal.eventId
-        //       );
-        //       return {
-        //         ...matchingEvent,
-        //         proposalId: proposal.id,
-        //         proposalEventId: proposal.eventId,
-        //       };
-        //     });
-        //     setFresh(updatedActive);
-        //     console.log(fresh);
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProposals();
     fetchOrganizerEvents();
   }, [organizer?.id, user?.token]);
 
@@ -142,28 +99,27 @@ const ProposalDetails = () => {
               <tbody>
                 <TableHead>
                   <TdLarge style={{ fontWeight: "600", padding: "1rem" }}>
-                    Proposal for {data.eventName} <br />
+                    Proposal for {data?.eventName} <br />
                     <SM>
-                      {formatDate(data.eventStartDate)} at{" "}
-                      {formatTime(data.eventStartTime)}
+                      {formatDate(data?.eventStartDate)} at{" "}
+                      {formatTime(data?.eventStartTime)}
                     </SM>
                   </TdLarge>
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
                     <AbsolutePrimaryButton
                       onClick={() =>
-                        navigate(`/event/proposal/proposal-buildup/${data.id}`)
+                        navigate(`/event/proposal/proposal-buildup/${data?.id}`)
                       }
                     >
                       Generate Proposal
                     </AbsolutePrimaryButton>
                   </TdMedium>
                 </TableHead>
-
-                {createdProposal?.map((proposal, index) => (
+                {Object.keys(data?.proposals).map((sponsorKey) => (
                   <TableTr
-                    key={index}
-                    // backgroundColor={data.selected ? "#f9e6ea" : "white"}
-                    // onClick={() => handleApiClick(data, index)}
+                    key={sponsorKey}
+                    // backgroundColor={data?.selected ? "#f9e6ea" : "white"}
+                    onClick={() => toggleOptions(sponsorKey)}
                   >
                     <TdLarge style={{ padding: "1rem 0.5rem" }}>
                       <AlignCenter>
@@ -171,7 +127,7 @@ const ProposalDetails = () => {
                           style={{ marginRight: "0.5rem" }}
                           size="1.5rem"
                         />
-                        To {proposal.eventSponsor}
+                        To {data?.proposals[sponsorKey]}
                       </AlignCenter>
                     </TdLarge>
 
@@ -187,7 +143,7 @@ const ProposalDetails = () => {
                         <ViewButton
                           onClick={() =>
                             navigate(
-                              `/event/proposal/proposal-buildup/proposal-preview/${proposal.id}`
+                              `/event/proposal/proposal-buildup/proposal-preview/${sponsorKey}`
                             )
                           }
                         >
@@ -196,7 +152,7 @@ const ProposalDetails = () => {
                       </div>
                       <div>
                         <SlOptionsVertical
-                          onClick={() => toggleOptions(proposal.id)}
+                          onClick={() => toggleOptions(sponsorKey)}
                           style={{
                             position: "absolute",
                             right: "1rem",
@@ -205,8 +161,8 @@ const ProposalDetails = () => {
                           }}
                         />
                       </div>
-                      {optionsArr.some(
-                        (options) => options.id === proposal.id && options.open
+                      {optionsArr?.some(
+                        (options) => options?.id === sponsorKey && options?.open
                       ) && (
                         <OptionsContainer>
                           <OptionsText>Edit</OptionsText>

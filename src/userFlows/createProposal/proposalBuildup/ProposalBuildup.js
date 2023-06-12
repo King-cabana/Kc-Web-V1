@@ -9,16 +9,16 @@ import {
   ProposalInner,
   BenefitsTag,
   ProposalTagsWrapper,
+  InputSeg,
 } from "./ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { InputSeg } from "../../profile/organiserProfile/OrganiserProfileStyled";
 import {
   CustomWrapper,
   FormContainer,
   Input,
   Supported,
   UploadBtn,
-} from "../../event/createEvent/FirstCreateEventStyled";
+} from "../../../userFlows/createEvent/FirstCreateEventStyled";
 import { ButtonContainer, FileWrapper } from "../budgetInventory/BudgetStyled";
 import { useNavigate } from "react-router";
 import {
@@ -26,28 +26,25 @@ import {
   Delete,
   EventSubSection,
   InputTagBox,
-} from "../../event/createEvent/TimeLineEventsStyled";
+} from "../../../userFlows/createEvent/TimeLineEventsStyled";
 import { AiOutlineClose } from "react-icons/ai";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
-} from "../../components/button/button";
-import createProposal from "../../redux/service/createProposal";
+} from "../../../components/buttons/Buttons";
+import createProposal from "../../../redux/services/createProposal";
 import { useParams } from "react-router-dom";
 import {
-  addBenefitList,
   addFields,
   addPotentialImpact,
-  removeBLTag,
   removePITag,
-} from "../../redux/slices/proposalSlice";
+} from "../../../redux/slices/proposalSlice";
 
 const ProposalBuildup = () => {
   const [file, setFile] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [benefitList, setNewBenefitTag] = useState("");
   const [potentialImpacts, setPotentialImpacts] = useState("");
   const { id } = useParams();
 
@@ -109,21 +106,6 @@ const ProposalBuildup = () => {
     setIsSuccess(true);
   }, [file]);
 
-  const handleTag = () => {
-    if (benefitList !== "") {
-      const alreadyExists = state?.benefitList?.some(
-        (tag) => tag === benefitList
-      );
-      if (!alreadyExists && state?.benefitList?.length < 5) {
-        dispatch(addBenefitList(benefitList));
-      }
-      setNewBenefitTag("");
-    }
-  };
-  const handleRemoveTag = (tag) => {
-    dispatch(removeBLTag(tag));
-  };
-
   const handlePITag = () => {
     if (potentialImpacts !== "") {
       const alreadyExists = state?.potentialImpacts?.some(
@@ -142,32 +124,6 @@ const ProposalBuildup = () => {
   const otherFields = (e) => {
     dispatch(addFields({ name: e.target.name, value: e.target.value }));
   };
-
-  const benefitTags = state?.benefitList?.map((tag, index) => (
-    <div key={index}>
-      <BenefitsTag
-        style={{
-          marginTop: "2%",
-          width: "max-content",
-          border: "1px solid black",
-          color: "black",
-        }}
-      >
-        {tag}
-        <Delete
-          onClick={() => handleRemoveTag(tag)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#ff2957",
-          }}
-        >
-          <AiOutlineClose />
-        </Delete>
-      </BenefitsTag>
-    </div>
-  ));
 
   const impactTags = state?.potentialImpacts?.map((tag, index) => (
     <div key={index}>
@@ -223,7 +179,7 @@ const ProposalBuildup = () => {
             <BsChevronRight style={{ marginRight: "0.5rem" }} />
             <Txt
               style={{ cursor: "pointer" }}
-              onclick={navigateBack}
+              onClick={navigateBack}
               fontWeight="400"
             >
               Proposal
@@ -237,8 +193,8 @@ const ProposalBuildup = () => {
 
         <ProposalBackground>
           <ProposalInner onSubmit={handleProposalPreview}>
-            <InputSeg>
-              <Txt>Event Banner</Txt>
+            <Txt>Proposal Banner</Txt>
+            <InputSeg style={{ background: "white" }}>
               <FormContainer>
                 <FileWrapper style={{ width: "100%" }}>
                   <CustomWrapper>
@@ -296,7 +252,16 @@ const ProposalBuildup = () => {
                 ) : null}
               </FormContainer>
             </InputSeg>
-            <Txt>Sponsorship Request</Txt>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Txt>Sponsorship Request</Txt>
+            </div>
 
             <InputSeg style={{ marginTop: "2%" }}>
               <Txt>Name of Sponsor’s Organization</Txt>
@@ -308,22 +273,6 @@ const ProposalBuildup = () => {
                 // defaultValue={state.}
               />
             </InputSeg>
-
-            <EventSubSection style={{ padding: "0" }}>
-              <Txt>Benefits of sponsoring this event</Txt>
-              <InputTagBox>
-                <Input
-                  placeholder="List all benefits"
-                  type="text"
-                  value={benefitList}
-                  onChange={(event) => setNewBenefitTag(event.target.value)}
-                />
-                <AddButton type="button" onClick={handleTag}>
-                  Add
-                </AddButton>
-              </InputTagBox>
-              <ProposalTagsWrapper>{benefitTags}</ProposalTagsWrapper>
-            </EventSubSection>
 
             <EventSubSection style={{ padding: "0" }}>
               <Txt>Impact of the event on the community</Txt>
@@ -342,11 +291,14 @@ const ProposalBuildup = () => {
             </EventSubSection>
 
             <InputSeg style={{ marginTop: "3%" }}>
-              <Txt>Event Budget</Txt>
+              <Txt>Event Organizer's Ask</Txt>
+              <p style={{ marginBottom: "1%", fontSize: "14px" }}>
+                Highlight the amount required from sponsor.
+              </p>
               <Input
                 type="text"
                 name="eventBudgetAddOn"
-                placeholder="Add the estimated total of what you need and amount required (optional) "
+                placeholder="Amount required."
                 onChange={otherFields}
                 defaultValue={state?.eventBudgetAddOn}
                 // defaultValue
@@ -359,12 +311,16 @@ const ProposalBuildup = () => {
                   color: "#FF2957",
                   fontWeight: "600",
                   marginRight: "15px",
+                  width: "fit-content",
+                  padding: "15px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 Back
               </AlternativeButton2>
               <AbsolutePrimaryButton type="submit">
-                Preview Proposal
+                Proceed to Preview Proposal
               </AbsolutePrimaryButton>
             </ButtonContainer>
           </ProposalInner>

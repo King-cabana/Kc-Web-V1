@@ -539,7 +539,7 @@ export const LogoPicture = styled.img`
   height: 152px;
   border-radius: 50px;
   position: absolute;
-  top: 150px;
+  top: 200px;
   left: 60px;
   object-fit: cover;
   background-color: #f5f5f5;

@@ -1,8 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { checkBox } from "../../userFlows/defineAudience/CheckBoxData";
 
 const initialState = {
+  budget: {
+    budgetDetails: [{}, {}],
+  },
+  demographyDto: {
+    ageRange: [],
+    income: [],
+    genderList: [],
+    genderListNew: [],
+    religionList: [],
+    religionListNew: [],
+    educationLevelList: [],
+    educationLevelListNew: [],
+    employmentStatusList: [],
+    employmentStatusListNew: [],
+    skillLevelList: [],
+    skillLevelListNew: [],
+  },
+  takeInventory: {
+    exclusiveContent: [],
+    signage: [],
+    databaseMarketing: [],
+    otherPromotionalOpportunities: [],
+    mediaProfile: [],
+    research: [],
+    contra: [],
+    production: [],
+    causeTieIn: [],
+  },
   potentialImpacts: [],
-  benefitList: [],
 };
 
 const clearObject = (obj) => {
@@ -26,28 +54,52 @@ const proposalSlice = createSlice({
     addFields: (state, { payload }) => {
       Object.assign(state, { [payload.name]: payload.value });
     },
-    addPotentialImpact: (state, {payload}) => {
+    addPotentialImpact: (state, { payload }) => {
       if (state.potentialImpacts.length < 5) {
         state.potentialImpacts.push(payload);
       }
     },
     removePITag: (state, action) => {
-      const index = state.potentialImpacts.findIndex((tag) => tag === action.payload);
+      const index = state.potentialImpacts.findIndex(
+        (tag) => tag === action.payload
+      );
       if (index !== -1) {
         state.potentialImpacts.splice(index, 1);
       }
-    }, 
-    addBenefitList: (state, {payload}) => {
-      if (state.benefitList.length < 5) {
-        state.benefitList.push(payload);
-      }
     },
-    removeBLTag: (state, action) => {
-      const index = state.benefitList.findIndex((tag) => tag === action.payload);
-      if (index !== -1) {
-        state.benefitList.splice(index, 1);
-      }
+    editInventoryCheckbox: (state, { payload }) => {
+      const { category, item } = payload;
+      Object.assign(state?.takeInventory, { [category]: item });
+      //   console.log(payload);
     },
+    editAudienceCheckbox: (state, { payload }) => {
+      const { category, item } = payload;
+      Object.assign(state?.demographyDto, { [category]: item });
+      //   console.log(payload);
+    },
+    addToList: (state, action) => {
+      const { listType, newItem } = action.payload;
+      const newList = newItem
+        .trim()
+        .split(",")
+        .map((item) => item.trim());
+
+      let finalArray;
+      if (Array.isArray(state.demographyDto[listType])) {
+        finalArray = [
+          ...[...state.demographyDto[listType]].filter((x) =>
+            checkBox[listType].includes(x)
+          ),
+          ...newList,
+        ];
+      } else {
+        finalArray = newList;
+      }
+
+      state.demographyDto[listType] = finalArray.filter((x) => x !== "");
+      state.demographyDto[`${listType}New`] = newList.filter((x) => x !== "");
+    },
+
     clearAllFields: (state) => {
       return clearObject(initialState);
     },
@@ -56,9 +108,10 @@ const proposalSlice = createSlice({
 
 export const {
   addFields,
-  addBenefitList,
+  editInventoryCheckbox,
+  editAudienceCheckbox,
+  addToList,
   addPotentialImpact,
-  removeBLTag,
   removePITag,
   clearAllFields,
 } = proposalSlice.actions;

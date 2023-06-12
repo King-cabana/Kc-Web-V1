@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// const API_URL = "https://api.kingcabana.com/eventuser/";
+// const API_URL = "http://localhost:8081/eventuser/";
 const API_URL = "http://localhost:8081/eventuser/";
-// export const API_URL_2 = "https://api.kingcabana.com/";
+// export const API_URL_2 = "http://localhost:8081/";
 export const API_URL_2 = "http://localhost:8081/";
 export const GOOGLE_URL = "http://localhost:8081/login/google";
 

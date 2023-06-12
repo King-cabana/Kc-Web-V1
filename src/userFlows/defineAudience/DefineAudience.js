@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ChechkBox,
   Form,
-  RadioButton,
   RadioButtonWrapper,
   InputOthers,
   Valueholder,
@@ -25,42 +24,36 @@ import {
 } from "../../components/buttons/Buttons";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  editGenerally,
-  editCheckbox,
+  editAudienceCheckbox,
   addToList,
-} from "../../redux/slices/createEventSlice";
+} from "../../redux/slices/proposalSlice";
 
 const DefineAudience = ({ padding }) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.createEvent);
+  const navigate = useNavigate();
+  const state = useSelector((state) => state?.proposal?.demographyDto);
+  // console.log(state);
   const location = useLocation();
   const [otherGender, setOtherGender] = useState(
-    Boolean(state.genderListNew?.length)
+    Boolean(state?.genderListNew?.length)
   );
   const [otherReligion, setOtherReligion] = useState(
-    Boolean(state.religionListNew?.length)
+    Boolean(state?.religionListNew?.length)
   );
   const [otherSkillLevel, setOtherSkillLevel] = useState(
-    Boolean(state.skillLevelListNew?.length)
+    Boolean(state?.skillLevelListNew?.length)
   );
   const [otherEmployment, setOtherEmployment] = useState(
-    Boolean(state.employmentStatusListNew?.length)
+    Boolean(state?.employmentStatusListNew?.length)
   );
   const [otherEducation, setOtherEducation] = useState(
-    Boolean(state.educationLevelListNew?.length)
+    Boolean(state?.educationLevelListNew?.length)
   );
-  const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [religion, setReligion] = useState("");
   const [skill, setSkill] = useState("");
   const [employment, setEmployment] = useState("");
   const [education, setEducation] = useState("");
-
-  const navigate = useNavigate();
-
-  const change = (e) => {
-    dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
-  };
 
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
@@ -68,9 +61,8 @@ const DefineAudience = ({ padding }) => {
     const updatedArr = checked
       ? [...arr, value]
       : arr.filter((item) => item !== value);
-    dispatch(editCheckbox({ category: name, item: updatedArr }));
+    dispatch(editAudienceCheckbox({ category: name, item: updatedArr }));
   };
-  
 
   const navigateBack = (e) => {
     e.preventDefault();
@@ -79,9 +71,6 @@ const DefineAudience = ({ padding }) => {
 
   const navigateNext = (e) => {
     e.preventDefault();
-    age
-      ? dispatch(addToList({ listType: "ageList", newItem: age }))
-      : dispatch(addToList({ listType: "ageList", newItem: "" }));
     gender
       ? dispatch(addToList({ listType: "genderList", newItem: gender }))
       : dispatch(addToList({ listType: "genderList", newItem: "" }));
@@ -101,7 +90,7 @@ const DefineAudience = ({ padding }) => {
           addToList({ listType: "educationLevelList", newItem: education })
         )
       : dispatch(addToList({ listType: "educationLevelList", newItem: "" }));
-    navigate("/createevent/budget&inventory/1");
+    // navigate("/createevent/budget&inventory/1");
   };
 
   return (
@@ -138,16 +127,15 @@ const DefineAudience = ({ padding }) => {
             What age range best describes your community?
           </BudgetInventorySubtitle>
           <Form>
-
             <div style={{ marginTop: "0.5%" }}>
               <RadioButtonWrapper>
                 <Valueholder>
                   <ChechkBox
-                    name="ageList"
+                    name="ageRange"
                     id="15"
                     value="15 and younger"
                     checked={
-                      state.ageList?.includes("15 and younger") ? true : false
+                      state.ageRange?.includes("15 and younger") ? true : false
                     }
                     onChange={handleCheckboxChange}
                   />
@@ -157,12 +145,10 @@ const DefineAudience = ({ padding }) => {
               <RadioButtonWrapper>
                 <Valueholder>
                   <ChechkBox
-                    name="ageList"
+                    name="ageRange"
                     id="16"
                     value="16-29"
-                    checked={
-                      state.ageList?.includes("16-29") ? true : false
-                    }
+                    checked={state.ageRange?.includes("16-29") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="16">16-29</Label>
@@ -171,12 +157,10 @@ const DefineAudience = ({ padding }) => {
               <RadioButtonWrapper>
                 <Valueholder>
                   <ChechkBox
-                    name="ageList"
+                    name="ageRange"
                     id="30"
                     value="30-45"
-                    checked={
-                      state.ageList?.includes("30-45") ? true : false
-                    }
+                    checked={state.ageRange?.includes("30-45") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="30">30-45</Label>
@@ -185,12 +169,10 @@ const DefineAudience = ({ padding }) => {
               <RadioButtonWrapper>
                 <Valueholder>
                   <ChechkBox
-                    name="ageList"
+                    name="ageRange"
                     id="46"
                     value="46-59"
-                    checked={
-                      state.ageList?.includes("46-59") ? true : false
-                    }
+                    checked={state.ageRange?.includes("46-59") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="46">46-59</Label>
@@ -199,11 +181,11 @@ const DefineAudience = ({ padding }) => {
               <RadioButtonWrapper>
                 <Valueholder>
                   <ChechkBox
-                    name="ageList"
+                    name="ageRange"
                     id="60"
                     value="60 and above"
                     checked={
-                      state.ageList?.includes("60 and above") ? true : false
+                      state.ageRange?.includes("60 and above") ? true : false
                     }
                     onChange={handleCheckboxChange}
                   />
@@ -224,10 +206,10 @@ const DefineAudience = ({ padding }) => {
             <div style={{ marginTop: "2%" }}>
               <RadioButtonWrapper>
                 <Valueholder>
-                  <RadioButton
+                  <ChechkBox
                     name="income"
                     id="0"
-                    onChange={change}
+                    onChange={handleCheckboxChange}
                     value="Below #50,000"
                     checked={
                       state.income?.includes("Below #50,000") ? true : false
@@ -238,10 +220,10 @@ const DefineAudience = ({ padding }) => {
               </RadioButtonWrapper>
               <RadioButtonWrapper>
                 <Valueholder>
-                  <RadioButton
+                  <ChechkBox
                     name="income"
                     id="50,000"
-                    onChange={change}
+                    onChange={handleCheckboxChange}
                     value="#50,000 - #99,999"
                     checked={
                       state.income?.includes("#50,000 - #99,999") ? true : false
@@ -252,13 +234,15 @@ const DefineAudience = ({ padding }) => {
               </RadioButtonWrapper>
               <RadioButtonWrapper>
                 <Valueholder>
-                  <RadioButton
+                  <ChechkBox
                     name="income"
                     id="100,000"
-                    onChange={change}
+                    onChange={handleCheckboxChange}
                     value="#100,000 - #499,999"
                     checked={
-                      state.income?.includes("#100,000 - #499,999") ? true : false
+                      state.income?.includes("#100,000 - #499,999")
+                        ? true
+                        : false
                     }
                   />
                   <Label htmlFor="100,000">#100,000 - #499,999</Label>
@@ -266,13 +250,15 @@ const DefineAudience = ({ padding }) => {
               </RadioButtonWrapper>
               <RadioButtonWrapper>
                 <Valueholder>
-                  <RadioButton
-                    onChange={change}
-                    value="500,000 - 999,999"
+                  <ChechkBox
+                    onChange={handleCheckboxChange}
+                    value="#500,000 - #999,999"
                     name="income"
                     id="500,000"
                     checked={
-                      state.income?.includes("#500,000 - #999,999") ? true : false
+                      state.income?.includes("#500,000 - #999,999")
+                        ? true
+                        : false
                     }
                   />
                   <Label htmlFor="500,000">#500,000 - 999,999</Label>
@@ -280,16 +266,18 @@ const DefineAudience = ({ padding }) => {
               </RadioButtonWrapper>
               <RadioButtonWrapper>
                 <Valueholder>
-                  <RadioButton
+                  <ChechkBox
                     name="income"
-                    id="100,000,000"
-                    onChange={change}
-                    value="#100,000,000 and above"
+                    id="1,000,000"
+                    onChange={handleCheckboxChange}
+                    value="#1,000,000 and above"
                     checked={
-                      state.income?.includes("#100,000,000 and above") ? true : false
+                      state.income?.includes("#1,000,000 and above")
+                        ? true
+                        : false
                     }
                   />
-                  <Label htmlFor="100,000,000">#100,000,000 and above</Label>
+                  <Label htmlFor="1,000,000">#1,000,000 and above</Label>
                 </Valueholder>
               </RadioButtonWrapper>
             </div>
@@ -500,7 +488,7 @@ const DefineAudience = ({ padding }) => {
                     }
                     onChange={handleCheckboxChange}
                   />
-                  <Label htmlFor="retired">Disabled</Label>
+                  <Label htmlFor="disabled">Disabled</Label>
                 </Valueholder>
               </RadioButtonWrapper>
               <RadioButtonWrapper>
@@ -554,35 +542,23 @@ const DefineAudience = ({ padding }) => {
                 <Valueholder>
                   <ChechkBox
                     name="educationLevelList"
-                    id="undergraduate"
-                    value="Under Graduate"
+                    id="college"
+                    value="College/Polytechnic/University/Post Graduate"
                     checked={
-                      state.educationLevelList?.includes("Under Graduate")
+                      state.educationLevelList?.includes(
+                        "College/Polytechnic/University/Post Graduate"
+                      )
                         ? true
                         : false
                     }
                     onChange={handleCheckboxChange}
                   />
-                  <Label htmlFor="undergraduate">Under Graduate</Label>
+                  <Label htmlFor="college">
+                    College/Polytechnic/University/Post Graduate
+                  </Label>
                 </Valueholder>
               </RadioButtonWrapper>
-              <RadioButtonWrapper>
-                <Valueholder>
-                  <ChechkBox
-                    name="educationLevelList"
-                    id="postGraduate"
-                    value="Post Graduate"
-                    checked={
-                      state.educationLevelList?.includes("Post Graduate")
-                        ? true
-                        : false
-                    }
-                    onChange={handleCheckboxChange}
-                  />
-                  <Label htmlFor="postGraduate">Post Graduate</Label>
-                </Valueholder>
-              </RadioButtonWrapper>
-             
+
               <RadioButtonWrapper>
                 <Valueholder>
                   <RadioInput
@@ -606,82 +582,81 @@ const DefineAudience = ({ padding }) => {
           </Form>
 
           <div style={{ marginTop: "2%" }}>
-          <InputText fontWeight={500}>Skill Level</InputText>
-          <BudgetInventorySubtitle>
-          Select area of set skills common to your event audience or specify for “others”.
-          </BudgetInventorySubtitle>
-          <Form>
-            <div style={{ marginTop: "2%" }}>
-              <RadioButtonWrapper>
-                <Valueholder>
-                  <ChechkBox
-                    name="skillLevelList"
-                    id="unskilled"
-                    value="Unskilled"
-                    checked={
-                      state.skillLevelList?.includes("Unskilled")
-                        ? true
-                        : false
-                    }
-                    onChange={handleCheckboxChange}
-                  />
-                  <Label htmlFor="unskilled">Unskilled</Label>
-                </Valueholder>
-              </RadioButtonWrapper>
-              <RadioButtonWrapper>
-                <Valueholder>
-                  <ChechkBox
-                    name="skillLevelList"
-                    id="semiSkilled"
-                    value="Semi-Skilled"
-                    checked={
-                      state.skillLevelList?.includes("Semi-Skilled")
-                        ? true
-                        : false
-                    }
-                    onChange={handleCheckboxChange}
-                  />
-                  <Label htmlFor="semiSkilled">Semi-Skilled</Label>
-                </Valueholder>
-              </RadioButtonWrapper>
-              <RadioButtonWrapper>
-                <Valueholder>
-                  <ChechkBox
-                    name="skillLevelList"
-                    id="skilled"
-                    value="Skilled"
-                    checked={
-                      state.skillLevelList?.includes("Skilled")
-                        ? true
-                        : false
-                    }
-                    onChange={handleCheckboxChange}
-                  />
-                  <Label htmlFor="skilled">Skilled</Label>
-                </Valueholder>
-              </RadioButtonWrapper>
-              <RadioButtonWrapper>
-                <Valueholder>
-                  <RadioInput
-                    type="checkbox"
-                    id="otherSkillLevel"
-                    name="skillLevelList"
-                    onClick={() => setOtherSkillLevel(!otherSkillLevel)}
-                  />
-                  <Label htmlFor="otherSkillLevel">Others</Label>
-                </Valueholder>
-              </RadioButtonWrapper>
-              <InputOthers
-                type="text"
-                name="skillLevelList"
-                placeholder="Specify for others(separating each with comma[,])"
-                display={otherSkillLevel ? "flex" : "none"}
-                defaultValue={state.skillLevelListNew?.join(", ")}
-                onChange={(e) => setSkill(e.target.value)}
-              ></InputOthers>
-            </div>
-          </Form>
-        </div>
+            <InputText fontWeight={500}>Skill Level</InputText>
+            <BudgetInventorySubtitle>
+              Select area of set skills common to your event audience or specify
+              for “others”.
+            </BudgetInventorySubtitle>
+            <Form>
+              <div style={{ marginTop: "2%" }}>
+                <RadioButtonWrapper>
+                  <Valueholder>
+                    <ChechkBox
+                      name="skillLevelList"
+                      id="unskilled"
+                      value="Unskilled"
+                      checked={
+                        state.skillLevelList?.includes("Unskilled")
+                          ? true
+                          : false
+                      }
+                      onChange={handleCheckboxChange}
+                    />
+                    <Label htmlFor="unskilled">Unskilled</Label>
+                  </Valueholder>
+                </RadioButtonWrapper>
+                <RadioButtonWrapper>
+                  <Valueholder>
+                    <ChechkBox
+                      name="skillLevelList"
+                      id="semiSkilled"
+                      value="Semi-skilled"
+                      checked={
+                        state.skillLevelList?.includes("Semi-skilled")
+                          ? true
+                          : false
+                      }
+                      onChange={handleCheckboxChange}
+                    />
+                    <Label htmlFor="semiSkilled">Semi-skilled</Label>
+                  </Valueholder>
+                </RadioButtonWrapper>
+                <RadioButtonWrapper>
+                  <Valueholder>
+                    <ChechkBox
+                      name="skillLevelList"
+                      id="skilled"
+                      value="Skilled"
+                      checked={
+                        state.skillLevelList?.includes("Skilled") ? true : false
+                      }
+                      onChange={handleCheckboxChange}
+                    />
+                    <Label htmlFor="skilled">Skilled</Label>
+                  </Valueholder>
+                </RadioButtonWrapper>
+                <RadioButtonWrapper>
+                  <Valueholder>
+                    <RadioInput
+                      type="checkbox"
+                      id="otherSkillLevel"
+                      name="skillLevelList"
+                      onClick={() => setOtherSkillLevel(!otherSkillLevel)}
+                    />
+                    <Label htmlFor="otherSkillLevel">Others</Label>
+                  </Valueholder>
+                </RadioButtonWrapper>
+                <InputOthers
+                  type="text"
+                  name="skillLevelList"
+                  placeholder="Specify for others(separating each with comma[,])"
+                  display={otherSkillLevel ? "flex" : "none"}
+                  defaultValue={state.skillLevelListNew?.join(", ")}
+                  onChange={(e) => setSkill(e.target.value)}
+                ></InputOthers>
+              </div>
+            </Form>
+          </div>
 
           {location.pathname === "/eventPlanPreview" ? null : (
             <ButtonContainer style={{ margin: "0rem" }}>

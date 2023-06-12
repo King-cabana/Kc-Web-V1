@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// const API_URL_2 = "https://api.kingcabana.com/proposals/event/";
+// const API_URL_2 = "http://localhost:8081/proposals/event/";
 
 // export const fetchProposalPreview = (id, token) => async (dispatch) => {
 //     try {

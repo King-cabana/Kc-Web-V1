@@ -50,7 +50,7 @@ const FirstCreateEvent = ({ padding }) => {
 
   const profileEmail = localStorage.getItem("profileEmail");
   const userEmail = localStorage.getItem("email");
-  // console.log(userEmail);
+  // console.log(userEmail);;
   // console.log(profileEmail);
   dispatch(editGenerally({ name: "keyContactEmail", value: email }));
 

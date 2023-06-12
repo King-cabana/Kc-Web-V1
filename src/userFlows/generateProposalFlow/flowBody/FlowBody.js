@@ -12,6 +12,7 @@ import {
 import { RxCaretLeft } from "react-icons/rx";
 import { KBTextL } from "../../../components/fonts/Fonts";
 import DefineAudience from "../../defineAudience/DefineAudience";
+import Inventory from "../../createProposal/budgetInventory/Inventory";
 
 const FlowBody = () => {
   const [activeStep, setActiveStep] = useState(() => {
@@ -40,7 +41,7 @@ const FlowBody = () => {
       case 0:
         return <EmptyEvent />;
       case 1:
-        return <EmptyEvent />;
+        return <Inventory />;
       case 2:
         return <DefineAudience />;
       default:
