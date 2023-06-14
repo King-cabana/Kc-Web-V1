@@ -28,6 +28,8 @@ import ProposalPreviewContent from "./userFlows/createProposal/proposalPreview/P
 import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/ProposalPreviewA"
 import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB"
 import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC"
+import Budget from "./pages/Budget/Budget";
+// import BudgetDraft from "./pages/BudgetDraft";
 
 
 const EditOrganiserProfile = lazy(() =>
@@ -82,7 +84,6 @@ function App() {
           <Route path="/vendors" element={<Vendor />} />
           <Route path="/aboutUs" element={<About />} />
           <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/guestRegistration/" element={<GuestView />} />
           <Route path="/guestRegistration/:id" element={<GuestView />} />
           <Route
             path="/event/planning/view-completed-event/:id"
@@ -160,9 +161,16 @@ function App() {
           <Route path="/event/proposal/proposalpreviewpage1" element={<ProposalPreviewA/>} />
           <Route path="/event/proposal/proposalpreviewpage2" element={<ProposalPreviewB/>} />
           <Route path="/event/proposal/proposalpreviewpage3" element={<ProposalPreviewC/>} />
-
+    
+          <Route path="/createEvent/eventDetails" element={<FirstCreateEvent />}/>
+          <Route path="/createEvent/tagsTimelines" element={<TimeLineEvent />} />
+          <Route path="/createEvent/eventPlanPreview" element={<EventPlanPreview />}/>
+          <Route path="/createEvent/submitted" element={<Submitted />} />
+          <Route path="/dashboard" element={<Sidebar><DashboardHome/></Sidebar>}/>
+          <Route path="*" element={<NoPage />} />
+          <Route path="/budget" element={<Budget />} />
         </Routes>
-      </>
+        </>
     </Suspense>
   );
 }

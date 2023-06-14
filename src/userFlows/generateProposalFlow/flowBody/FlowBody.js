@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import CreateEventTopBar from "../../topBar/CreateEventTopBar/CreateEventTopBar";
-import EmptyEvent from "../../emptyEvent/EmptyEvent";
 import ProgressBar from "../progressBar/ProgressBar";
 import {
   WavyBackground,
@@ -13,6 +12,7 @@ import { RxCaretLeft } from "react-icons/rx";
 import { KBTextL } from "../../../components/fonts/Fonts";
 import DefineAudience from "../../defineAudience/DefineAudience";
 import Inventory from "../../createProposal/budgetInventory/Inventory";
+import Budget from "../../../pages/Budget/Budget";
 
 const FlowBody = () => {
   const [activeStep, setActiveStep] = useState(() => {
@@ -39,7 +39,7 @@ const FlowBody = () => {
   function getSectionComponent() {
     switch (activeStep) {
       case 0:
-        return <EmptyEvent />;
+        return <Budget />;
       case 1:
         return <Inventory />;
       case 2:
