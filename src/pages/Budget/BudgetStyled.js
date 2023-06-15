@@ -3,9 +3,7 @@ import styled from "styled-components";
 export const BudgetBody = styled.div`
     background-color: #eff3f8;
     padding: 3%;
-    /* width: 100%;
-    height: fit-content;
-    overflow-x: scroll; */
+    width: 100%;
 `
 export const BudgetDraft = styled.div`
     h1, p{
@@ -14,14 +12,14 @@ export const BudgetDraft = styled.div`
     h1 {
         font-weight: 700;
         font-size: 24px;
-        line-height: 32px;
+        line-height: 32pxx
     }
     p{
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
     }
-    @media screen and (max-width: 768px) {
+    /* @media screen and (max-width: 768px) {
     padding: 1rem;
     font-size: 30px;
     font-size: 30px;
@@ -30,10 +28,16 @@ export const BudgetDraft = styled.div`
     padding: 20px 0;
     line-height: 1.2;
     width: 100%; 
-    padding-top: 5%;
+    height: 60px;
+    padding: 0px 40px;
     margin-top: 5%; 
-
-  }
+  } */
+`;
+export const BudgetBox = styled.div`
+  display: flex;
+  align-items: center;  
+  justify-content: space-between;
+  margin: 20px 0;
 `;
 
 export const BudgetHeader = styled.div `
@@ -42,7 +46,19 @@ export const BudgetHeader = styled.div `
     margin-top: 20px;
     padding-left: 120px;
     justify-content: space-between;
-`;
+
+    @media screen and (max-width: 768px) {
+    padding: 1rem;
+    font-size: 1rem;
+    font-size: 1rem;
+    line-height: 40px;
+    margin: 20px 0;
+    padding: 20px 0;
+    line-height: 1.2;
+    width: 100%; 
+    padding-top: 5%;
+    margin-top: 5%; 
+    }`;
 
 export const BudgetItem = styled.div`
     display: flex;
@@ -53,11 +69,12 @@ export const BudgetItem = styled.div`
     padding: 25px;
     height: 60px;
     margin-top: 40px;
-`
+    overflow: scroll;
+;`
 export const Input = styled.input`
     display: flex;
     flex-direction: row;
-    align-items: center;
+    /* align-items: center; */
     gap: 25px;
     padding-left: 10px;
     width: 454px;
@@ -68,18 +85,12 @@ export const Input = styled.input`
     outline: none;
 ;
 `
-export const Click = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-`
 export const TextArea = styled.input`
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     padding: 15px;
     gap: 25px;
     width: 454px;
@@ -108,6 +119,7 @@ export const Button = styled.div`
     flex-direction: row;
     align-items: center;
     padding: 15px;
+    margin-left: 9%;
     gap: 8px;
     width: 454px;
     height: 60px;
@@ -116,7 +128,6 @@ export const Button = styled.div`
     background: #FFFFFF;
     border: 1px solid rgba(0, 104, 255, 0.1);
     border-radius: 10px;
-    margin-left: 110px;
     cursor: pointer;
 `
 export const Total = styled.div`
@@ -124,6 +135,7 @@ export const Total = styled.div`
     justify-content: flex-end;
     gap: 10px;
     align-items: center;
+    margin-bottom: 20px;
 `;
 export const Sum = styled.div`
     display: flex;
@@ -138,6 +150,16 @@ export const Sum = styled.div`
     border-radius: 10px;
 `;
 
+export const ScrollableContainer = styled.div`
+  overflow: auto;
+  height: 100vh;
+  /* white-space: nowrap; */
+`;
+export const Scrollable = styled.div`
+  overflow: auto;
+  height: 300px;
+  /* white-space: nowrap; */
+`;
 
 export const ButtonContainer = styled.footer`
   background-color: white;
