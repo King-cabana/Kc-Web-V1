@@ -23,17 +23,40 @@ import {
   TableRow,
 } from "./ProposalPreviewCoverStyled";
 import styled from "styled-components";
+import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
 const ProposalPreviewC = () => {
   const [loading, setLoading] = useState(true);
+  const totalPages = 5;
+  const [currentPage, setCurrentPage] = useState(5);
+
   const navigate = useNavigate();
 
   const navigateBack = () => {
-    navigate("/event/proposal/proposalpreviewpage2");
+    navigate("/event/proposal/proposalpreview-page4");
   };
 
   const navigateNext = () => {
     navigate("/");
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    navigate(`/event/proposal/proposalpreview-page${pageNumber}`);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage - 1}`);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage + 1}`);
+    }
   };
 
   return (
@@ -124,6 +147,13 @@ const ProposalPreviewC = () => {
             </div>
           </div>
         </PreviewLogoBg>
+        <ProposalPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPreviousPage={handlePreviousPage}
+          onNextPage={handleNextPage}
+          handlePageChange={handlePageChange}
+        />
 
         <ButtonContainer
           style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}

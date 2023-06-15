@@ -17,9 +17,13 @@ import {
 import { BsChevronRight } from "react-icons/bs";
 import TestImage from "../../../assets/images/Wedding.jpg";
 import { CoverDetailsHolder, CoverImageHolder } from "./ProposalPreviewCoverStyled";
+import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
 const ProposalPreviewCover = () => {
   const [loading, setLoading] = useState(true);
+  const totalPages = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+
   const navigate = useNavigate();
 
   const navigateBack = () => {
@@ -27,9 +31,27 @@ const ProposalPreviewCover = () => {
   };
 
   const navigateNext = () => {
-    navigate("/event/proposal/proposalpreviewcontent");
+    navigate("/event/proposal/proposalpreview-page2");
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    navigate(`/event/proposal/proposalpreview-page${pageNumber}`);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage - 1}`);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage + 1}`);
+    }
+  };
   return (
     <>
       <TopBar marginBottom="1rem" />
@@ -59,23 +81,28 @@ const ProposalPreviewCover = () => {
         </CoverImageHolder>
 
         <CoverDetailsHolder>
+          <div style={{ width: "30%", height: "30vh" }}>
+            <h3>Prepared by</h3>
+            <p>Kofoworola Ademola Hall</p>
+            <p>Lanisa Fayomika</p>
+            <p>ademolakohall@gmail.com</p>
+            <p>+2348025500567</p>
+          </div>
 
-            <div style={{width:'30%', height:'30vh'}}>
-                <h3>Prepared by</h3>
-                <p>Kofoworola Ademola Hall</p>
-                <p>Lanisa Fayomika</p>
-                <p>ademolakohall@gmail.com</p>
-                <p>+2348025500567</p>
-            </div>
-
-            <div style={{width:'30%', height:'30vh', textAlign:'right'}}>
-                <h3>Prepared For</h3>
-                <p>First Bank PLC</p>
-             
-            </div>
-
+          <div style={{ width: "30%", height: "30vh", textAlign: "right" }}>
+            <h3>Prepared For</h3>
+            <p>First Bank PLC</p>
+          </div>
         </CoverDetailsHolder>
-        
+        <ProposalPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPreviousPage={handlePreviousPage}
+          onNextPage={handleNextPage}
+          handlePageChange={handlePageChange}
+        />
+
+     
         <ButtonContainer
           style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
         >

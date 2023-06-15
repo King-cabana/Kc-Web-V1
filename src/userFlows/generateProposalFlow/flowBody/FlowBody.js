@@ -39,11 +39,11 @@ const FlowBody = () => {
   function getSectionComponent() {
     switch (activeStep) {
       case 0:
-        return <Budget />;
+        return <Budget activeStep={activeStep} setActiveStep={setActiveStep} />;
       case 1:
-        return <Inventory />;
+        return <Inventory activeStep={activeStep} setActiveStep={setActiveStep} />;
       case 2:
-        return <DefineAudience />;
+        return <DefineAudience activeStep={activeStep} setActiveStep={setActiveStep} />;
       default:
         return null;
     }
@@ -72,14 +72,6 @@ const FlowBody = () => {
 
         <div style={{ padding: "5px"}}></div>
         {getSectionComponent()}
-        {activeStep !== 0 && activeStep !== steps.length - 1 && (
-          <button onClick={() => setActiveStep(activeStep - 1)}>
-            Previous
-          </button>
-        )}
-        {activeStep !== steps.length - 1 && (
-          <button onClick={() => setActiveStep(activeStep + 1)}>Next</button>
-        )}
       </WavyBackground>
     </>
   );

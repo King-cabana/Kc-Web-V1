@@ -20,7 +20,7 @@ import click from "./../../assets/images/Click.svg"
 import { AbsolutePrimaryButton, AlternativeButton2 } from '../../components/buttons/Buttons.js';
 
 
-const Budget = () => {
+const Budget = ({ activeStep, setActiveStep }) => {
 const [budget, setBudget] = useState([])
 const inputs = <BudgetItem>
       <Click><img src={click} alt=''/></Click>
@@ -33,12 +33,14 @@ const handleClick = () => {
 }
   
 const navigate = useNavigate();
+
 const navigateBack = () => {
-  navigate("");
+  navigate("/");
 }
-const navigateNext = () => {
-  navigate("");
-}
+
+const handleNext = () => {
+  setActiveStep(activeStep + 1);
+};
 
   return (
     <>
@@ -71,7 +73,7 @@ const navigateNext = () => {
         </Total>
         <ButtonContainer style={{ margin: "0rem" }}>
               <AlternativeButton2 onClick={navigateBack} style={{color: "#FF2957",fontWeight: "600", marginRight: "2rem", }}>Back</AlternativeButton2>
-              <AbsolutePrimaryButton onClick={navigateNext}>Save & Continue</AbsolutePrimaryButton>
+              <AbsolutePrimaryButton onClick={handleNext}>Save & Continue</AbsolutePrimaryButton>
             </ButtonContainer>
       </BudgetBody>
     </>

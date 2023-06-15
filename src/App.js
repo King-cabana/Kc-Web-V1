@@ -156,11 +156,11 @@ function App() {
           <Route path="*" element={<NoPage />} />
           <Route path="/progress" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
-          <Route path="/event/proposal/proposalpreviewcover" element={<ProposalPreviewCover />} />
-          <Route path="/event/proposal/proposalpreviewcontent" element={<ProposalPreviewContent />} />
-          <Route path="/event/proposal/proposalpreviewpage1" element={<ProposalPreviewA/>} />
-          <Route path="/event/proposal/proposalpreviewpage2" element={<ProposalPreviewB/>} />
-          <Route path="/event/proposal/proposalpreviewpage3" element={<ProposalPreviewC/>} />
+          <Route path="/event/proposal/proposalpreview-page1" element={<ProposalPreviewCover />} />
+          <Route path="/event/proposal/proposalpreview-page2" element={<ProposalPreviewContent />} />
+          <Route path="/event/proposal/proposalpreview-page3" element={<ProposalPreviewA/>} />
+          <Route path="/event/proposal/proposalpreview-page4" element={<ProposalPreviewB/>} />
+          <Route path="/event/proposal/proposalpreview-page5" element={<ProposalPreviewC/>} />
     
           <Route path="/createEvent/eventDetails" element={<FirstCreateEvent />}/>
           <Route path="/createEvent/tagsTimelines" element={<TimeLineEvent />} />

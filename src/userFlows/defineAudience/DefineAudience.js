@@ -28,7 +28,7 @@ import {
   addToList,
 } from "../../redux/slices/proposalSlice";
 
-const DefineAudience = ({ padding }) => {
+const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state?.proposal?.demographyDto);
@@ -66,7 +66,8 @@ const DefineAudience = ({ padding }) => {
 
   const navigateBack = (e) => {
     e.preventDefault();
-    navigate("/createevent/eventdetails/3");
+    // navigate("/createevent/eventdetails/3");
+    setActiveStep(activeStep - 1);
   };
 
   const navigateNext = (e) => {

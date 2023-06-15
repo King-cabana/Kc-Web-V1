@@ -16,17 +16,40 @@ import {
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
 import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
+import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
 const ProposalPreviewContent = () => {
   const [loading, setLoading] = useState(true);
+  const totalPages = 5;
+  const [currentPage, setCurrentPage] = useState(2);
+
   const navigate = useNavigate();
 
   const navigateBack = () => {
-    navigate("/event/proposal/proposalpreviewcover");
+    navigate("/event/proposal/proposalpreview-page1");
   };
 
   const navigateNext = () => {
-    navigate("/event/proposal/proposalpreviewpage1");
+    navigate("/event/proposal/proposalpreview-page3");
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    navigate(`/event/proposal/proposalpreview-page${pageNumber}`);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage - 1}`);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage + 1}`);
+    }
   };
 
   return (
@@ -70,6 +93,14 @@ const ProposalPreviewContent = () => {
             </div>
           </div>
         </PreviewLogoBg>
+        
+          <ProposalPagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPreviousPage={handlePreviousPage}
+            onNextPage={handleNextPage}
+            handlePageChange={handlePageChange}
+          />
 
         <ButtonContainer
           style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
