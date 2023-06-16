@@ -197,6 +197,7 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
                                 backgroundColor: "#ff2957",
                                 color: "#fff",
                               }}
+                              onClick={handleNext}
                             >
                               Save & Continue
                             </ViewButton>

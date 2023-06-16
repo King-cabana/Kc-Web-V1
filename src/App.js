@@ -25,12 +25,11 @@ import DefineAudience from "./userFlows/defineAudience/DefineAudience";
 import ProposalBuildup from "./userFlows/createProposal/proposalBuildup/ProposalBuildup";
 import ProposalPreviewCover from "./userFlows/createProposal/proposalPreview/ProposalPreviewCover";
 import ProposalPreviewContent from "./userFlows/createProposal/proposalPreview/ProposalPreviewContent";
-import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/ProposalPreviewA"
-import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB"
-import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC"
+import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/ProposalPreviewA";
+import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB";
+import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC";
 import Budget from "./pages/Budget/Budget";
 // import BudgetDraft from "./pages/BudgetDraft";
-
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -145,32 +144,59 @@ function App() {
             }
           />
 
+          <Route path="*" element={<NoPage />} />
+          <Route path="/progress" element={<FlowBody />} />
+          <Route path="/defineaudience" element={<DefineAudience />} />
           <Route
             path="/event/proposal/proposalbuildup"
+            element={<ProposalBuildup />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page1"
+            element={<ProposalPreviewCover />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page2"
+            element={<ProposalPreviewContent />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page3"
+            element={<ProposalPreviewA />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page4"
+            element={<ProposalPreviewB />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page5"
+            element={<ProposalPreviewC />}
+          />
+
+          <Route
+            path="/createEvent/eventDetails"
+            element={<FirstCreateEvent />}
+          />
+          <Route
+            path="/createEvent/tagsTimelines"
+            element={<TimeLineEvent />}
+          />
+          <Route
+            path="/createEvent/eventPlanPreview"
+            element={<EventPlanPreview />}
+          />
+          <Route path="/createEvent/submitted" element={<Submitted />} />
+          <Route
+            path="/dashboard"
             element={
               <Sidebar>
-                <ProposalBuildup />
+                <DashboardHome />
               </Sidebar>
             }
           />
           <Route path="*" element={<NoPage />} />
-          <Route path="/progress" element={<FlowBody />} />
-          <Route path="/defineaudience" element={<DefineAudience />} />
-          <Route path="/event/proposal/proposalpreview-page1" element={<ProposalPreviewCover />} />
-          <Route path="/event/proposal/proposalpreview-page2" element={<ProposalPreviewContent />} />
-          <Route path="/event/proposal/proposalpreview-page3" element={<ProposalPreviewA/>} />
-          <Route path="/event/proposal/proposalpreview-page4" element={<ProposalPreviewB/>} />
-          <Route path="/event/proposal/proposalpreview-page5" element={<ProposalPreviewC/>} />
-    
-          <Route path="/createEvent/eventDetails" element={<FirstCreateEvent />}/>
-          <Route path="/createEvent/tagsTimelines" element={<TimeLineEvent />} />
-          <Route path="/createEvent/eventPlanPreview" element={<EventPlanPreview />}/>
-          <Route path="/createEvent/submitted" element={<Submitted />} />
-          <Route path="/dashboard" element={<Sidebar><DashboardHome/></Sidebar>}/>
-          <Route path="*" element={<NoPage />} />
           <Route path="/budget" element={<Budget />} />
         </Routes>
-        </>
+      </>
     </Suspense>
   );
 }
