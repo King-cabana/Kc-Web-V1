@@ -68,7 +68,12 @@ const EventDetailsSidebar = () => {
           Edit Event
         </AlternativeButton2>
         {/* {selectedEvent?.status === "Completed" ? ( */}
-        <AlternativeButton2 style={{ width: "150px", marginTop: "1rem" }}>
+        <AlternativeButton2
+          style={{ width: "150px", marginTop: "1rem" }}
+          onClick={() =>
+            navigate(`/generateproposal/${encryptId(selectedEvent?.id)}`)
+          }
+        >
           Generate Proposal
         </AlternativeButton2>
         {/* ) : null} */}

@@ -51,7 +51,9 @@ const ViewEvent = () => {
   const navigate = useNavigate();
   const encryptedId = encryptId(event?.id);
   const decryptedId = decryptId(id);
-  // console.log(decryptedId);
+  console.log(decryptedId);
+  // console.log(id);
+  // console.log(event?.id);
   const shareDetails = {
     title: event?.eventName,
     url: `/guestRegistration/${encryptedId}`,
@@ -107,7 +109,13 @@ const ViewEvent = () => {
           <Container
             style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}
           >
-            <AlternativeButton2>Generate Proposal</AlternativeButton2>
+            <AlternativeButton2
+              onClick={() =>
+                navigate(`/generateproposal/${encryptId(event?.id)}`)
+              }
+            >
+              Generate Proposal
+            </AlternativeButton2>
           </Container>
 
           <ImagesContainer>
