@@ -3,16 +3,25 @@ import Background from "../../../assets/images/budgetBackground.jpg";
  
 export const OverallContainer = styled.section`
   width: 100%;
-  height: 100%;
+  // height: 100%;
+
+  @media screen and (max-width: 480px){
+    margin-top:20%;
+  }
 `;
 
 export const ProposalContainer = styled.div`
   padding: 1rem 5rem;
   width: 100%;
   background: transparent;
-//   height: 100%;
 
-  @media screen and (max-width: 769px) {
+@media screen and (max-width :480px){
+  padding : 1rem;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+  @media screen and (min-width:481px) and (max-width: 769px) {
     padding: 1rem;
     margin-top: 5%;
   }
@@ -27,7 +36,7 @@ export const Txt = styled.span`
   margin-right: 0.5rem;
 
   @media screen and (max-width: 769px) {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
   }
 `;

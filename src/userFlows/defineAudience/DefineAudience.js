@@ -28,14 +28,21 @@ import {
   addToList,
 } from "../../redux/slices/proposalSlice";
 import { useParams } from "react-router-dom";
+import { decryptId } from "../../utils";
 
-const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
-
-  const {id} = useParams();
+const DefineAudience = ({ padding, activeStep, setActiveStep }) => {
+  const { id } = useParams();
+  const decryptedId = decryptId(id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state?.proposal?.demographyDto);
-  // console.log(state);
+  console.log(decryptedId);
+  console.log(id);
+
+  sessionStorage.setItem("line41", id);
+
+
+
   const location = useLocation();
   const [otherGender, setOtherGender] = useState(
     Boolean(state?.genderListNew?.length)
@@ -230,7 +237,9 @@ const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
                     onChange={handleCheckboxChange}
                     value="#50,000 - #99,999"
                     checked={
-                      state?.income?.includes("#50,000 - #99,999") ? true : false
+                      state?.income?.includes("#50,000 - #99,999")
+                        ? true
+                        : false
                     }
                   />
                   <Label htmlFor="50,000">#50,000 - #99,999</Label>
@@ -632,7 +641,9 @@ const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
                       id="skilled"
                       value="Skilled"
                       checked={
-                        state?.skillLevelList?.includes("Skilled") ? true : false
+                        state?.skillLevelList?.includes("Skilled")
+                          ? true
+                          : false
                       }
                       onChange={handleCheckboxChange}
                     />

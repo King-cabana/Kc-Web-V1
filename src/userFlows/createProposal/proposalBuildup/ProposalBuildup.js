@@ -32,7 +32,7 @@ import {
   AbsolutePrimaryButton,
   AlternativeButton2,
 } from "../../../components/buttons/Buttons";
-import createProposal from "../../../redux/services/createProposal";
+// import createProposal from "../../../redux/services/createProposal";
 import { useParams } from "react-router-dom";
 import {
   addFields,
@@ -47,16 +47,14 @@ const ProposalBuildup = () => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [potentialImpacts, setPotentialImpacts] = useState("");
-  const { id } = useParams();
 
-  const eventId = id;
-  const decryptedId = decryptId(eventId)
   const state = useSelector((state) => state.proposal);
-  const user = useSelector((state) => state.userDetails);
-  console.log(decryptedId)
-  console.log(state)
+  const id = sessionStorage.getItem("line41")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const decryptedId = decryptId(id)
+  // const user = useSelector((state) => state.userDetails);
+  // console.log(eventId)
   const dispatch = useDispatch();
 
   const handleFileChange = async (e) => {
@@ -158,12 +156,12 @@ const ProposalBuildup = () => {
   const handleProposalPreview = async (event) => {
     event.preventDefault();
     try {
-      if (!decryptId) {
+      if (!decryptedId) {
         throw new Error("ID is not defined");
       }
-      const stateWithId = { ...state, decryptId: parseInt(decryptId) };
-      const proposal = await createProposal(stateWithId, user.token);
-      (sessionStorage.setItem("proposalId", proposal.id))
+      // const stateWithId = { ...state, decryptId: parseInt(decryptId) };
+      // const proposal = await createProposal(stateWithId, user.token);
+      // (sessionStorage.setItem("proposalId", proposal.id))
       navigate("/event/proposal/proposalpreview-page1")
     } catch (error) {
       console.log(error);
@@ -310,7 +308,7 @@ const ProposalBuildup = () => {
             </InputSeg>
             <ButtonContainer style={{ margin: "0rem" }}>
               <AlternativeButton2
-                onClick={() => navigate("/event/proposal")}
+                onClick={() => navigate(`/generateproposal/${id}`)}
                 style={{
                   color: "#FF2957",
                   fontWeight: "600",

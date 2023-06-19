@@ -270,7 +270,7 @@ const Budget = ({ activeStep, setActiveStep }) => {
 
   const navigate = useNavigate();
   const navigateBack = () => {
-    navigate("/");
+    navigate("/event/proposal");
   };
 
   const handleNext = () => {

@@ -15,19 +15,18 @@ import {
   WelcomeHeader,
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
+import { PreviewLogoBg, ProposalInner } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 const ProposalPreviewA = () => {
-  const [loading, setLoading] = useState(true);
-  const [preview, setPreview] = useState({});
+  const [loading, setLoading] = useState(false);
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(3);
 
   const user = useSelector((state) => state.userDetails);
-  const proposalId = sessionStorage.getItem("proposalId");
+  const proposal = useSelector((state) => state.proposal);
+  const eventCreated = useSelector((state) => state.eventCreated);
 
   const navigate = useNavigate();
 
@@ -59,30 +58,12 @@ const ProposalPreviewA = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8080/proposals/";
-    const fetchProposalPreview = async () => {
-      try {
-        const { data } = await axios.get(API_URL_2 + proposalId, {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        });
-        setPreview(data);
-      } catch (error) {
-        if (error?.response?.status === 400) {
-          // toast.error("Proposal Does Not Exist");
-        } else {
-          // toast.error("Failed to fetch proposal preview");
-          console.log(error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (proposalId && user?.token) {
-      fetchProposalPreview();
+    setLoading(true);
+    if (user?.token) {
+      setLoading(false);
     }
-  }, [proposalId, user?.token]);
+  }, [user?.token]);
+
 
   return (
     <>
@@ -109,9 +90,7 @@ const ProposalPreviewA = () => {
             </WelcomeHeader>
           </ProposalContainer>
           <PreviewLogoBg>
-            <div
-              style={{ width: "100%", height: "100%", padding: "2rem 5rem" }}
-            >
+            <ProposalInner>
               <h4
                 style={{
                   textAlign: "center",
@@ -119,23 +98,23 @@ const ProposalPreviewA = () => {
                   textDecoration: "underline",
                 }}
               >
-                {preview?.eventName ? preview?.eventName + `'s` : "Event Name"}{" "}
+                {eventCreated?.eventName ? eventCreated?.eventName : "Event name"}{" "}
                 Proposal to{" "}
-                {preview?.eventSponsor ? preview?.eventSponsor : "Sponsor"}.
+                {proposal?.eventSponsor ? proposal?.eventSponsor : "Event sponsor"}
               </h4>
               <div style={{ marginTop: "3%" }}>
                 <div>
                   <h3>Event Name</h3>
                   <p>
-                    {preview?.eventName ? preview?.eventName : "Event Name"}
+                  {eventCreated?.eventName ? eventCreated?.eventName : "Event name"}
                   </p>
                 </div>
 
                 <div style={{ marginTop: "2%" }}>
                   <h3>Event description</h3>
                   <p>
-                    {preview?.eventDescription
-                      ? preview?.eventDescription
+                    {eventCreated?.eventDescription
+                      ? eventCreated?.eventDescription
                       : "Event description"}
                   </p>
                 </div>
@@ -143,7 +122,7 @@ const ProposalPreviewA = () => {
                 <div style={{ marginTop: "2%" }}>
                   <h3>Event Theme</h3>
                   <p>
-                    {preview?.eventTheme ? preview?.eventTheme : "Event theme"}
+                    {eventCreated?.eventTheme ? eventCreated?.eventTheme : "Event theme"}
                   </p>
                 </div>
 
@@ -159,16 +138,16 @@ const ProposalPreviewA = () => {
                   <div style={{ width: "50%" }}>
                     <h3>Event Time</h3>
                     <p>
-                      {preview?.eventStartTime
-                        ? preview?.eventStartTime
+                      {eventCreated?.eventStartTime
+                        ? eventCreated?.eventStartTime
                         : "Event time"}
                     </p>
                   </div>
                   <div style={{ width: "50%" }}>
                     <h3>Event Date</h3>
                     <p>
-                      {preview?.eventStartDate
-                        ? preview?.eventStartDate
+                      {eventCreated?.eventStartDate
+                        ? eventCreated?.eventStartDate
                         : "Event date"}
                     </p>
                   </div>
@@ -176,13 +155,13 @@ const ProposalPreviewA = () => {
                 <div style={{ marginTop: "2%" }}>
                   <h3>Estimated Attendance</h3>
                   <p>
-                    {preview?.estimatedAttendance
-                      ? preview?.estimatedAttendance
+                    {eventCreated?.estimatedAttendance
+                      ? eventCreated?.estimatedAttendance
                       : "Estimated attendance"}
                   </p>
                 </div>
               </div>
-            </div>
+            </ProposalInner>
           </PreviewLogoBg>
           <ProposalPagination
             totalPages={totalPages}

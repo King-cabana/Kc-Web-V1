@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch} from "react-redux";
 import { addFields } from "../../../redux/slices/proposalSlice";
 
+
 const FlowBody = () => {
   const [activeStep, setActiveStep] = useState(() => {
     const storedActiveStep = localStorage.getItem("activeStep");
@@ -28,6 +29,8 @@ const FlowBody = () => {
   const dispatch =useDispatch();
   dispatch(addFields({name: "eventId", value: decryptedId}));
   
+  console.log(id)
+  console.log(decryptedId)
 
   const steps = [
     { label: <StepLabel>Budget</StepLabel>, onClick: () => setActiveStep(0) },

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TopBar from "../../../userFlows/topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../../LoadingScreen";
 import {
@@ -6,8 +6,6 @@ import {
   AlternativeButton2,
 } from "../../../components/buttons/Buttons";
 import { ButtonContainer } from "../../../userFlows/defineAudience/DefineAudienceStyled";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   OverallContainer,
   ProposalContainer,
@@ -19,23 +17,26 @@ import TestImage from "../../../assets/images/Wedding.jpg";
 import {
   CoverDetailsHolder,
   CoverImageHolder,
+  PreparedByDiv,
+  PreparedForDiv,
 } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProposalPreviewCover = () => {
-  const [loading, setLoading] = useState(true);
-  const [preview, setPreview] = useState({});
+  const [loading, setLoading] = useState(false);
+  const eventCreated = useSelector((state) => state.eventCreated);
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const user = useSelector((state) => state.userDetails);
-  const proposalId = sessionStorage.getItem("proposalId");
-
+  const proposal = useSelector((state) => state.proposal);
+  const profile = useSelector((state) => state?.eventOrganizerProfile);
   const navigate = useNavigate();
+  const id = sessionStorage.getItem("line41")
 
   const navigateBack = () => {
-    navigate(`/event/proposal/proposal-buildup`);
+    navigate(`/event/proposal/proposal-buildup/${id}`);
   };
 
   const navigateNext = () => {
@@ -62,30 +63,12 @@ const ProposalPreviewCover = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8080/proposals/";
-    const fetchProposalPreview = async () => {
-      try {
-        const { data } = await axios.get(API_URL_2 + proposalId, {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        });
-        setPreview(data);
-      } catch (error) {
-        if (error?.response?.status === 400) {
-          // toast.error("Proposal Does Not Exist");
-        } else {
-          // toast.error("Failed to fetch proposal preview");
-          console.log(error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (proposalId && user?.token) {
-      fetchProposalPreview();
+    setLoading(true);
+    if (user?.token) {
+      setLoading(false);
     }
-  }, [proposalId, user?.token]);
+  }, [user?.token]);
+
 
   return (
     <>
@@ -113,44 +96,38 @@ const ProposalPreviewCover = () => {
           </ProposalContainer>
           <CoverImageHolder>
             <img
-              src={
-                preview?.proposalBannerUrl
-                  ? preview?.proposalBannerUrl
-                  : TestImage
-              }
+              src={proposal?.proposalBannerUrl ? proposal?.proposalBannerUrl : TestImage}
               alt="banner"
             />
           </CoverImageHolder>
 
           <CoverDetailsHolder>
-            <div style={{ width: "30%", height: "30vh" }}>
+            <PreparedByDiv>
               <h3>Prepared by</h3>
               <p>
-                {preview?.eventOrganizerName
-                  ? preview?.eventOrganizerName
+                {profile?.organizerName
+                  ? profile?.organizerName
                   : "Event Organizer's name"}
               </p>
-              <p>{preview?.eventName ? preview?.eventName : "Event Name"}</p>
+              <p>{eventCreated?.eventName ? eventCreated?.eventName  : "Event Name"}</p>
               <p>
-                {preview?.profileEmailAddress
-                  ? preview?.profileEmailAddress
+                {profile?.profileEmail
+                  ? profile?.profileEmail
                   : "Organizer's email"}
               </p>
               <p>
-                {preview?.profilePhoneNumber
-                  ? preview?.profilePhoneNumber
+                {profile?.phoneNumber
+                  ? profile?.phoneNumber
                   : "Phone number"}
               </p>
-            </div>
+            </PreparedByDiv>
 
-            <div style={{ width: "30%", height: "30vh", textAlign: "right" }}>
+            <PreparedForDiv>
               <h3>Prepared For</h3>
               <p>
-                {preview?.eventSponsor
-                  ? preview?.eventSponsor
-                  : "Event sponsor"}
+                {proposal?.eventSponsor ? proposal?.eventSponsor : "Event sponsor"}
               </p>
-            </div>
+            </PreparedForDiv>
           </CoverDetailsHolder>
           <ProposalPagination
             totalPages={totalPages}

@@ -7,7 +7,7 @@ import {
 } from "../../../components/buttons/Buttons";
 import { ButtonContainer } from "../../../userFlows/defineAudience/DefineAudienceStyled";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   OverallContainer,
   ProposalContainer,
@@ -17,23 +17,30 @@ import {
 import { BsChevronRight } from "react-icons/bs";
 import {
   PreviewLogoBg,
+  ProposalInner,
   TableContainer,
   TableDataCell,
   TableHeaderCell,
   TableRow,
+  TableAndContentContainer,
+  OrganizerAsk,
+  Confidential,
 } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
-import axios from "axios";
 import { useSelector } from "react-redux";
+import createProposal from "../../../redux/services/createProposal";
+
 
 const ProposalPreviewC = () => {
-  const [loading, setLoading] = useState(true);
-  const [preview, setPreview] = useState({});
+  const [loading, setLoading] = useState(false);
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(5);
+  const { id } = useParams();
 
   const user = useSelector((state) => state.userDetails);
-  const proposalId = sessionStorage.getItem("proposalId");
+  const proposal = useSelector((state) => state.proposal);
+  const eventCreated = useSelector((state) => state.eventCreated);
+  const profile = useSelector((state) => state?.eventOrganizerProfile);
 
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
@@ -42,13 +49,9 @@ const ProposalPreviewC = () => {
     navigate("/event/proposal/proposalpreview-page4");
   };
 
-  const navigateNext = () => {
-    navigate("/");
-  };
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    navigate(`/event/proposal/proposalpreview-page${pageNumber}`);
+    navigate(`/event/proposal/proposalpreview-page${id}`);
   };
 
   const handlePreviousPage = () => {
@@ -66,30 +69,26 @@ const ProposalPreviewC = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8080/proposals/";
-    const fetchProposalPreview = async () => {
-      try {
-        const { data } = await axios.get(API_URL_2 + proposalId, {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        });
-        setPreview(data);
-      } catch (error) {
-        if (error?.response?.status === 400) {
-          // toast.error("Proposal Does Not Exist");
-        } else {
-          // toast.error("Failed to fetch proposal preview");
-          console.log(error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (proposalId && user?.token) {
-      fetchProposalPreview();
+    setLoading(true);
+    if (user?.token) {
+      setLoading(false);
     }
-  }, [proposalId, user?.token]);
+  }, [user?.token]);
+
+  const handleProposalPreview = async (event) => {
+    event.preventDefault();
+    try {
+      if (!eventCreated.id) {
+        throw new Error("ID is not defined");
+      }
+      const stateWithId = { ...proposal, id: eventCreated.id };
+      await createProposal(stateWithId, user.token);
+      navigate("/createEvent/submitted")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
     <>
@@ -98,7 +97,7 @@ const ProposalPreviewC = () => {
         <LoadingScreen />
       ) : (
         <OverallContainer>
-          <ProposalContainer style={{ marginTop: "5%" }}>
+          <ProposalContainer style={{ marginTop: "5%"}}>
             <WelcomeHeader>
               <Txt>Event</Txt>
               <BsChevronRight style={{ marginRight: "0.5rem" }} />
@@ -116,36 +115,22 @@ const ProposalPreviewC = () => {
             </WelcomeHeader>
           </ProposalContainer>
           <PreviewLogoBg>
-            <div
-              style={{ width: "100%", height: "100%", padding: "3rem 5rem" }}
-            >
-              <h4
-                style={{
-                  textAlign: "center",
-                  color: "#0068FF",
-                  textDecoration: "underline",
-                }}
-              >
-                Kofoworola Ademola Hall Week Proposal to FirstBank PLC.
+            <ProposalInner>
+              <h4 style={{textAlign: "center", color: "#0068ff", textDecoration: "underline"}}>
+                {eventCreated?.eventName ? eventCreated?.eventName + `'s` : "Event Name"}{" "}
+                Proposal to{" "}
+                {proposal?.eventSponsor ? proposal?.eventSponsor : "Sponsor"}.
               </h4>
-              <div
-                style={{
-                  marginTop: "3%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <TableAndContentContainer>
                 <TableContainer>
                   <TableRow>
                     <TableHeaderCell>Item</TableHeaderCell>
                     <TableHeaderCell>Description</TableHeaderCell>
                     <TableHeaderCell>Cost (#)</TableHeaderCell>
                   </TableRow>
-                  {preview?.budget?.budgetDetails ? (
+                  {proposal?.budget?.budgetDetails ? (
                     <>
-                      {preview.budget.budgetDetails.map((detail, index) => (
+                      {proposal?.budget?.budgetDetails.map((detail, index) => (
                         <TableRow key={index}>
                           <TableDataCell>{detail.item}</TableDataCell>
                           <TableDataCell>{detail.description}</TableDataCell>
@@ -158,7 +143,7 @@ const ProposalPreviewC = () => {
                           <h4 style={{ textDecoration: "none" }}>Total</h4>
                         </TableDataCell>
 
-                        <TableDataCell>{preview.budget.total}</TableDataCell>
+                        <TableDataCell>{proposal?.budget?.total}</TableDataCell>
                       </TableRow>
                     </>
                   ) : (
@@ -166,54 +151,45 @@ const ProposalPreviewC = () => {
                   )}
                 </TableContainer>
 
-                <div style={{ width: "100%", marginTop: "5%" }}>
+                <OrganizerAsk>
                   <h4>Event Organizer’s Ask</h4>
-                  <p style={{ marginTop: "2%" }}>
+                  <p>
                     We would require{" "}
-                    {preview?.amountRequired
-                      ? preview?.amountRequired
+                    {proposal?.eventBudgetAddOn
+                      ? proposal?.eventBudgetAddOn
                       : "Event organizer's Ask "}{" "}
                     worth of sponsorship from your organization
                   </p>
-                </div>
+                </OrganizerAsk>
 
-                <div
-                  style={{
-                    width: "100%",
-                    marginTop: "5%",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
+                <Confidential>
                   <h4>Confidentiality</h4>
-                  <p style={{ textAlign: "center", marginTop: "2%" }}>
+                  <p>
                     Copyright{" "}
-                    {preview?.eventOrganizerName
-                      ? preview?.eventOrganizerName
+                    {profile?.organizerName
+                      ? profile?.organizerName
                       : "Event organizer's name"}{" "}
                     {currentYear}.
                   </p>
-                  <p style={{ textAlign: "center", marginTop: "2%" }}>
+                  <p>
                     This publication is copyrighted and remains the intellectual
                     property of{" "}
-                    {preview?.eventOrganizerName
-                      ? preview?.eventOrganizerName
+                    {profile?.organizerName
+                      ? profile?.organizerName
                       : "Event organizer's name"}
                     .
                   </p>
-                  <p style={{ textAlign: "center", marginTop: "2%" }}>
+                  <p>
                     The information contained in this proposal is confidential,
                     and no part of it may be copied and/or disclosed to any
                     person without the express permission of{" "}
-                    {preview?.eventOrganizerName
-                      ? preview?.eventOrganizerName
-                      : "Event organizer's name"}
+                    {profile?.organizerName
+                      ? profile?.organizerName
+                      : "Event organizer's name"}.
                   </p>
-                </div>
-              </div>
-            </div>
+                </Confidential>
+              </TableAndContentContainer>
+            </ProposalInner>
           </PreviewLogoBg>
           <ProposalPagination
             totalPages={totalPages}
@@ -240,8 +216,8 @@ const ProposalPreviewC = () => {
             >
               Back
             </AlternativeButton2>
-            <AbsolutePrimaryButton onClick={navigateNext}>
-              Next
+            <AbsolutePrimaryButton onClick={handleProposalPreview}>
+              Proceed
             </AbsolutePrimaryButton>
           </ButtonContainer>
         </OverallContainer>
