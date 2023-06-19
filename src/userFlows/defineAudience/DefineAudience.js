@@ -27,8 +27,11 @@ import {
   editAudienceCheckbox,
   addToList,
 } from "../../redux/slices/proposalSlice";
+import { useParams } from "react-router-dom";
 
-const DefineAudience = ({ padding }) => {
+const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
+
+  const {id} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state?.proposal?.demographyDto);
@@ -66,7 +69,8 @@ const DefineAudience = ({ padding }) => {
 
   const navigateBack = (e) => {
     e.preventDefault();
-    navigate("/createevent/eventdetails/3");
+    // navigate("/createevent/eventdetails/3");
+    setActiveStep(activeStep - 1);
   };
 
   const navigateNext = (e) => {
@@ -90,14 +94,14 @@ const DefineAudience = ({ padding }) => {
           addToList({ listType: "educationLevelList", newItem: education })
         )
       : dispatch(addToList({ listType: "educationLevelList", newItem: "" }));
-    // navigate("/createevent/budget&inventory/1");
+    navigate(`/event/proposal/proposalbuildup/${id}`);
   };
 
   return (
     <BudgetInventoryContainer
       style={{
         padding: "2% 8%",
-        padding: padding,
+        // padding: padding,
       }}
     >
       {location.pathname === "/eventPlanPreview" ? null : (
@@ -135,7 +139,7 @@ const DefineAudience = ({ padding }) => {
                     id="15"
                     value="15 and younger"
                     checked={
-                      state.ageRange?.includes("15 and younger") ? true : false
+                      state?.ageRange?.includes("15 and younger") ? true : false
                     }
                     onChange={handleCheckboxChange}
                   />
@@ -148,7 +152,7 @@ const DefineAudience = ({ padding }) => {
                     name="ageRange"
                     id="16"
                     value="16-29"
-                    checked={state.ageRange?.includes("16-29") ? true : false}
+                    checked={state?.ageRange?.includes("16-29") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="16">16-29</Label>
@@ -160,7 +164,7 @@ const DefineAudience = ({ padding }) => {
                     name="ageRange"
                     id="30"
                     value="30-45"
-                    checked={state.ageRange?.includes("30-45") ? true : false}
+                    checked={state?.ageRange?.includes("30-45") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="30">30-45</Label>
@@ -172,7 +176,7 @@ const DefineAudience = ({ padding }) => {
                     name="ageRange"
                     id="46"
                     value="46-59"
-                    checked={state.ageRange?.includes("46-59") ? true : false}
+                    checked={state?.ageRange?.includes("46-59") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="46">46-59</Label>
@@ -185,7 +189,7 @@ const DefineAudience = ({ padding }) => {
                     id="60"
                     value="60 and above"
                     checked={
-                      state.ageRange?.includes("60 and above") ? true : false
+                      state?.ageRange?.includes("60 and above") ? true : false
                     }
                     onChange={handleCheckboxChange}
                   />
@@ -212,7 +216,7 @@ const DefineAudience = ({ padding }) => {
                     onChange={handleCheckboxChange}
                     value="Below #50,000"
                     checked={
-                      state.income?.includes("Below #50,000") ? true : false
+                      state?.income?.includes("Below #50,000") ? true : false
                     }
                   />
                   <Label htmlFor="0">Below #50,000</Label>
@@ -226,7 +230,7 @@ const DefineAudience = ({ padding }) => {
                     onChange={handleCheckboxChange}
                     value="#50,000 - #99,999"
                     checked={
-                      state.income?.includes("#50,000 - #99,999") ? true : false
+                      state?.income?.includes("#50,000 - #99,999") ? true : false
                     }
                   />
                   <Label htmlFor="50,000">#50,000 - #99,999</Label>
@@ -240,7 +244,7 @@ const DefineAudience = ({ padding }) => {
                     onChange={handleCheckboxChange}
                     value="#100,000 - #499,999"
                     checked={
-                      state.income?.includes("#100,000 - #499,999")
+                      state?.income?.includes("#100,000 - #499,999")
                         ? true
                         : false
                     }
@@ -256,7 +260,7 @@ const DefineAudience = ({ padding }) => {
                     name="income"
                     id="500,000"
                     checked={
-                      state.income?.includes("#500,000 - #999,999")
+                      state?.income?.includes("#500,000 - #999,999")
                         ? true
                         : false
                     }
@@ -272,7 +276,7 @@ const DefineAudience = ({ padding }) => {
                     onChange={handleCheckboxChange}
                     value="#1,000,000 and above"
                     checked={
-                      state.income?.includes("#1,000,000 and above")
+                      state?.income?.includes("#1,000,000 and above")
                         ? true
                         : false
                     }
@@ -298,7 +302,7 @@ const DefineAudience = ({ padding }) => {
                     name="genderList"
                     id="male"
                     value="Male"
-                    checked={state.genderList?.includes("Male") ? true : false}
+                    checked={state?.genderList?.includes("Male") ? true : false}
                     onChange={handleCheckboxChange}
                   />
                   <Label htmlFor="male">Male</Label>
@@ -311,7 +315,7 @@ const DefineAudience = ({ padding }) => {
                     id="female"
                     value="Female"
                     checked={
-                      state.genderList?.includes("Female") ? true : false
+                      state?.genderList?.includes("Female") ? true : false
                     }
                     onChange={handleCheckboxChange}
                   />
@@ -335,7 +339,7 @@ const DefineAudience = ({ padding }) => {
                 type="text"
                 placeholder="Specify for others(separating each with comma[,])"
                 display={otherGender ? "flex" : "none"}
-                defaultValue={state.genderListNew?.join(", ")}
+                defaultValue={state?.genderListNew?.join(", ")}
                 onChange={(e) => setGender(e.target.value)}
               ></InputOthers>
             </div>
@@ -357,7 +361,7 @@ const DefineAudience = ({ padding }) => {
                     id="christianity"
                     value="Christianity"
                     checked={
-                      state.religionList?.includes("Christianity")
+                      state?.religionList?.includes("Christianity")
                         ? true
                         : false
                     }
@@ -373,7 +377,7 @@ const DefineAudience = ({ padding }) => {
                     id="islam"
                     value="Islam"
                     checked={
-                      state.religionList?.includes("Islam") ? true : false
+                      state?.religionList?.includes("Islam") ? true : false
                     }
                     onChange={handleCheckboxChange}
                   />
@@ -396,7 +400,7 @@ const DefineAudience = ({ padding }) => {
                 type="text"
                 placeholder="Specify for others(separating each with comma[,])"
                 display={otherReligion ? "flex" : "none"}
-                defaultValue={state.religionListNew?.join(", ")}
+                defaultValue={state?.religionListNew?.join(", ")}
                 onChange={(e) => setReligion(e.target.value)}
               ></InputOthers>
             </div>
@@ -418,7 +422,7 @@ const DefineAudience = ({ padding }) => {
                     id="employed"
                     value="Employed"
                     checked={
-                      state.employmentStatusList?.includes("Employed")
+                      state?.employmentStatusList?.includes("Employed")
                         ? true
                         : false
                     }
@@ -434,7 +438,7 @@ const DefineAudience = ({ padding }) => {
                     id="selfEmployed"
                     value="Self Employed"
                     checked={
-                      state.employmentStatusList?.includes("Self Employed")
+                      state?.employmentStatusList?.includes("Self Employed")
                         ? true
                         : false
                     }
@@ -450,7 +454,7 @@ const DefineAudience = ({ padding }) => {
                     id="unemployed"
                     value="Unemployed"
                     checked={
-                      state.employmentStatusList?.includes("Unemployed")
+                      state?.employmentStatusList?.includes("Unemployed")
                         ? true
                         : false
                     }
@@ -466,7 +470,7 @@ const DefineAudience = ({ padding }) => {
                     id="retired"
                     value="Retired"
                     checked={
-                      state.employmentStatusList?.includes("Retired")
+                      state?.employmentStatusList?.includes("Retired")
                         ? true
                         : false
                     }
@@ -482,7 +486,7 @@ const DefineAudience = ({ padding }) => {
                     id="disabled"
                     value="Disabled"
                     checked={
-                      state.employmentStatusList?.includes("Disabled")
+                      state?.employmentStatusList?.includes("Disabled")
                         ? true
                         : false
                     }
@@ -507,7 +511,7 @@ const DefineAudience = ({ padding }) => {
                 name="employmentStatusList"
                 placeholder="Specify for others(separating each with comma[,])"
                 display={otherEmployment ? "flex" : "none"}
-                defaultValue={state.employmentStatusListNew?.join(", ")}
+                defaultValue={state?.employmentStatusListNew?.join(", ")}
                 onChange={(e) => setEmployment(e.target.value)}
               ></InputOthers>
             </div>
@@ -529,7 +533,7 @@ const DefineAudience = ({ padding }) => {
                     id="highSchool"
                     value="High School"
                     checked={
-                      state.educationLevelList?.includes("High School")
+                      state?.educationLevelList?.includes("High School")
                         ? true
                         : false
                     }
@@ -545,7 +549,7 @@ const DefineAudience = ({ padding }) => {
                     id="college"
                     value="College/Polytechnic/University/Post Graduate"
                     checked={
-                      state.educationLevelList?.includes(
+                      state?.educationLevelList?.includes(
                         "College/Polytechnic/University/Post Graduate"
                       )
                         ? true
@@ -575,7 +579,7 @@ const DefineAudience = ({ padding }) => {
                 name="educationLevelList"
                 placeholder="Specify for others(separating each with comma[,])"
                 display={otherEducation ? "flex" : "none"}
-                defaultValue={state.educationLevelListNew?.join(", ")}
+                defaultValue={state?.educationLevelListNew?.join(", ")}
                 onChange={(e) => setEducation(e.target.value)}
               ></InputOthers>
             </div>
@@ -596,7 +600,7 @@ const DefineAudience = ({ padding }) => {
                       id="unskilled"
                       value="Unskilled"
                       checked={
-                        state.skillLevelList?.includes("Unskilled")
+                        state?.skillLevelList?.includes("Unskilled")
                           ? true
                           : false
                       }
@@ -612,7 +616,7 @@ const DefineAudience = ({ padding }) => {
                       id="semiSkilled"
                       value="Semi-skilled"
                       checked={
-                        state.skillLevelList?.includes("Semi-skilled")
+                        state?.skillLevelList?.includes("Semi-skilled")
                           ? true
                           : false
                       }
@@ -628,7 +632,7 @@ const DefineAudience = ({ padding }) => {
                       id="skilled"
                       value="Skilled"
                       checked={
-                        state.skillLevelList?.includes("Skilled") ? true : false
+                        state?.skillLevelList?.includes("Skilled") ? true : false
                       }
                       onChange={handleCheckboxChange}
                     />
@@ -651,7 +655,7 @@ const DefineAudience = ({ padding }) => {
                   name="skillLevelList"
                   placeholder="Specify for others(separating each with comma[,])"
                   display={otherSkillLevel ? "flex" : "none"}
-                  defaultValue={state.skillLevelListNew?.join(", ")}
+                  defaultValue={state?.skillLevelListNew?.join(", ")}
                   onChange={(e) => setSkill(e.target.value)}
                 ></InputOthers>
               </div>

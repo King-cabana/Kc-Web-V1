@@ -12,6 +12,7 @@ import {
   BudgetUpload,
   BudgetSubtitle,
   InventoryPopUpTitle,
+  ButtonContainer,
 } from "./BudgetStyled";
 import {
   InventorySection,
@@ -32,8 +33,9 @@ import { BsChevronDown } from "react-icons/bs";
 import { inventoryData } from "./InventoryData";
 import { ViewButton } from "../../eventPlanning/EventPlanningStyled";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AbsolutePrimaryButton, AlternativeButton2 } from "../../../components/buttons/Buttons";
 
-const Inventory = ({ padding }) => {
+const Inventory = ({ padding , activeStep, setActiveStep}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -53,6 +55,15 @@ const Inventory = ({ padding }) => {
   const handlePreviousInventory = () => {
     setSelectedInventoryIndex((prevIndex) => prevIndex - 1);
   };
+
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+  const handlePrevious = () => {
+    setActiveStep(activeStep - 1);
+  };
+
   // Modal Contitions
   if (modal) {
     document.body.classList.add("active-modal");
@@ -186,6 +197,7 @@ const Inventory = ({ padding }) => {
                                 backgroundColor: "#ff2957",
                                 color: "#fff",
                               }}
+                              onClick={handleNext}
                             >
                               Save & Continue
                             </ViewButton>
@@ -210,6 +222,10 @@ const Inventory = ({ padding }) => {
           </BudgetUpload>
         </BudgetSection>
       </BudgetInventoryContainer>
+      <ButtonContainer style={{ margin: "0rem" }}>
+              <AlternativeButton2 onClick={handlePrevious} style={{color: "#FF2957",fontWeight: "600", marginRight: "2rem", }}>Back</AlternativeButton2>
+              <AbsolutePrimaryButton onClick={() => handleInventoryClick(0)}>Continue</AbsolutePrimaryButton>
+      </ButtonContainer>
     </>
   );
 };
