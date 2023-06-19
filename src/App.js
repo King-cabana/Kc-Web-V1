@@ -144,11 +144,10 @@ function App() {
             }
           />
 
-          <Route path="*" element={<NoPage />} />
-          <Route path="/progress" element={<FlowBody />} />
+          <Route path="/generateproposal/:id" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
           <Route
-            path="/event/proposal/proposalbuildup"
+            path="/event/proposal/proposalbuildup/:id"
             element={<ProposalBuildup />}
           />
           <Route

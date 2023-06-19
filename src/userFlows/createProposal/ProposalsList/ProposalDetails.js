@@ -26,6 +26,7 @@ import { AbsolutePrimaryButton } from "../../../components/buttons/button";
 import { API_URL_2 } from "../../../redux/services/authService";
 import { setEventCreated } from "../../../redux/slices/eventCreatedSlice";
 import { formatDate, formatTime } from "../../../utils";
+import { encryptId } from "../../../utils";
 
 const ProposalDetails = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const ProposalDetails = () => {
       }
     };
     fetchOrganizerEvents();
-  }, [organizer?.id, user?.token]);
+  }, [dispatch, organizer?.id, user?.token]);
 
   return (
     <div
@@ -108,7 +109,7 @@ const ProposalDetails = () => {
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
                     <AbsolutePrimaryButton
                       onClick={() =>
-                        navigate(`/event/proposal/proposal-buildup/${data?.id}`)
+                        navigate(`/generateproposal/${encryptId(data?.id)}`)
                       }
                     >
                       Generate Proposal

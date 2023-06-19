@@ -39,6 +39,7 @@ import {
   addPotentialImpact,
   removePITag,
 } from "../../../redux/slices/proposalSlice";
+import { decryptId } from "../../../utils";
 
 const ProposalBuildup = () => {
   const [file, setFile] = useState("");
@@ -49,8 +50,11 @@ const ProposalBuildup = () => {
   const { id } = useParams();
 
   const eventId = id;
+  const decryptedId = decryptId(eventId)
   const state = useSelector((state) => state.proposal);
   const user = useSelector((state) => state.userDetails);
+  console.log(decryptedId)
+  console.log(state)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -154,13 +158,13 @@ const ProposalBuildup = () => {
   const handleProposalPreview = async (event) => {
     event.preventDefault();
     try {
-      if (!eventId) {
+      if (!decryptId) {
         throw new Error("ID is not defined");
       }
-      const stateWithId = { ...state, eventId: parseInt(eventId) };
+      const stateWithId = { ...state, decryptId: parseInt(decryptId) };
       const proposal = await createProposal(stateWithId, user.token);
-      sessionStorage.setItem("proposalId", proposal.id);
-      navigate(`/event/proposal/proposal-buildup/proposal-preview/${id}`);
+      (sessionStorage.setItem("proposalId", proposal.id))
+      navigate("/event/proposal/proposalpreview-page1")
     } catch (error) {
       console.log(error);
     }

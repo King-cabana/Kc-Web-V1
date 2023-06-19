@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopBar from "../../../userFlows/topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../../LoadingScreen";
 import {
@@ -17,11 +17,17 @@ import {
 import { BsChevronRight } from "react-icons/bs";
 import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ProposalpreviewB = () => {
   const [loading, setLoading] = useState(true);
+  const [preview, setPreview] = useState({});
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(4);
+
+  const user = useSelector((state) => state.userDetails);
+  const proposalId = sessionStorage.getItem("proposalId");
 
   const navigate = useNavigate();
 
@@ -52,12 +58,38 @@ const ProposalpreviewB = () => {
     }
   };
 
+  useEffect(() => {
+    const API_URL_2 = "http://localhost:8081/proposals/"
+    const fetchProposalPreview = async () => {
+      try {
+        const { data } = await axios.get(API_URL_2 + proposalId, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        });
+        setPreview(data);
+      } catch (error) {
+        if (error?.response?.status === 400) {
+          // toast.error("Proposal Does Not Exist");
+        } else {
+          // toast.error("Failed to fetch proposal preview");
+          console.log(error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (proposalId && user?.token) {
+      fetchProposalPreview();
+    }
+  }, [proposalId, user?.token]);
+
   return (
     <>
       <TopBar marginBottom="1rem" />
-      {/* {loading ? (
+      {loading ? (
         <LoadingScreen />
-      ) : ( */}
+      ) : (
       <OverallContainer>
         <ProposalContainer style={{ marginTop: "5%" }}>
           <WelcomeHeader>
@@ -85,22 +117,22 @@ const ProposalpreviewB = () => {
                 textDecoration: "underline",
               }}
             >
-              Kofoworola Ademola Hall Week Proposal to FirstBank PLC.
+              {preview?.eventName ? preview?.eventName +`'s` : "Event Name" } Proposal to {preview?.eventSponsor ? preview?.eventSponsor : "Sponsor"}.
             </h4>
 
             <div style={{ marginTop: "3%" }}>
               <h4>Attendees Profile</h4>
               <div style={{ lineHeight: "2rem" }}>
-                <li>Age: 15 and younger, 30-39.</li>
-                <li>Income Range: Below #50,000.00</li>
-                <li>Gender: Female and Male</li>
-                <li>Religion: Christianity and Islam</li>
-                <li>Employment Status: Employed and Unemployed.</li>
-                <li>Educational Level: High school, Others.</li>
+                <li>Age: {preview?.defineAudience ? preview?.defineAudience?.ageRange : "Age"}</li>
+                <li>Income Range: {preview?.defineAudience ? preview?.defineAudience?.income : "Income"}</li>
+                <li>Gender: {preview?.defineAudience ? preview?.defineAudience?.genderList : "Gender"}</li>
+                <li>Religion: {preview?.defineAudience ? preview?.defineAudience?.religionList : "Religion"}</li>
+                <li>Employment Status: {preview?.defineAudience ? preview?.defineAudience?.employmentStatusList : "Employment status"}</li>
+                <li>Educational Level: {preview?.defineAudience ? preview?.defineAudience?.educationLevelList : "Educational level"}</li>
               </div>
             </div>
 
-            <div style={{ marginTop: "3%" }}>
+            {/* <div style={{ marginTop: "3%" }}>
               <h4>Benefits of sponsoring this event (Inventory)</h4>
               <div style={{ lineHeight: "2rem" }}>
                 <li>
@@ -116,27 +148,20 @@ const ProposalpreviewB = () => {
                   pellentesque sapien scelerisque in.
                 </li>
               </div>
-            </div>
+            </div> */}
 
             <div style={{ marginTop: "3%" }}>
               <h4>Impact of the event on the community</h4>
               <div style={{ lineHeight: "2rem", marginBottom:"5%" }}>
-                <li>
-                  Lorem ipsum dolor sit amet consectetur. In aliquet elit
-                  pellentesque sapien scelerisque in.
-                </li>
-                <li>
-                  Amet platea pharetra et ac lectus ac sed dictum. Nulla in
-                  laoreet sem enim.
-                </li>
-                <li>
-                  Lorem ipsum dolor sit amet consectetur. In aliquet elit
-                  pellentesque sapien scelerisque in.
-                </li>
-                <li>
-                  Amet platea pharetra et ac lectus ac sed dictum. Nulla in
-                  laoreet sem enim.
-                </li>
+              {preview?.potentialImpacts ? (
+              <ul>
+                {preview.potentialImpacts.map((impacts) => (
+                  <li key={impacts}>{impacts}</li>
+                ))}
+              </ul>
+            ) : (
+              "Potential Impact List"
+            )}
               </div>
             </div>
           </div>
@@ -171,7 +196,7 @@ const ProposalpreviewB = () => {
           </AbsolutePrimaryButton>
         </ButtonContainer>
       </OverallContainer>
-      {/* )} */}
+      )} 
     </>
   );
 };

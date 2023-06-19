@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopBar from "../../../userFlows/topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../../LoadingScreen";
 import {
@@ -17,11 +17,17 @@ import {
 import { BsChevronRight } from "react-icons/bs";
 import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ProposalPreviewA = () => {
   const [loading, setLoading] = useState(true);
+  const [preview, setPreview] = useState({});
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(3);
+
+  const user = useSelector((state) => state.userDetails);
+  const proposalId = sessionStorage.getItem("proposalId");
 
   const navigate = useNavigate();
 
@@ -53,12 +59,39 @@ const ProposalPreviewA = () => {
     }
   };
 
+  useEffect(() => {
+    const API_URL_2 = "http://localhost:8081/proposals/"
+    const fetchProposalPreview = async () => {
+      try {
+        const { data } = await axios.get(API_URL_2 + proposalId, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        });
+        setPreview(data);
+      } catch (error) {
+        if (error?.response?.status === 400) {
+          // toast.error("Proposal Does Not Exist");
+        } else {
+          // toast.error("Failed to fetch proposal preview");
+          console.log(error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (proposalId && user?.token) {
+      fetchProposalPreview();
+    }
+  }, [proposalId, user?.token]);
+
+
   return (
     <>
       <TopBar marginBottom="1rem" />
-      {/* {loading ? (
+      {loading ? (
         <LoadingScreen />
-      ) : ( */}
+      ) : (
       <OverallContainer>
         <ProposalContainer style={{ marginTop: "5%" }}>
           <WelcomeHeader>
@@ -86,33 +119,25 @@ const ProposalPreviewA = () => {
                 textDecoration: "underline",
               }}
             >
-              Kofoworola Ademola Hall Week Proposal to FirstBank PLC.
+              {preview?.eventName ? preview?.eventName +`'s` : "Event Name" } Proposal to {preview?.eventSponsor ? preview?.eventSponsor : "Sponsor"}.
             </h4>
             <div style={{ marginTop: "3%" }}>
               <div>
                 <h3>Event Name</h3>
-                <p>Kofoworala Ademola Hall Week.</p>
+                <p>{preview?.eventName ? preview?.eventName : "Event Name" }</p>
               </div>
 
               <div style={{marginTop:"2%"}}>
                 <h3>Event description</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur. Vulputate ullamcorper
-                  lobortis est amet proin diam. Velit ut in augue maecenas.
-                  Malesuada nam molestie donec morbi. Amet sed sed id quis ut
-                  dictum diam. Enim rhoncus morbi nisl ut nunc. Ornare ipsum
-                  venenatis viverra sit leo ut rutrum amet pellentesque. Elit
-                  nullam leo sit pellentesque. Sed nunc risus nulla nisi.
-                  Interdum malesuada viverra adipiscing parturient nam sem
-                  egestas aliquet.
+                 {preview?.eventDescription ? preview?.eventDescription  : "Event description" }
                 </p>
               </div>
 
               <div style={{marginTop:"2%"}}>
                 <h3>Event Theme</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur. Sapien volutpat id
-                  nulla id viverra.
+                  {preview?.eventTheme ? preview?.eventTheme  : "Event theme" }
                 </p>
               </div>
 
@@ -127,16 +152,16 @@ const ProposalPreviewA = () => {
               >
                 <div style={{ width: "50%" }}>
                   <h3>Event Time</h3>
-                  <p>11:30am-3:30pm</p>
+                  <p>{preview?.eventStartTime ? preview?.eventStartTime : "Event time"}</p>
                 </div>
                 <div style={{ width: "50%" }}>
                   <h3>Event Date</h3>
-                  <p>20th, April, 2023.</p>
+                  <p>{preview?.eventStartDate ? preview?.eventStartDate : "Event date"}</p>
                 </div>
               </div>
               <div style={{marginTop:"2%"}}>
                 <h3>Estimated Attendance</h3>
-                <p>4000-5000 Students</p>
+                <p>{preview?.estimatedAttendance ? preview?.estimatedAttendance : "Estimated attendance"}</p>
               </div>
             </div>
           </div>
@@ -171,7 +196,7 @@ const ProposalPreviewA = () => {
           </AbsolutePrimaryButton>
         </ButtonContainer>
       </OverallContainer>
-      {/* )} */}
+    )}
     </>
   );
 };

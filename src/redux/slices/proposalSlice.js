@@ -3,7 +3,8 @@ import { checkBox } from "../../userFlows/defineAudience/CheckBoxData";
 
 const initialState = {
   budget: {
-    budgetDetails: [{}, {}],
+    budgetDetails: [],
+    total: "",
   },
   demographyDto: {
     ageRange: [],
@@ -77,6 +78,15 @@ const proposalSlice = createSlice({
       Object.assign(state?.demographyDto, { [category]: item });
       //   console.log(payload);
     },
+    addTotal: (state, { payload }) => {
+      state.budget.total = payload.value;
+    },
+
+    editBudget: (state, { payload }) => {
+      const { category, item } = payload;
+      state.budget.budgetDetails[category] = item;
+    },
+    
     addToList: (state, action) => {
       const { listType, newItem } = action.payload;
       const newList = newItem
@@ -114,5 +124,7 @@ export const {
   addPotentialImpact,
   removePITag,
   clearAllFields,
+  editBudget,
+  addTotal,
 } = proposalSlice.actions;
 export default proposalSlice.reducer;

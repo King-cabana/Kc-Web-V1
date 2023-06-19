@@ -1,6 +1,5 @@
 import React from "react";
 import TopBar from "../../../userFlows/topBar/dashboardTopBar/TopBar";
-import LoadingScreen from "../../../LoadingScreen";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
@@ -19,7 +18,6 @@ import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
 const ProposalPreviewContent = () => {
-  const [loading, setLoading] = useState(true);
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(2);
 
@@ -55,9 +53,6 @@ const ProposalPreviewContent = () => {
   return (
     <>
       <TopBar marginBottom="1rem" />
-      {/* {loading ? (
-        <LoadingScreen />
-      ) : ( */}
       <OverallContainer>
         <ProposalContainer style={{ marginTop: "5%" }}>
           <WelcomeHeader>
@@ -124,7 +119,6 @@ const ProposalPreviewContent = () => {
           </AbsolutePrimaryButton>
         </ButtonContainer>
       </OverallContainer>
-      {/* )} */}
     </>
   );
 };

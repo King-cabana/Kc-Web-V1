@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopBar from "../../../userFlows/topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../../LoadingScreen";
 import {
@@ -18,11 +18,17 @@ import { BsChevronRight } from "react-icons/bs";
 import TestImage from "../../../assets/images/Wedding.jpg";
 import { CoverDetailsHolder, CoverImageHolder } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
+import { useSelector } from "react-redux";
+import axios from "axios";
+
 
 const ProposalPreviewCover = () => {
   const [loading, setLoading] = useState(true);
+  const [preview, setPreview] = useState({});
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  const user = useSelector((state) => state.userDetails);
+  const proposalId = sessionStorage.getItem("proposalId");
 
   const navigate = useNavigate();
 
@@ -52,12 +58,40 @@ const ProposalPreviewCover = () => {
       navigate(`/event/proposal/proposalpreview-page${currentPage + 1}`);
     }
   };
+
+  useEffect(() => {
+    const API_URL_2 = "http://localhost:8081/proposals/"
+    const fetchProposalPreview = async () => {
+      try {
+        const { data } = await axios.get(API_URL_2 + proposalId, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        });
+        setPreview(data);
+      } catch (error) {
+        if (error?.response?.status === 400) {
+          // toast.error("Proposal Does Not Exist");
+        } else {
+          // toast.error("Failed to fetch proposal preview");
+          console.log(error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (proposalId && user?.token) {
+      fetchProposalPreview();
+    }
+  }, [proposalId, user?.token]);
+
+
   return (
     <>
       <TopBar marginBottom="1rem" />
-      {/* {loading ? (
+      {loading ? (
         <LoadingScreen />
-      ) : ( */}
+      ) : (
       <OverallContainer>
         <ProposalContainer style={{ marginTop: "5%" }}>
           <WelcomeHeader>
@@ -77,21 +111,22 @@ const ProposalPreviewCover = () => {
           </WelcomeHeader>
         </ProposalContainer>
         <CoverImageHolder>
-          <img src={TestImage} alt="" />
+          <img src={preview?.proposalBannerUrl ? preview?.proposalBannerUrl : TestImage} alt="banner" />
         </CoverImageHolder>
+       
 
         <CoverDetailsHolder>
           <div style={{ width: "30%", height: "30vh" }}>
             <h3>Prepared by</h3>
-            <p>Kofoworola Ademola Hall</p>
-            <p>Lanisa Fayomika</p>
-            <p>ademolakohall@gmail.com</p>
-            <p>+2348025500567</p>
+            <p>{preview?.eventOrganizerName ? preview?.eventOrganizerName : "Event Organizer's name"}</p>
+            <p>{preview?.eventName ? preview?.eventName : "Event Name"}</p>
+            <p>{preview?.profileEmailAddress ? preview?.profileEmailAddress : "Organizer's email"}</p>
+            <p>{preview?.profilePhoneNumber ? preview?.profilePhoneNumber : "Phone number"}</p>
           </div>
 
           <div style={{ width: "30%", height: "30vh", textAlign: "right" }}>
             <h3>Prepared For</h3>
-            <p>First Bank PLC</p>
+            <p>{preview?.eventSponsor ? preview?.eventSponsor : "Event sponsor"}</p>
           </div>
         </CoverDetailsHolder>
         <ProposalPagination
@@ -125,7 +160,7 @@ const ProposalPreviewCover = () => {
           </AbsolutePrimaryButton>
         </ButtonContainer>
       </OverallContainer>
-      {/* )} */}
+      )} 
     </>
   );
 };

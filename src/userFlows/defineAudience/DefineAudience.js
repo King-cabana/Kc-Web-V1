@@ -27,8 +27,11 @@ import {
   editAudienceCheckbox,
   addToList,
 } from "../../redux/slices/proposalSlice";
+import { useParams } from "react-router-dom";
 
 const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
+
+  const {id} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state?.proposal?.demographyDto);
@@ -91,14 +94,14 @@ const DefineAudience = ({ padding , activeStep, setActiveStep }) => {
           addToList({ listType: "educationLevelList", newItem: education })
         )
       : dispatch(addToList({ listType: "educationLevelList", newItem: "" }));
-    // navigate("/createevent/budget&inventory/1");
+    navigate(`/event/proposal/proposalbuildup/${id}`);
   };
 
   return (
     <BudgetInventoryContainer
       style={{
         padding: "2% 8%",
-        padding: padding,
+        // padding: padding,
       }}
     >
       {location.pathname === "/eventPlanPreview" ? null : (

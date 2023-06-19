@@ -13,12 +13,21 @@ import { KBTextL } from "../../../components/fonts/Fonts";
 import DefineAudience from "../../defineAudience/DefineAudience";
 import Inventory from "../../createProposal/budgetInventory/Inventory";
 import Budget from "../../../pages/Budget/Budget";
+import { decryptId } from "../../../utils";
+import { useParams } from "react-router-dom";
+import { useDispatch} from "react-redux";
+import { addFields } from "../../../redux/slices/proposalSlice";
 
 const FlowBody = () => {
   const [activeStep, setActiveStep] = useState(() => {
     const storedActiveStep = localStorage.getItem("activeStep");
     return storedActiveStep ? parseInt(storedActiveStep) : 0;
   });
+  const {id} = useParams();
+  const decryptedId = decryptId(id)
+  const dispatch =useDispatch();
+  dispatch(addFields({name: "eventId", value: decryptedId}));
+  
 
   const steps = [
     { label: <StepLabel>Budget</StepLabel>, onClick: () => setActiveStep(0) },
