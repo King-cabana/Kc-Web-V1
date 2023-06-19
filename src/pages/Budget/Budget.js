@@ -37,8 +37,6 @@
 // //   console.log(state);
 // //   console.log(totalState);
 
- 
-
 // //   const handleChange = (index, field, value) => {
 // //     const updatedValues = [...values];
 // //     updatedValues[index] = { ...updatedValues[index], [field]: value };
@@ -65,10 +63,10 @@
 // //       setValues((prev) => [...prev, newBudgetItem]);
 // //       dispatch(editBudget((prev)=>[...prev, newBudgetItem]));
 // //     };
-    
+
 // //     console.log(values); // Log the values to the console
 // //   };
-  
+
 // //   const navigate = useNavigate();
 // //   const navigateBack = () => {
 // //     navigate("/");
@@ -77,7 +75,6 @@
 // //   const handleNext = () => {
 // //     setActiveStep(activeStep + 1);
 // //   };
-
 
 // //   useEffect(() => {
 // //     // Calculate the total cost whenever the values change
@@ -102,7 +99,6 @@
 //   const sendTotal =()=> {dispatch(addFields({name: "total", value: totalCost}))}
 //   const state = useSelector((state) => state?.proposal?.budget);
 
-  
 //   const navigate = useNavigate();
 //   const navigateBack = () => {
 //     navigate("/");
@@ -111,7 +107,6 @@
 //   const handleNext = () => {
 //     setActiveStep(activeStep + 1);
 //   };
-
 
 //   const handleChange = (index, field, value) => {
 //     const updatedBudget = [...budget];
@@ -244,7 +239,7 @@ import {
   Total,
   Sum,
   ButtonContainer,
-  OverflowContoller
+  OverflowContoller,
 } from "./BudgetStyled.js";
 import { useNavigate } from "react-router-dom";
 import add from "./../../assets/images/add.svg";
@@ -266,8 +261,8 @@ const Budget = ({ activeStep, setActiveStep }) => {
   });
   const [totalCost, setTotalCost] = useState(0);
   const dispatch = useDispatch();
-  const state =  useSelector((state)=>state?.proposal)
-  console.log(state)
+  const state = useSelector((state) => state?.proposal);
+  console.log(state);
 
   const sendTotal = () => {
     dispatch(addTotal({ value: totalCost }));
@@ -286,10 +281,9 @@ const Budget = ({ activeStep, setActiveStep }) => {
     const updatedBudget = [...budget];
     updatedBudget[index] = { ...updatedBudget[index], [field]: value };
     setBudget(updatedBudget);
-    
+
     dispatch(editBudget({ category: index, item: updatedBudget[index] }));
   };
-  
 
   const handleDelete = (index) => {
     setBudget((prev) => prev.filter((_, i) => i !== index));
@@ -313,16 +307,16 @@ const Budget = ({ activeStep, setActiveStep }) => {
           sum += cost;
         }
       });
-      setTotalCost(sum.toFixed(2)); 
+      setTotalCost(sum.toFixed(2));
     };
 
     calculateTotalCost();
     localStorage.setItem("budget", JSON.stringify(budget));
   }, [budget]);
-  console.log(budget)
+  console.log(budget);
 
   useEffect(() => {
-    sendTotal(); 
+    sendTotal();
   }, [totalCost]);
 
   return (
@@ -343,31 +337,27 @@ const Budget = ({ activeStep, setActiveStep }) => {
             <p style={{ width: "250px", margin: "0 20px" }}>Cost(Naira)</p>
           </BudgetHeader>
           <div>
-            {budget.map((item, index) => {
+            {budget?.map((item, index) => {
               return (
                 <BudgetBox key={index}>
-                  <img
-                    src={click}
-                    alt=""
-                    onClick={() => handleDelete(index)}
-                  />
+                  <img src={click} alt="" onClick={() => handleDelete(index)} />
                   <Input
                     placeholder="Food"
-                    value={item.item}
+                    value={item?.item}
                     onChange={(e) =>
                       handleChange(index, "item", e.target.value)
                     }
                   />
                   <TextArea
                     placeholder="Finger Foods for 1000 students African dishes for VIP Guests"
-                    value={item.description}
+                    value={item?.description}
                     onChange={(e) =>
                       handleChange(index, "description", e.target.value)
                     }
                   />
                   <InputPrice
                     placeholder="250.00"
-                    value={item.cost}
+                    value={item?.cost}
                     onChange={(e) =>
                       handleChange(index, "cost", e.target.value)
                     }
@@ -406,4 +396,3 @@ const Budget = ({ activeStep, setActiveStep }) => {
 };
 
 export default Budget;
-

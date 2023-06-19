@@ -16,11 +16,13 @@ import {
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
 import TestImage from "../../../assets/images/Wedding.jpg";
-import { CoverDetailsHolder, CoverImageHolder } from "./ProposalPreviewCoverStyled";
+import {
+  CoverDetailsHolder,
+  CoverImageHolder,
+} from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 import { useSelector } from "react-redux";
 import axios from "axios";
-
 
 const ProposalPreviewCover = () => {
   const [loading, setLoading] = useState(true);
@@ -60,7 +62,7 @@ const ProposalPreviewCover = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8081/proposals/"
+    const API_URL_2 = "http://localhost:8080/proposals/";
     const fetchProposalPreview = async () => {
       try {
         const { data } = await axios.get(API_URL_2 + proposalId, {
@@ -85,82 +87,102 @@ const ProposalPreviewCover = () => {
     }
   }, [proposalId, user?.token]);
 
-
   return (
     <>
       <TopBar marginBottom="1rem" />
       {loading ? (
         <LoadingScreen />
       ) : (
-      <OverallContainer>
-        <ProposalContainer style={{ marginTop: "5%" }}>
-          <WelcomeHeader>
-            <Txt>Event</Txt>
-            <BsChevronRight style={{ marginRight: "0.5rem" }} />
-            <Txt
-              style={{ cursor: "pointer" }}
-              onClick={navigateBack}
-              fontWeight="400"
-            >
-              Proposal
-            </Txt>
-            <BsChevronRight style={{ marginRight: "0.5rem" }} />
-            <Txt fontWeight="400" color="#FF2957">
-              Proposal Preview Cover
-            </Txt>
-          </WelcomeHeader>
-        </ProposalContainer>
-        <CoverImageHolder>
-          <img src={preview?.proposalBannerUrl ? preview?.proposalBannerUrl : TestImage} alt="banner" />
-        </CoverImageHolder>
-       
+        <OverallContainer>
+          <ProposalContainer style={{ marginTop: "5%" }}>
+            <WelcomeHeader>
+              <Txt>Event</Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt
+                style={{ cursor: "pointer" }}
+                onClick={navigateBack}
+                fontWeight="400"
+              >
+                Proposal
+              </Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt fontWeight="400" color="#FF2957">
+                Proposal Preview Cover
+              </Txt>
+            </WelcomeHeader>
+          </ProposalContainer>
+          <CoverImageHolder>
+            <img
+              src={
+                preview?.proposalBannerUrl
+                  ? preview?.proposalBannerUrl
+                  : TestImage
+              }
+              alt="banner"
+            />
+          </CoverImageHolder>
 
-        <CoverDetailsHolder>
-          <div style={{ width: "30%", height: "30vh" }}>
-            <h3>Prepared by</h3>
-            <p>{preview?.eventOrganizerName ? preview?.eventOrganizerName : "Event Organizer's name"}</p>
-            <p>{preview?.eventName ? preview?.eventName : "Event Name"}</p>
-            <p>{preview?.profileEmailAddress ? preview?.profileEmailAddress : "Organizer's email"}</p>
-            <p>{preview?.profilePhoneNumber ? preview?.profilePhoneNumber : "Phone number"}</p>
-          </div>
+          <CoverDetailsHolder>
+            <div style={{ width: "30%", height: "30vh" }}>
+              <h3>Prepared by</h3>
+              <p>
+                {preview?.eventOrganizerName
+                  ? preview?.eventOrganizerName
+                  : "Event Organizer's name"}
+              </p>
+              <p>{preview?.eventName ? preview?.eventName : "Event Name"}</p>
+              <p>
+                {preview?.profileEmailAddress
+                  ? preview?.profileEmailAddress
+                  : "Organizer's email"}
+              </p>
+              <p>
+                {preview?.profilePhoneNumber
+                  ? preview?.profilePhoneNumber
+                  : "Phone number"}
+              </p>
+            </div>
 
-          <div style={{ width: "30%", height: "30vh", textAlign: "right" }}>
-            <h3>Prepared For</h3>
-            <p>{preview?.eventSponsor ? preview?.eventSponsor : "Event sponsor"}</p>
-          </div>
-        </CoverDetailsHolder>
-        <ProposalPagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPreviousPage={handlePreviousPage}
-          onNextPage={handleNextPage}
-          handlePageChange={handlePageChange}
-        />
+            <div style={{ width: "30%", height: "30vh", textAlign: "right" }}>
+              <h3>Prepared For</h3>
+              <p>
+                {preview?.eventSponsor
+                  ? preview?.eventSponsor
+                  : "Event sponsor"}
+              </p>
+            </div>
+          </CoverDetailsHolder>
+          <ProposalPagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPreviousPage={handlePreviousPage}
+            onNextPage={handleNextPage}
+            handlePageChange={handlePageChange}
+          />
 
-     
-        <ButtonContainer
-          style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
-        >
-          <AlternativeButton2
-            onClick={navigateBack}
-            style={{
-              color: "#FF2957",
-              fontWeight: "600",
-              marginRight: "15px",
-              width: "fit-content",
-              padding: "15px",
-              display: "flex",
-              alignItems: "center",
-            }}
+          <ButtonContainer
+            style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
           >
-            Back
-          </AlternativeButton2>
-          <AbsolutePrimaryButton onClick={navigateNext}>
-            Next
-          </AbsolutePrimaryButton>
-        </ButtonContainer>
-      </OverallContainer>
-      )} 
+            <AlternativeButton2
+              onClick={navigateBack}
+              style={{
+                color: "#FF2957",
+                fontWeight: "600",
+                marginRight: "15px",
+                width: "fit-content",
+                padding: "15px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Back
+            </AlternativeButton2>
+            <AbsolutePrimaryButton onClick={navigateNext}>
+              Next
+            </AbsolutePrimaryButton>
+          </ButtonContainer>
+        </OverallContainer>
+      )}
     </>
   );
 };

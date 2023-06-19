@@ -66,7 +66,7 @@ const ProposalPreviewC = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8081/proposals/";
+    const API_URL_2 = "http://localhost:8080/proposals/";
     const fetchProposalPreview = async () => {
       try {
         const { data } = await axios.get(API_URL_2 + proposalId, {
@@ -168,7 +168,7 @@ const ProposalPreviewC = () => {
 
                 <div style={{ width: "100%", marginTop: "5%" }}>
                   <h4>Event Organizer’s Ask</h4>
-                  <p style={{marginTop:"2%"}}>
+                  <p style={{ marginTop: "2%" }}>
                     We would require{" "}
                     {preview?.amountRequired
                       ? preview?.amountRequired
@@ -188,15 +188,28 @@ const ProposalPreviewC = () => {
                   }}
                 >
                   <h4>Confidentiality</h4>
-                  <p style={{textAlign:"center", marginTop:"2%"}}>Copyright {preview?.eventOrganizerName ? preview?.eventOrganizerName : "Event organizer's name"} {currentYear}.</p>
-                  <p style={{textAlign:"center", marginTop:"2%"}}>
-                    This publication is copyrighted and remains the intellectual
-                    property of {preview?.eventOrganizerName ? preview?.eventOrganizerName : "Event organizer's name"}.
+                  <p style={{ textAlign: "center", marginTop: "2%" }}>
+                    Copyright{" "}
+                    {preview?.eventOrganizerName
+                      ? preview?.eventOrganizerName
+                      : "Event organizer's name"}{" "}
+                    {currentYear}.
                   </p>
-                  <p style={{textAlign:"center", marginTop:"2%"}}>
+                  <p style={{ textAlign: "center", marginTop: "2%" }}>
+                    This publication is copyrighted and remains the intellectual
+                    property of{" "}
+                    {preview?.eventOrganizerName
+                      ? preview?.eventOrganizerName
+                      : "Event organizer's name"}
+                    .
+                  </p>
+                  <p style={{ textAlign: "center", marginTop: "2%" }}>
                     The information contained in this proposal is confidential,
                     and no part of it may be copied and/or disclosed to any
-                    person without the express permission of {preview?.eventOrganizerName ? preview?.eventOrganizerName : "Event organizer's name"}
+                    person without the express permission of{" "}
+                    {preview?.eventOrganizerName
+                      ? preview?.eventOrganizerName
+                      : "Event organizer's name"}
                   </p>
                 </div>
               </div>

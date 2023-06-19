@@ -59,7 +59,7 @@ const ProposalpreviewB = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8081/proposals/"
+    const API_URL_2 = "http://localhost:8080/proposals/";
     const fetchProposalPreview = async () => {
       try {
         const { data } = await axios.get(API_URL_2 + proposalId, {
@@ -90,49 +90,83 @@ const ProposalpreviewB = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-      <OverallContainer>
-        <ProposalContainer style={{ marginTop: "5%" }}>
-          <WelcomeHeader>
-            <Txt>Event</Txt>
-            <BsChevronRight style={{ marginRight: "0.5rem" }} />
-            <Txt
-              style={{ cursor: "pointer" }}
-              onClick={navigateBack}
-              fontWeight="400"
+        <OverallContainer>
+          <ProposalContainer style={{ marginTop: "5%" }}>
+            <WelcomeHeader>
+              <Txt>Event</Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt
+                style={{ cursor: "pointer" }}
+                onClick={navigateBack}
+                fontWeight="400"
+              >
+                Proposal
+              </Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt fontWeight="400" color="#FF2957">
+                Proposal Preview
+              </Txt>
+            </WelcomeHeader>
+          </ProposalContainer>
+          <PreviewLogoBg style={{ height: "fit-content" }}>
+            <div
+              style={{ width: "100%", height: "100%", padding: "2rem 5rem" }}
             >
-              Proposal
-            </Txt>
-            <BsChevronRight style={{ marginRight: "0.5rem" }} />
-            <Txt fontWeight="400" color="#FF2957">
-              Proposal Preview
-            </Txt>
-          </WelcomeHeader>
-        </ProposalContainer>
-        <PreviewLogoBg style={{ height: "fit-content" }}>
-          <div style={{ width: "100%", height: "100%", padding: "2rem 5rem" }}>
-            <h4
-              style={{
-                textAlign: "center",
-                color: "#0068FF",
-                textDecoration: "underline",
-              }}
-            >
-              {preview?.eventName ? preview?.eventName +`'s` : "Event Name" } Proposal to {preview?.eventSponsor ? preview?.eventSponsor : "Sponsor"}.
-            </h4>
+              <h4
+                style={{
+                  textAlign: "center",
+                  color: "#0068FF",
+                  textDecoration: "underline",
+                }}
+              >
+                {preview?.eventName ? preview?.eventName + `'s` : "Event Name"}{" "}
+                Proposal to{" "}
+                {preview?.eventSponsor ? preview?.eventSponsor : "Sponsor"}.
+              </h4>
 
-            <div style={{ marginTop: "3%" }}>
-              <h4>Attendees Profile</h4>
-              <div style={{ lineHeight: "2rem" }}>
-                <li>Age: {preview?.defineAudience ? preview?.defineAudience?.ageRange : "Age"}</li>
-                <li>Income Range: {preview?.defineAudience ? preview?.defineAudience?.income : "Income"}</li>
-                <li>Gender: {preview?.defineAudience ? preview?.defineAudience?.genderList : "Gender"}</li>
-                <li>Religion: {preview?.defineAudience ? preview?.defineAudience?.religionList : "Religion"}</li>
-                <li>Employment Status: {preview?.defineAudience ? preview?.defineAudience?.employmentStatusList : "Employment status"}</li>
-                <li>Educational Level: {preview?.defineAudience ? preview?.defineAudience?.educationLevelList : "Educational level"}</li>
+              <div style={{ marginTop: "3%" }}>
+                <h4>Attendees Profile</h4>
+                <div style={{ lineHeight: "2rem" }}>
+                  <li>
+                    Age:{" "}
+                    {preview?.defineAudience
+                      ? preview?.defineAudience?.ageRange
+                      : "Age"}
+                  </li>
+                  <li>
+                    Income Range:{" "}
+                    {preview?.defineAudience
+                      ? preview?.defineAudience?.income
+                      : "Income"}
+                  </li>
+                  <li>
+                    Gender:{" "}
+                    {preview?.defineAudience
+                      ? preview?.defineAudience?.genderList
+                      : "Gender"}
+                  </li>
+                  <li>
+                    Religion:{" "}
+                    {preview?.defineAudience
+                      ? preview?.defineAudience?.religionList
+                      : "Religion"}
+                  </li>
+                  <li>
+                    Employment Status:{" "}
+                    {preview?.defineAudience
+                      ? preview?.defineAudience?.employmentStatusList
+                      : "Employment status"}
+                  </li>
+                  <li>
+                    Educational Level:{" "}
+                    {preview?.defineAudience
+                      ? preview?.defineAudience?.educationLevelList
+                      : "Educational level"}
+                  </li>
+                </div>
               </div>
-            </div>
 
-            {/* <div style={{ marginTop: "3%" }}>
+              {/* <div style={{ marginTop: "3%" }}>
               <h4>Benefits of sponsoring this event (Inventory)</h4>
               <div style={{ lineHeight: "2rem" }}>
                 <li>
@@ -150,53 +184,53 @@ const ProposalpreviewB = () => {
               </div>
             </div> */}
 
-            <div style={{ marginTop: "3%" }}>
-              <h4>Impact of the event on the community</h4>
-              <div style={{ lineHeight: "2rem", marginBottom:"5%" }}>
-              {preview?.potentialImpacts ? (
-              <ul>
-                {preview.potentialImpacts.map((impacts) => (
-                  <li key={impacts}>{impacts}</li>
-                ))}
-              </ul>
-            ) : (
-              "Potential Impact List"
-            )}
+              <div style={{ marginTop: "3%" }}>
+                <h4>Impact of the event on the community</h4>
+                <div style={{ lineHeight: "2rem", marginBottom: "5%" }}>
+                  {preview?.potentialImpacts ? (
+                    <ul>
+                      {preview.potentialImpacts.map((impacts) => (
+                        <li key={impacts}>{impacts}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "Potential Impact List"
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </PreviewLogoBg>
-        <ProposalPagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPreviousPage={handlePreviousPage}
-          onNextPage={handleNextPage}
-          handlePageChange={handlePageChange}
-        />
+          </PreviewLogoBg>
+          <ProposalPagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPreviousPage={handlePreviousPage}
+            onNextPage={handleNextPage}
+            handlePageChange={handlePageChange}
+          />
 
-        <ButtonContainer
-          style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
-        >
-          <AlternativeButton2
-            onClick={navigateBack}
-            style={{
-              color: "#FF2957",
-              fontWeight: "600",
-              marginRight: "15px",
-              width: "fit-content",
-              padding: "15px",
-              display: "flex",
-              alignItems: "center",
-            }}
+          <ButtonContainer
+            style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
           >
-            Back
-          </AlternativeButton2>
-          <AbsolutePrimaryButton onClick={navigateNext}>
-            Next
-          </AbsolutePrimaryButton>
-        </ButtonContainer>
-      </OverallContainer>
-      )} 
+            <AlternativeButton2
+              onClick={navigateBack}
+              style={{
+                color: "#FF2957",
+                fontWeight: "600",
+                marginRight: "15px",
+                width: "fit-content",
+                padding: "15px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Back
+            </AlternativeButton2>
+            <AbsolutePrimaryButton onClick={navigateNext}>
+              Next
+            </AbsolutePrimaryButton>
+          </ButtonContainer>
+        </OverallContainer>
+      )}
     </>
   );
 };
