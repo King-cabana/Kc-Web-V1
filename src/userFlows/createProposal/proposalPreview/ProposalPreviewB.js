@@ -15,19 +15,18 @@ import {
   WelcomeHeader,
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
+import { PreviewLogoBg, ProposalInner, UlInner } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 const ProposalpreviewB = () => {
-  const [loading, setLoading] = useState(true);
-  const [preview, setPreview] = useState({});
+  const [loading, setLoading] = useState(false);
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(4);
 
   const user = useSelector((state) => state.userDetails);
-  const proposalId = sessionStorage.getItem("proposalId");
+  const proposal = useSelector((state) => state.proposal);
+  const eventCreated = useSelector((state) => state.eventCreated);
 
   const navigate = useNavigate();
 
@@ -59,30 +58,11 @@ const ProposalpreviewB = () => {
   };
 
   useEffect(() => {
-    const API_URL_2 = "http://localhost:8080/proposals/";
-    const fetchProposalPreview = async () => {
-      try {
-        const { data } = await axios.get(API_URL_2 + proposalId, {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        });
-        setPreview(data);
-      } catch (error) {
-        if (error?.response?.status === 400) {
-          // toast.error("Proposal Does Not Exist");
-        } else {
-          // toast.error("Failed to fetch proposal preview");
-          console.log(error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (proposalId && user?.token) {
-      fetchProposalPreview();
+    setLoading(true);
+    if (user?.token) {
+      setLoading(false);
     }
-  }, [proposalId, user?.token]);
+  }, [user?.token]);
 
   return (
     <>
@@ -109,9 +89,7 @@ const ProposalpreviewB = () => {
             </WelcomeHeader>
           </ProposalContainer>
           <PreviewLogoBg style={{ height: "fit-content" }}>
-            <div
-              style={{ width: "100%", height: "100%", padding: "2rem 5rem" }}
-            >
+            <ProposalInner>
               <h4
                 style={{
                   textAlign: "center",
@@ -119,9 +97,9 @@ const ProposalpreviewB = () => {
                   textDecoration: "underline",
                 }}
               >
-                {preview?.eventName ? preview?.eventName + `'s` : "Event Name"}{" "}
+                {eventCreated?.eventName ? eventCreated?.eventName + `'s` : "Event Name"}{" "}
                 Proposal to{" "}
-                {preview?.eventSponsor ? preview?.eventSponsor : "Sponsor"}.
+                {proposal?.eventSponsor ? proposal?.eventSponsor : "Sponsor"}.
               </h4>
 
               <div style={{ marginTop: "3%" }}>
@@ -129,76 +107,58 @@ const ProposalpreviewB = () => {
                 <div style={{ lineHeight: "2rem" }}>
                   <li>
                     Age:{" "}
-                    {preview?.defineAudience
-                      ? preview?.defineAudience?.ageRange
+                    {proposal?.demographyDto
+                      ? proposal?.demographyDto?.ageRange.join(", ")
                       : "Age"}
                   </li>
                   <li>
                     Income Range:{" "}
-                    {preview?.defineAudience
-                      ? preview?.defineAudience?.income
+                    {proposal?.demographyDto
+                      ? proposal?.demographyDto?.income.join(", ")
                       : "Income"}
                   </li>
                   <li>
                     Gender:{" "}
-                    {preview?.defineAudience
-                      ? preview?.defineAudience?.genderList
+                    {proposal?.demographyDto
+                      ? proposal?.demographyDto?.genderList.join(", ")
                       : "Gender"}
                   </li>
                   <li>
                     Religion:{" "}
-                    {preview?.defineAudience
-                      ? preview?.defineAudience?.religionList
+                    {proposal?.demographyDto
+                      ? proposal?.demographyDto?.religionList.join(", ")
                       : "Religion"}
                   </li>
                   <li>
                     Employment Status:{" "}
-                    {preview?.defineAudience
-                      ? preview?.defineAudience?.employmentStatusList
+                    {proposal?.demographyDto
+                      ? proposal?.demographyDto?.employmentStatusList.join(", ")
                       : "Employment status"}
                   </li>
                   <li>
                     Educational Level:{" "}
-                    {preview?.defineAudience
-                      ? preview?.defineAudience?.educationLevelList
+                    {proposal?.demographyDto
+                      ? proposal?.demographyDto?.educationLevelList.join(", ")
                       : "Educational level"}
                   </li>
                 </div>
               </div>
 
-              {/* <div style={{ marginTop: "3%" }}>
-              <h4>Benefits of sponsoring this event (Inventory)</h4>
-              <div style={{ lineHeight: "2rem" }}>
-                <li>
-                  Lorem ipsum dolor sit amet consectetur. In aliquet elit
-                  pellentesque sapien scelerisque in.
-                </li>
-                <li>
-                  Amet platea pharetra et ac lectus ac sed dictum. Nulla in
-                  laoreet sem enim.
-                </li>
-                <li>
-                  Lorem ipsum dolor sit amet consectetur. In aliquet elit
-                  pellentesque sapien scelerisque in.
-                </li>
-              </div>
-            </div> */}
-
               <div style={{ marginTop: "3%" }}>
                 <h4>Impact of the event on the community</h4>
                 <div style={{ lineHeight: "2rem", marginBottom: "5%" }}>
-                  {preview?.potentialImpacts ? (
-                    <ul>
-                      {preview.potentialImpacts.map((impacts) => (
+                  {proposal?.potentialImpacts ? (
+                    <UlInner>
+                      {proposal.potentialImpacts.map((impacts) => (
                         <li key={impacts}>{impacts}</li>
                       ))}
-                    </ul>
+                    </UlInner>
                   ) : (
                     "Potential Impact List"
                   )}
                 </div>
               </div>
-            </div>
+            </ProposalInner>
           </PreviewLogoBg>
           <ProposalPagination
             totalPages={totalPages}

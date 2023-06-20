@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 // const API_URL_2 = "http://localhost:8080/proposals/event/";
 

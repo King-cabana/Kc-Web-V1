@@ -14,7 +14,7 @@ import {
   WelcomeHeader,
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
+import { PreviewLogoBg, ProposalInner } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
 const ProposalPreviewContent = () => {
@@ -72,7 +72,7 @@ const ProposalPreviewContent = () => {
           </WelcomeHeader>
         </ProposalContainer>
         <PreviewLogoBg>
-          <div style={{ width: "100%", height: "100%", padding: "2rem 5rem" }}>
+          <ProposalInner>
             <h4 style={{ textAlign: "center" }}>Table of Contents</h4>
             <div style={{ lineHeight: "2.5rem" }}>
               <li>Event Name</li>
@@ -86,7 +86,7 @@ const ProposalPreviewContent = () => {
               <li>Budget</li>
               <li>Confidentiality</li>
             </div>
-          </div>
+          </ProposalInner>
         </PreviewLogoBg>
         
           <ProposalPagination

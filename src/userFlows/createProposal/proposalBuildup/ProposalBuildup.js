@@ -32,14 +32,15 @@ import {
   AbsolutePrimaryButton,
   AlternativeButton2,
 } from "../../../components/buttons/Buttons";
-import createProposal from "../../../redux/services/createProposal";
+// import createProposal from "../../../redux/services/createProposal";
 import { useParams } from "react-router-dom";
 import {
   addFields,
   addPotentialImpact,
   removePITag,
 } from "../../../redux/slices/proposalSlice";
-import { decryptId } from "../../../utils";
+import { decryptId, encryptId } from "../../../utils";
+import CreateEventTopBar from "../../topBar/CreateEventTopBar/CreateEventTopBar";
 
 const ProposalBuildup = () => {
   const [file, setFile] = useState("");
@@ -47,16 +48,15 @@ const ProposalBuildup = () => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [potentialImpacts, setPotentialImpacts] = useState("");
-  const { id } = useParams();
 
-  const eventId = id;
-  const decryptedId = decryptId(eventId)
   const state = useSelector((state) => state.proposal);
-  const user = useSelector((state) => state.userDetails);
-  console.log(decryptedId)
-  console.log(state)
+  const id = sessionStorage.getItem("line41");
+  console.log(state?.eventId);
 
   const navigate = useNavigate();
+  const decryptedId = decryptId(id);
+  // const user = useSelector((state) => state.userDetails);
+  // console.log(eventId)
   const dispatch = useDispatch();
 
   const handleFileChange = async (e) => {
@@ -158,13 +158,13 @@ const ProposalBuildup = () => {
   const handleProposalPreview = async (event) => {
     event.preventDefault();
     try {
-      if (!decryptId) {
+      if (!decryptedId) {
         throw new Error("ID is not defined");
       }
-      const stateWithId = { ...state, decryptId: parseInt(decryptId) };
-      const proposal = await createProposal(stateWithId, user.token);
-      (sessionStorage.setItem("proposalId", proposal.id))
-      navigate("/event/proposal/proposalpreview-page1")
+      // const stateWithId = { ...state, decryptId: parseInt(decryptId) };
+      // const proposal = await createProposal(stateWithId, user.token);
+      // (sessionStorage.setItem("proposalId", proposal.id))
+      navigate("/event/proposal/proposalpreview-page1");
     } catch (error) {
       console.log(error);
     }
@@ -176,6 +176,7 @@ const ProposalBuildup = () => {
 
   return (
     <>
+      <CreateEventTopBar />
       <OverallContainer>
         <ProposalContainer>
           <WelcomeHeader>
@@ -310,7 +311,9 @@ const ProposalBuildup = () => {
             </InputSeg>
             <ButtonContainer style={{ margin: "0rem" }}>
               <AlternativeButton2
-                onClick={() => navigate("/event/proposal")}
+                onClick={() =>
+                  navigate(`/generateproposal/${encryptId(state?.eventId)}`)
+                }
                 style={{
                   color: "#FF2957",
                   fontWeight: "600",

@@ -270,7 +270,7 @@ const Budget = ({ activeStep, setActiveStep }) => {
 
   const navigate = useNavigate();
   const navigateBack = () => {
-    navigate("/");
+    navigate("/event/proposal");
   };
 
   const handleNext = () => {
@@ -342,21 +342,21 @@ const Budget = ({ activeStep, setActiveStep }) => {
                 <BudgetBox key={index}>
                   <img src={click} alt="" onClick={() => handleDelete(index)} />
                   <Input
-                    placeholder="Food"
+                    placeholder="Item, e.g:Food, Venue, Decoration, etc."
                     value={item?.item}
                     onChange={(e) =>
                       handleChange(index, "item", e.target.value)
                     }
                   />
                   <TextArea
-                    placeholder="Finger Foods for 1000 students African dishes for VIP Guests"
+                    placeholder="Add more details about aforementioned Item"
                     value={item?.description}
                     onChange={(e) =>
                       handleChange(index, "description", e.target.value)
                     }
                   />
                   <InputPrice
-                    placeholder="250.00"
+                    placeholder="Amount"
                     value={item?.cost}
                     onChange={(e) =>
                       handleChange(index, "cost", e.target.value)
