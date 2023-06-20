@@ -27,8 +27,9 @@ import {
   Confidential,
 } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import createProposal from "../../../redux/services/createProposal";
+import { clearAllFields } from "../../../redux/slices/proposalSlice";
 
 
 const ProposalPreviewC = () => {
@@ -44,6 +45,7 @@ const ProposalPreviewC = () => {
 
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const navigateBack = () => {
     navigate("/event/proposal/proposalpreview-page4");
@@ -83,6 +85,7 @@ const ProposalPreviewC = () => {
       }
       const stateWithId = { ...proposal, id: eventCreated.id };
       await createProposal(stateWithId, user.token);
+      dispatch(clearAllFields());
       navigate("/createEvent/submitted")
     } catch (error) {
       console.log(error);

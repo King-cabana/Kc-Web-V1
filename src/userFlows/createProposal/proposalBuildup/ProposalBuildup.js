@@ -40,6 +40,7 @@ import {
   removePITag,
 } from "../../../redux/slices/proposalSlice";
 import { decryptId } from "../../../utils";
+import CreateEventTopBar from "../../topBar/CreateEventTopBar/CreateEventTopBar";
 
 const ProposalBuildup = () => {
   const [file, setFile] = useState("");
@@ -174,6 +175,7 @@ const ProposalBuildup = () => {
 
   return (
     <>
+    <CreateEventTopBar/>
       <OverallContainer>
         <ProposalContainer>
           <WelcomeHeader>
