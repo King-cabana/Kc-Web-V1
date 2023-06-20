@@ -15,7 +15,7 @@ import Inventory from "../../createProposal/budgetInventory/Inventory";
 import Budget from "../../../pages/Budget/Budget";
 import { decryptId } from "../../../utils";
 import { useParams } from "react-router-dom";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addFields } from "../../../redux/slices/proposalSlice";
 
 const FlowBody = () => {
@@ -23,11 +23,10 @@ const FlowBody = () => {
     const storedActiveStep = localStorage.getItem("activeStep");
     return storedActiveStep ? parseInt(storedActiveStep) : 0;
   });
-  const {id} = useParams();
-  const decryptedId = decryptId(id)
-  const dispatch =useDispatch();
-  dispatch(addFields({name: "eventId", value: decryptedId}));
-  
+  const { id } = useParams();
+  const decryptedId = decryptId(id);
+  const dispatch = useDispatch();
+  dispatch(addFields({ name: "eventId", value: decryptedId }));
 
   const steps = [
     { label: <StepLabel>Budget</StepLabel>, onClick: () => setActiveStep(0) },
@@ -50,9 +49,16 @@ const FlowBody = () => {
       case 0:
         return <Budget activeStep={activeStep} setActiveStep={setActiveStep} />;
       case 1:
-        return <Inventory activeStep={activeStep} setActiveStep={setActiveStep} />;
+        return (
+          <Inventory activeStep={activeStep} setActiveStep={setActiveStep} />
+        );
       case 2:
-        return <DefineAudience activeStep={activeStep} setActiveStep={setActiveStep} />;
+        return (
+          <DefineAudience
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+          />
+        );
       default:
         return null;
     }
@@ -79,7 +85,7 @@ const FlowBody = () => {
           />
         </ProgressBarBody>
 
-        <div style={{ padding: "5px"}}></div>
+        <div style={{ padding: "5px" }}></div>
         {getSectionComponent()}
       </WavyBackground>
     </>
