@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const API_URL_2 = "http://localhost:8081/proposals/event/";
+// const API_URL_2 = "http://localhost:8080/proposals/event/";
 
 // export const fetchProposalPreview = (id, token) => async (dispatch) => {
 //     try {

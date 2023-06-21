@@ -31,7 +31,6 @@ import { useDispatch, useSelector } from "react-redux";
 import createProposal from "../../../redux/services/createProposal";
 import { clearAllFields } from "../../../redux/slices/proposalSlice";
 
-
 const ProposalPreviewC = () => {
   const [loading, setLoading] = useState(false);
   const totalPages = 5;
@@ -87,12 +86,11 @@ const ProposalPreviewC = () => {
       await createProposal(stateWithId, user.token);
       dispatch(clearAllFields());
       localStorage.removeItem("budget");
-      navigate("/createEvent/submitted")
+      navigate("/create-proposal/generated");
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <>
@@ -101,7 +99,7 @@ const ProposalPreviewC = () => {
         <LoadingScreen />
       ) : (
         <OverallContainer>
-          <ProposalContainer style={{ marginTop: "5%"}}>
+          <ProposalContainer style={{ marginTop: "5%" }}>
             <WelcomeHeader>
               <Txt>Event</Txt>
               <BsChevronRight style={{ marginRight: "0.5rem" }} />
@@ -120,8 +118,16 @@ const ProposalPreviewC = () => {
           </ProposalContainer>
           <PreviewLogoBg>
             <ProposalInner>
-              <h4 style={{textAlign: "center", color: "#0068ff", textDecoration: "underline"}}>
-                {eventCreated?.eventName ? eventCreated?.eventName + `'s` : "Event Name"}{" "}
+              <h4
+                style={{
+                  textAlign: "center",
+                  color: "#0068ff",
+                  textDecoration: "underline",
+                }}
+              >
+                {eventCreated?.eventName
+                  ? eventCreated?.eventName + `'s`
+                  : "Event Name"}{" "}
                 Proposal to{" "}
                 {proposal?.eventSponsor ? proposal?.eventSponsor : "Sponsor"}.
               </h4>
@@ -189,7 +195,8 @@ const ProposalPreviewC = () => {
                     person without the express permission of{" "}
                     {profile?.organizerName
                       ? profile?.organizerName
-                      : "Event organizer's name"}.
+                      : "Event organizer's name"}
+                    .
                   </p>
                 </Confidential>
               </TableAndContentContainer>
