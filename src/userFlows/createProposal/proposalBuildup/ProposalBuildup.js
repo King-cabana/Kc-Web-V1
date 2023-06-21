@@ -177,7 +177,9 @@ const ProposalBuildup = () => {
   return (
     <>
       <CreateEventTopBar />
-      <OverallContainer>
+      <OverallContainer
+        style={{ height: "calc(100vh - 200px)", overflowY: "auto" }}
+      >
         <ProposalContainer>
           <WelcomeHeader>
             <Txt>Event</Txt>
