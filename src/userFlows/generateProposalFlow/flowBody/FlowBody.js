@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CreateEventTopBar from "../../topBar/CreateEventTopBar/CreateEventTopBar";
 import ProgressBar from "../progressBar/ProgressBar";
 import {
@@ -21,12 +21,18 @@ import { addFields } from "../../../redux/slices/proposalSlice";
 const FlowBody = () => {
   const [activeStep, setActiveStep] = useState(() => {
     const storedActiveStep = localStorage.getItem("activeStep");
-    return storedActiveStep ? parseInt(storedActiveStep) : 0;
+    return storedActiveStep !== null ? parseInt(storedActiveStep) : 0;
   });
   const { id } = useParams();
   const decryptedId = decryptId(id);
   const dispatch = useDispatch();
   dispatch(addFields({ name: "eventId", value: decryptedId }));
+
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    contentRef.current.scrollTop = 0; // Scroll to top whenever active step changes
+  }, [activeStep]);
 
   const steps = [
     { label: <StepLabel>Budget</StepLabel>, onClick: () => setActiveStep(0) },
@@ -41,8 +47,21 @@ const FlowBody = () => {
   ];
 
   useEffect(() => {
-    localStorage.setItem("activeStep", activeStep.toString());
-  }, [activeStep]);
+    const storedActiveStep = localStorage.getItem("activeStep");
+    const parsedActiveStep = storedActiveStep ? parseInt(storedActiveStep) : 0;
+
+    if (parsedActiveStep === 2) {
+      setActiveStep(0);
+      localStorage.setItem("activeStep", "0");
+    }
+
+    return () => {
+      if (parsedActiveStep === 2) {
+        setActiveStep(0);
+        localStorage.setItem("activeStep", "0");
+      }
+    };
+  }, []);
 
   function getSectionComponent() {
     switch (activeStep) {
@@ -85,8 +104,9 @@ const FlowBody = () => {
           />
         </ProgressBarBody>
 
-        <div style={{ padding: "5px" }}></div>
-        {getSectionComponent()}
+        <div ref={contentRef} style={{ height: "calc(100vh - 200px)", overflowY: "auto" }}>
+          {getSectionComponent()}
+        </div>
       </WavyBackground>
     </>
   );

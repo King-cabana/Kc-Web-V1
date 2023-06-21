@@ -86,6 +86,7 @@ const ProposalPreviewC = () => {
       const stateWithId = { ...proposal, id: eventCreated.id };
       await createProposal(stateWithId, user.token);
       dispatch(clearAllFields());
+      localStorage.removeItem("budget");
       navigate("/createEvent/submitted")
     } catch (error) {
       console.log(error);

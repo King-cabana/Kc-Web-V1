@@ -114,6 +114,7 @@ const ContactInput = () => {
               <ContactLabel>Drop Messages</ContactLabel>
               <InputBox>
                 <textarea
+                  style={{ resize: "none" }}
                   placeholder="What will you like us to provide you?"
                   name="message"
                   onChange={inputChange}

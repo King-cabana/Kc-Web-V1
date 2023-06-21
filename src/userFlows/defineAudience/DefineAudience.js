@@ -74,7 +74,6 @@ const DefineAudience = ({ padding, activeStep, setActiveStep }) => {
 
   const navigateBack = (e) => {
     e.preventDefault();
-    // navigate("/createevent/eventdetails/3");
     setActiveStep(activeStep - 1);
   };
 
