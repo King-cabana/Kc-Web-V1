@@ -103,8 +103,8 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
           </BudgetInventoryHeader>
         )}
 
-        <BudgetSection style={{ height: "100%" }}>
-          <BudgetTitle2>Take Inventory</BudgetTitle2>
+        <BudgetSection>
+          <BudgetTitle2 style={{marginTop:"3%"}}>Take Inventory</BudgetTitle2>
           <BudgetUpload>
             <BudgetSubtitle style={{ fontWeight: "400" }}>
               Add and make a list of every promotional and marketing opportunity

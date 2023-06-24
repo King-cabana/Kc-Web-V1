@@ -36,11 +36,14 @@ export function formatDate(date) {
 
 // convert time
 export const formatTime = (time) => {
-  const newTime = new Date(`1970-01-01T${time}Z`);
-  const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
-  const formattedTime = newTime?.toLocaleTimeString("en-US", timeOptions);
-
-  return formattedTime;
+  if (!time) {
+    return "Invalid Time";
+  } else {
+    const newTime = new Date(`1970-01-01T${time}Z`);
+    const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
+    const formattedTime = newTime?.toLocaleTimeString("en-US", timeOptions);
+    return formattedTime;
+  }
 };
 
 // Upcoming, expiren and ongoing event check

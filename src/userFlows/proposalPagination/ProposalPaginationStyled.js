@@ -7,6 +7,10 @@ export const PaginationContainer = styled.div`
   align-items: center;
   gap: 5px;
   margin-bottom: 10%;
+
+  @media screen and (max-width: 480px){
+    margin-bottom: 20%;
+  }
 `;
 
 export const PaginationButton = styled.button`

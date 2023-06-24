@@ -1,18 +1,27 @@
 import styled from "styled-components";
 import Background from "../../../assets/images/budgetBackground.jpg";
- 
+
 export const OverallContainer = styled.section`
   width: 100%;
-  height: 100%;
+  // height: 100%;
+
+  @media screen and (max-width: 480px) {
+    margin-top: 20%;
+  }
 `;
 
 export const ProposalContainer = styled.div`
   padding: 1rem 5rem;
   width: 100%;
   background: transparent;
-//   height: 100%;
 
-  @media screen and (max-width: 769px) {
+  @media screen and (max-width: 480px) {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (min-width: 481px) and (max-width: 769px) {
     padding: 1rem;
     margin-top: 5%;
   }
@@ -27,7 +36,7 @@ export const Txt = styled.span`
   margin-right: 0.5rem;
 
   @media screen and (max-width: 769px) {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
   }
 `;
@@ -37,11 +46,9 @@ export const WelcomeHeader = styled.section`
   align-items: center;
 `;
 
-
-
 export const ProposalBackground = styled.div`
   width: 100%;
-  heigth: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background: url(${Background});
   background-size: cover;
@@ -53,15 +60,14 @@ export const ProposalBackground = styled.div`
   @media screen and (max-width: 769px) {
     padding: 1rem;
     padding-bottom: 20%;
- 
   }
 `;
 
 export const ProposalInner = styled.form`
-    width:100%;
-    // background-color:white;
-    padding:1rem;
-`
+  width: 100%;
+  // background-color:white;
+  padding: 1rem;
+`;
 
 export const BenefitsTag = styled.button`
   display: flex;
@@ -87,8 +93,7 @@ export const BenefitsTag = styled.button`
 export const ProposalTagsWrapper = styled.section`
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 10px; 
-  
+  row-gap: 10px;
 
   @media screen and (max-width: 960px) {
     /* flex-direction: column; */
@@ -100,5 +105,4 @@ export const InputSeg = styled.section`
   width: 100%;
   /* height: 100%; */
   margin-bottom: 2rem;
-
 `;

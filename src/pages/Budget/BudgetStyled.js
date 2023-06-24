@@ -93,20 +93,23 @@ export const Input = styled.input`
   border-radius: 10px;
   outline: none;
 `;
-export const TextArea = styled.input`
+export const TextArea = styled.textarea`
   box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
+  resize: none;
+  // display: flex;
+  // flex-direction: row;
   justify-content: center;
-  /* align-items: center; */
   padding: 15px;
-  gap: 25px;
   width: 454px;
   height: 90px;
   background: #ffffff;
   border: 1px solid rgba(0, 104, 255, 0.1);
   border-radius: 10px;
   outline: none;
+
+  @media screen and (max-width:480px){
+    width: 100%;
+  }
 `;
 export const InputPrice = styled.input`
   box-sizing: border-box;

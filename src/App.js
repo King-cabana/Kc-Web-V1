@@ -147,7 +147,7 @@ function App() {
           <Route path="/generateproposal/:id" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
           <Route
-            path="/event/proposal/proposalbuildup/:id"
+            path="/event/proposal/proposalbuildup"
             element={<ProposalBuildup />}
           />
           <Route

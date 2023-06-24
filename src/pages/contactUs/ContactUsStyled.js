@@ -64,9 +64,8 @@ export const ContactRight = styled.div`
 `;
 
 export const ContactHeader = styled.h1`
-  font-family: "Poppins";
   font-weight: 700;
-  font-size: 48px;
+  font-size: 36px;
   color: #484848;
   width: 100%;
   margin-bottom: 5px;
@@ -85,10 +84,9 @@ export const Wrapper = styled.section`
 `;
 
 export const ContactParagraph = styled.p`
-  font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 16px;
   line-height: 30px;
   color: #484848;
   margin-bottom: 50px;
@@ -240,10 +238,9 @@ export const Form = styled.form`
 `;
 
 export const ContactInfo = styled.h1`
-  font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 44px;
+  font-size: 36px;
   line-height: 54px;
   color: #484848;
 
@@ -254,9 +251,8 @@ export const ContactInfo = styled.h1`
 `;
 
 export const ContactText = styled.p`
-  font-family: "Poppins";
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 21px;
   display: flex;
   align-items: center;
@@ -356,7 +352,7 @@ export const InputBox = styled.div`
     padding: 15px;
     gap: 10px;
     width: 100%;
-    height: 80px;
+    height: 60px;
     border: 1px solid rgba(0, 104, 255, 0.1);
     outline: none;
     border-radius: 10px;
