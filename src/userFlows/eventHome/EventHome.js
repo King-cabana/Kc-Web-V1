@@ -219,7 +219,7 @@ const EventHome = () => {
                 </ButtonLink>
               </Wrap>
               {/* <JointContainer> */}
-              <ButtonLink to="/event/create">
+              <ButtonLink to="">
                 <CustomAlt
                   style={{
                     color: "#FF2957",
