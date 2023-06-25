@@ -95,7 +95,7 @@ export const TableHead = styled.tr`
 
 export const TableTr = styled(TableHead)`
   cursor: pointer;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
 
   &:hover {
     background-color: #f6e9ec;

@@ -18,6 +18,7 @@ import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
 import Proposal from "./userFlows/createProposal/Proposal";
+import EventHistory from "./userFlows/pages/EventHistory";
 import Generated from "./userFlows/createProposal/Generated";
 import Inventory from "./userFlows/createProposal/budgetInventory/Inventory";
 import FlowBody from "./userFlows/generateProposalFlow/flowBody/FlowBody";
@@ -140,6 +141,14 @@ function App() {
             element={
               <Sidebar>
                 <Proposal />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/event/history"
+            element={
+              <Sidebar>
+                <EventHistory />
               </Sidebar>
             }
           />

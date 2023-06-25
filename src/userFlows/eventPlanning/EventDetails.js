@@ -57,7 +57,7 @@ const EventDetails = () => {
               {active?.map((data, index) => (
                 <TableTr
                   key={index}
-                  backgroundColor={data.selected ? "#f9e6ea" : "white"}
+                  backgroundcolor={data.selected ? "#f9e6ea" : "white"}
                   onClick={() => handleApiClick(data, index)}
                 >
                   <TdLarge>
