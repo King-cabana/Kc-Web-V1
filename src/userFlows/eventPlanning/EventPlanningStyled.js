@@ -38,9 +38,17 @@ export const TdLarge = styled.td`
   }
 `;
 
+export const HistoryTdLg = styled(TdLarge)`
+  width: 200px;
+`;
+
 export const TdMedium = styled(TdLarge)`
   width: 100px;
   padding-right: 1rem;
+`;
+
+export const HistoryTdMd = styled(TdMedium)`
+  width: 150px;
 `;
 
 export const TdSmall = styled(TdMedium)`

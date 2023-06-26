@@ -30,6 +30,7 @@ import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/Proposa
 import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB";
 import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC";
 import Budget from "./pages/Budget/Budget";
+import SingleEventHistory from "./userFlows/eventHistory/SingleEventHistory";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -152,7 +153,7 @@ function App() {
               </Sidebar>
             }
           />
-
+          <Route path="event/event-history" element={<SingleEventHistory />} />
           <Route path="/generateproposal/:id" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
           <Route

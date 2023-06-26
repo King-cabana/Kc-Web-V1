@@ -36,7 +36,10 @@ export const Plan = styled.p`
 export const Wrapper = styled.section`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: ${({ justifycontent }) =>
+    justifycontent ? justifycontent : "start"};
+  gap: ${({ gap }) => (gap ? gap : "1rem")};
+  cursor: ${({ cursor }) => (cursor ? cursor : "default")};
 `;
 
 export const Tags = styled.div`
