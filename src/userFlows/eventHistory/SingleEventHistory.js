@@ -1,5 +1,4 @@
 import { useState } from "react";
-import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
 import kcLogo from "../../assets/images/KCLogo.svg";
 import axios from "axios";
 import {
@@ -10,7 +9,7 @@ import {
   Container,
   IconsContainer,
 } from "../guestRegistration/GuestRegistrationStyled";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, useLocation } from "react-router";
 import { AiTwotoneCalendar, AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { BsChevronRight, BsUpload } from "react-icons/bs";
@@ -49,12 +48,14 @@ import {
   LI,
   UL,
 } from "./SingleEventHistoryStyled";
+import TopBar from "../topBar/dashboardTopBar/TopBar";
 
 const SingleEventHistory = () => {
   //   const [loading, setLoading] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const dataSponsors = {
     well: [
@@ -70,22 +71,24 @@ const SingleEventHistory = () => {
   };
   return (
     <>
-      <CreateEventTopBar />
+      {location.pathname === "/event/history/eventId" && <TopBar />}
       {loading ? (
         <LoadingScreen />
       ) : (
-        <Page style={{ marginTop: "1rem", padding: "0 2%" }}>
-          <WelcomeHeader style={{ marginBottom: "1.5rem" }}>
-            <Txt>Event</Txt>
-            <BsChevronRight style={{ marginRight: "0.5rem" }} />
-            <Txt fontWeight="400" onClick={() => navigate("/event/history")}>
-              History
-            </Txt>
-            <BsChevronRight style={{ marginRight: "0.5rem" }} />
-            <Txt fontWeight="400" color="#FF2957">
-              View Event
-            </Txt>
-          </WelcomeHeader>
+        <Page style={{ marginTop: "2rem", padding: "0 2%" }}>
+          {location.pathname === "/event/history/eventId" && (
+            <WelcomeHeader style={{ marginBottom: "1.5rem" }}>
+              <Txt>Event</Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt fontWeight="400" onClick={() => navigate("/event/history")}>
+                History
+              </Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt fontWeight="400" color="#FF2957">
+                View Event
+              </Txt>
+            </WelcomeHeader>
+          )}
           <Display style={{ marginRight: "1.5rem" }}>
             <Wrapper cursor="pointer" justifycontent="end" gap="0.3rem">
               <IMG src={kcLogo} alt="King Cabana Logo" />
@@ -245,11 +248,13 @@ const SingleEventHistory = () => {
             >
               Back
             </AlternativeButton2>
-            <AbsolutePrimaryButton
-              style={{ width: "60px", height: "auto", padding: "0.5rem" }}
-            >
-              Edit
-            </AbsolutePrimaryButton>
+            {location.pathname === "/event/history/eventId" && (
+              <AbsolutePrimaryButton
+                style={{ width: "60px", height: "auto", padding: "0.5rem" }}
+              >
+                Edit
+              </AbsolutePrimaryButton>
+            )}
           </ButtonContainer>
         </Page>
       )}

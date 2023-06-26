@@ -13,7 +13,7 @@ import {
   DropdownContentLink,
   Inner,
 } from "./TopBar.styled";
-import Logo from "../../../assets/images/KCLogo.svg";
+import Logo from "../../../assets/images/kingCabanaLogo.svg";
 import { SlBell } from "react-icons/sl";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { KBTextM } from "../../../components/fonts/Fonts";
@@ -72,9 +72,9 @@ const TopBar = () => {
       if (auth2) {
         auth2.signOut().then(() => {
           const data = dispatch(clearUserDetails());
-          console.log(data)
+          console.log(data);
           const local = localStorage.clear();
-          console.log(local)
+          console.log(local);
           toast.success("Logout!");
         });
       }
