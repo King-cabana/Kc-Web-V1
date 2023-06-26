@@ -7,12 +7,12 @@ export const StepLabel = styled.span`
 
 export const WavyBackground = styled.div`
   width: 100%;
-  heigth: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background: url(${Background});
   background-size: cover;
   background-repeat: no-repeat;
-  height: max-content;
+  /* height: max-content; */
   padding: 1rem 2rem;
   padding-bottom: 10%;
 

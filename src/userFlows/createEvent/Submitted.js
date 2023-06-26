@@ -9,6 +9,7 @@ import { SubmittedContainer, SubmittedButtons } from "./SubmittedStyled";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
+  ModalPrimaryButton,
 } from "../../components/buttons/button";
 import Lottie from "lottie-react";
 import animationData from "../../assets/lotties/102001-success-icon.json";
@@ -16,7 +17,7 @@ import { AnimationContainer } from "../../globalStyles";
 import { useNavigate } from "react-router";
 import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
 import { encryptId, decryptId } from "../../utils";
-// import TopBar from "../../components/createEventTopBar/TopBar";
+import { ModalButtonContainer } from "../createProposal/budgetInventory/InventoryStyled";
 
 const Submitted = () => {
   const navigate = useNavigate();
@@ -39,16 +40,41 @@ const Submitted = () => {
         <AnimationContainer>
           <Lottie animationData={animationData} loop={true} />
         </AnimationContainer>
-        <BudgetInventorySubtitle
-          style={{ marginBottom: "1rem", fontWeight: "600" }}
-        >
-          {location.pathname === "/createEvent/submitted"
-            ? "Event created successfully."
-            : null}
-          {location.pathname === "/create-proposal/generated"
-            ? "You have successfully generated a proposal"
-            : null}
-        </BudgetInventorySubtitle>
+
+        {location.pathname === "/createEvent/submitted" ? (
+          <BudgetInventorySubtitle
+            style={{ marginBottom: "1rem", fontWeight: "600" }}
+          >
+            Event created successfully.
+          </BudgetInventorySubtitle>
+        ) : null}
+        {location.pathname === "/create-proposal/generated" ? (
+          <>
+            <BudgetInventorySubtitle
+              style={{
+                marginBottom: "0.5rem",
+                fontWeight: "600",
+                textAlign: "center",
+              }}
+            >
+              You have successfully generated a proposal.
+            </BudgetInventorySubtitle>
+            <BudgetInventorySubtitle
+              style={{
+                marginBottom: "1.5rem",
+                fontWeight: "600",
+                textAlign: "center",
+              }}
+            >
+              Proceed to share with prospective sponsors.
+            </BudgetInventorySubtitle>
+
+            <ModalButtonContainer>
+              <AlternativeButton2>Download PDF</AlternativeButton2>
+              <ModalPrimaryButton>Share proposal link</ModalPrimaryButton>
+            </ModalButtonContainer>
+          </>
+        ) : null}
 
         {location.pathname === "/createEvent/submitted" ? (
           <SubmittedButtons>

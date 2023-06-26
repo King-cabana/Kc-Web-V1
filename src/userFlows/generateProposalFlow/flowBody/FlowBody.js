@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CreateEventTopBar from "../../topBar/CreateEventTopBar/CreateEventTopBar";
-import EmptyEvent from "../../emptyEvent/EmptyEvent";
 import ProgressBar from "../progressBar/ProgressBar";
 import {
   WavyBackground,
@@ -13,12 +12,27 @@ import { RxCaretLeft } from "react-icons/rx";
 import { KBTextL } from "../../../components/fonts/Fonts";
 import DefineAudience from "../../defineAudience/DefineAudience";
 import Inventory from "../../createProposal/budgetInventory/Inventory";
+import Budget from "../../../pages/Budget/Budget";
+import { decryptId } from "../../../utils";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addFields } from "../../../redux/slices/proposalSlice";
 
 const FlowBody = () => {
   const [activeStep, setActiveStep] = useState(() => {
     const storedActiveStep = localStorage.getItem("activeStep");
-    return storedActiveStep ? parseInt(storedActiveStep) : 0;
+    return storedActiveStep !== null ? parseInt(storedActiveStep) : 0;
   });
+  const { id } = useParams();
+  const decryptedId = decryptId(id);
+  const dispatch = useDispatch();
+  dispatch(addFields({ name: "eventId", value: decryptedId }));
+
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    contentRef.current.scrollTop = 0; // Scroll to top whenever active step changes
+  }, [activeStep]);
 
   const steps = [
     { label: <StepLabel>Budget</StepLabel>, onClick: () => setActiveStep(0) },
@@ -33,17 +47,37 @@ const FlowBody = () => {
   ];
 
   useEffect(() => {
-    localStorage.setItem("activeStep", activeStep.toString());
-  }, [activeStep]);
+    const storedActiveStep = localStorage.getItem("activeStep");
+    const parsedActiveStep = storedActiveStep ? parseInt(storedActiveStep) : 0;
+
+    if (parsedActiveStep === 2) {
+      setActiveStep(0);
+      localStorage.setItem("activeStep", "0");
+    }
+
+    return () => {
+      if (parsedActiveStep === 2) {
+        setActiveStep(0);
+        localStorage.setItem("activeStep", "0");
+      }
+    };
+  }, []);
 
   function getSectionComponent() {
     switch (activeStep) {
       case 0:
-        return <EmptyEvent />;
+        return <Budget activeStep={activeStep} setActiveStep={setActiveStep} />;
       case 1:
-        return <Inventory />;
+        return (
+          <Inventory activeStep={activeStep} setActiveStep={setActiveStep} />
+        );
       case 2:
-        return <DefineAudience />;
+        return (
+          <DefineAudience
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+          />
+        );
       default:
         return null;
     }
@@ -70,16 +104,9 @@ const FlowBody = () => {
           />
         </ProgressBarBody>
 
-        <div style={{ padding: "5px"}}></div>
-        {getSectionComponent()}
-        {activeStep !== 0 && activeStep !== steps.length - 1 && (
-          <button onClick={() => setActiveStep(activeStep - 1)}>
-            Previous
-          </button>
-        )}
-        {activeStep !== steps.length - 1 && (
-          <button onClick={() => setActiveStep(activeStep + 1)}>Next</button>
-        )}
+        <div ref={contentRef} style={{ height: "calc(100vh - 200px)", overflowY: "auto" }}>
+          {getSectionComponent()}
+        </div>
       </WavyBackground>
     </>
   );

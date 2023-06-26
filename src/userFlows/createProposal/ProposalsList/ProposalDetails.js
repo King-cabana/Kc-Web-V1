@@ -15,47 +15,44 @@ import {
   ViewButton,
   LoadingSection,
 } from "../../eventPlanning/EventPlanningStyled";
+import { AlignCenter } from "./ProposalsListStyled";
+import { HiOutlineDocumentText, HiOutlineTrash } from "react-icons/hi";
 import {
-  AlignCenter,
-  OptionsContainer,
-  OptionsText,
-} from "./ProposalsListStyled";
-import { SlOptionsVertical } from "react-icons/sl";
-import { HiOutlineDocumentText } from "react-icons/hi";
-import { AbsolutePrimaryButton } from "../../../components/buttons/button";
+  AbsolutePrimaryButton,
+  AlternativeButton2,
+  ModalPrimaryButton,
+} from "../../../components/buttons/button";
 import { API_URL_2 } from "../../../redux/services/authService";
 import { setEventCreated } from "../../../redux/slices/eventCreatedSlice";
 import { formatDate, formatTime } from "../../../utils";
+import { encryptId } from "../../../utils";
+import "../../../modal.css";
+import {
+  BtnHolderLink,
+  ModalButtonContainer,
+  ModalText,
+  NPopUpComponent,
+  PopUpOverlay,
+} from "../budgetInventory/InventoryStyled";
 
 const ProposalDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [active, setActive] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.userDetails);
   const organizer = useSelector((state) => state.eventOrganizerProfile);
-  const [optionsArr, setOptionsArr] = useState([]);
-
-  const toggleOptions = (sponsorKey) => {
-    setOptionsArr((prevOptionsArr) => {
-      const index = prevOptionsArr.findIndex(
-        (options) => options.id === sponsorKey
-      );
-      if (index === -1) {
-        // options state for this proposal not found, create new options state
-        return [...prevOptionsArr, { id: sponsorKey, open: true }];
-      } else {
-        // options state for this proposal found, toggle the open property
-        const newOptionsArr = [...prevOptionsArr];
-        newOptionsArr[index] = {
-          ...newOptionsArr[index],
-          open: !newOptionsArr[index].open,
-        };
-        return newOptionsArr;
-      }
-    });
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => {
+    setModal(!modal);
   };
+  // Modal Contitions
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
+  const showModal = !modal && "notShown";
 
   useEffect(() => {
     // console.log(organizer);
@@ -70,7 +67,7 @@ const ProposalDetails = () => {
             },
           }
         );
-        console.log(data);
+        // console.log(data);
         setActive(data);
         dispatch(setEventCreated(data));
       } catch (error) {
@@ -81,13 +78,27 @@ const ProposalDetails = () => {
       }
     };
     fetchOrganizerEvents();
-  }, [organizer?.id, user?.token]);
+  }, [dispatch, organizer?.id, user?.token]);
+
+  const deleteProposal = async (sponsorKey) => {
+    // console.log(sponsorKey);
+    try {
+      await axios.delete(API_URL_2 + `proposals/${sponsorKey}`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      });
+      toast.success("Proposal deleted successfully.");
+      window.location.reload();
+    } catch (error) {
+      console.log("Failed to delete proposal:", error);
+      toast.error(error.message);
+    }
+  };
 
   return (
-    <div
-      style={{ overflowX: "auto" }}
-      // onClick={() => options === true && setOptions(false)}
-    >
+    <div style={{ overflowX: "auto" }}>
+      {modal && <PopUpOverlay />}
       {loading ? (
         <LoadingSection style={{ width: "100vw" }}>
           <ReactLoading type="spin" color="#FF2957" height={100} width={50} />
@@ -108,7 +119,7 @@ const ProposalDetails = () => {
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
                     <AbsolutePrimaryButton
                       onClick={() =>
-                        navigate(`/event/proposal/proposal-buildup/${data?.id}`)
+                        navigate(`/generateproposal/${encryptId(data?.id)}`)
                       }
                     >
                       Generate Proposal
@@ -116,11 +127,7 @@ const ProposalDetails = () => {
                   </TdMedium>
                 </TableHead>
                 {Object.keys(data?.proposals).map((sponsorKey) => (
-                  <TableTr
-                    key={sponsorKey}
-                    // backgroundColor={data?.selected ? "#f9e6ea" : "white"}
-                    onClick={() => toggleOptions(sponsorKey)}
-                  >
+                  <TableTr key={sponsorKey}>
                     <TdLarge style={{ padding: "1rem 0.5rem" }}>
                       <AlignCenter>
                         <HiOutlineDocumentText
@@ -131,11 +138,15 @@ const ProposalDetails = () => {
                       </AlignCenter>
                     </TdLarge>
 
-                    <TdSmall style={{ position: "relative" }}>
+                    <TdSmall
+                      style={{
+                        position: "relative",
+                      }}
+                    >
                       <div
                         style={{
                           position: "absolute",
-                          right: "1rem",
+                          right: "2.5rem",
                           top: "50%",
                           transform: "translateY(-50%)",
                         }}
@@ -151,24 +162,33 @@ const ProposalDetails = () => {
                         </ViewButton>
                       </div>
                       <div>
-                        <SlOptionsVertical
-                          onClick={() => toggleOptions(sponsorKey)}
-                          style={{
-                            position: "absolute",
-                            right: "1rem",
-                            top: "50%",
-                            transform: "translateY(-50%)",
-                          }}
+                        <HiOutlineTrash
+                          size="1.5rem"
+                          color="#FF4646"
+                          onClick={toggleModal}
                         />
                       </div>
-                      {optionsArr?.some(
-                        (options) => options?.id === sponsorKey && options?.open
-                      ) && (
-                        <OptionsContainer>
-                          <OptionsText>Edit</OptionsText>
-                          <OptionsText color="#FF4646">Delete</OptionsText>
-                        </OptionsContainer>
-                      )}
+                      <div className={`${showModal}`}>
+                        <NPopUpComponent style={{ height: "auto" }}>
+                          <ModalText style={{ marginBottom: "1.5rem" }}>
+                            Are you sure you wanna delete this Proposal?
+                          </ModalText>
+                          <ModalButtonContainer>
+                            <BtnHolderLink>
+                              <AlternativeButton2
+                                onClick={() => setModal(!modal)}
+                              >
+                                Cancel
+                              </AlternativeButton2>
+                            </BtnHolderLink>
+                            <ModalPrimaryButton
+                              onClick={() => deleteProposal(sponsorKey)}
+                            >
+                              Yes, delete
+                            </ModalPrimaryButton>
+                          </ModalButtonContainer>
+                        </NPopUpComponent>
+                      </div>
                     </TdSmall>
                   </TableTr>
                 ))}

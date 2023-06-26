@@ -12,8 +12,6 @@ import {
   LottieWrapper,
   PrimaryButton,
 } from "./EmptyEventStyled";
-// import { OverallContainer } from "../eventHome/EventHomeStyled";
-// import { WelcomeText } from "../eventHome/EventHomeStyled";
 import { BsChevronRight } from "react-icons/bs";
 
 const EmptyEvent = () => {
@@ -38,7 +36,7 @@ const EmptyEvent = () => {
             </LottieWrapper>
             <NoContentText>You have no event created yet.</NoContentText>
           </NoEventCenter>
-          <ButtonLink to="/createevent/eventdetails/1">
+          <ButtonLink to="/createevent/eventdetails">
             <PrimaryButton>Create event</PrimaryButton>
           </ButtonLink>
         </NoEventContainer>

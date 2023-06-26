@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
-// const API_URL_2 = "http://localhost:8081/proposals/event/";
+// const API_URL_2 = "http://localhost:8080/proposals/event/";
 
 // export const fetchProposalPreview = (id, token) => async (dispatch) => {
 //     try {
@@ -24,11 +23,10 @@ const proposalPreviewSlice = createSlice({
       state.preview = action.payload;
     },
     clearProposalPreview: (state) => {
-        state.preview = null;
+      state.preview = null;
     },
   },
 });
 
 export const { setProposalPreview } = proposalPreviewSlice.actions;
 export default proposalPreviewSlice.reducer;
-

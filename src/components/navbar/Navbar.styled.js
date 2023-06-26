@@ -76,7 +76,6 @@ export const NavItems = styled.ul`
   width: 65%;
   justify-content: space-between;
   align-items: center;
-  
 
   li,
   a {
@@ -134,7 +133,6 @@ export const NavBarLink = styled(NavLink)`
     &:hover {
       color: #ff2957;
     }
-
   }
 `;
 
@@ -165,9 +163,6 @@ export const NavSearchHolder = styled.div`
 `;
 
 export const NavButtonLink = styled(Link)`
-
-
   @media screen and (max-width: 960px) {
-
-}
+  }
 `;

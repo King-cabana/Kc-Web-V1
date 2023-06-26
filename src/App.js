@@ -18,6 +18,7 @@ import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
 import Proposal from "./userFlows/createProposal/Proposal";
+import EventHistory from "./userFlows/pages/EventHistory";
 import Generated from "./userFlows/createProposal/Generated";
 import Inventory from "./userFlows/createProposal/budgetInventory/Inventory";
 import FlowBody from "./userFlows/generateProposalFlow/flowBody/FlowBody";
@@ -25,10 +26,13 @@ import DefineAudience from "./userFlows/defineAudience/DefineAudience";
 import ProposalBuildup from "./userFlows/createProposal/proposalBuildup/ProposalBuildup";
 import ProposalPreviewCover from "./userFlows/createProposal/proposalPreview/ProposalPreviewCover";
 import ProposalPreviewContent from "./userFlows/createProposal/proposalPreview/ProposalPreviewContent";
-import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/ProposalPreviewA"
-import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB"
-import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC"
-
+import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/ProposalPreviewA";
+import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB";
+import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC";
+import Budget from "./pages/Budget/Budget";
+import SingleEventHistory from "./userFlows/eventHistory/SingleEventHistory";
+import PreviousEvents from "./userFlows/eventOrganizerProfile/previousEvents/PreviousEvents";
+// import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
   import("./pages/profile/EditOrganiserProfile/EditOrganiserProfile")
@@ -50,6 +54,12 @@ const SignUp = lazy(() => import("./auth/signUp/SignUp"));
 
 const FirstCreateEvent = lazy(() =>
   import("./userFlows/createEvent/FirstCreateEvent")
+);
+
+const OrganizerProfilePage = lazy(() =>
+  import(
+    "./userFlows/eventOrganizerProfile/organizerProfilePage/OrganizerProfilePage"
+  )
 );
 
 function App() {
@@ -82,7 +92,6 @@ function App() {
           <Route path="/vendors" element={<Vendor />} />
           <Route path="/aboutUs" element={<About />} />
           <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/guestRegistration/" element={<GuestView />} />
           <Route path="/guestRegistration/:id" element={<GuestView />} />
           <Route
             path="/event/planning/view-completed-event/:id"
@@ -143,24 +152,70 @@ function App() {
               </Sidebar>
             }
           />
-
           <Route
-            path="/event/proposal/proposalbuildup"
+            path="/event/history"
             element={
               <Sidebar>
-                <ProposalBuildup />
+                <EventHistory />
+              </Sidebar>
+            }
+          />
+          <Route path="/profile" element={<OrganizerProfilePage />} />
+          <Route path="/profile/previous-event" element={<PreviousEvents />} />
+          <Route
+            path="/event/history/eventId"
+            element={<SingleEventHistory />}
+          />
+          <Route path="/generateproposal/:id" element={<FlowBody />} />
+          <Route path="/defineaudience" element={<DefineAudience />} />
+          <Route
+            path="/event/proposal/proposalbuildup"
+            element={<ProposalBuildup />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page1"
+            element={<ProposalPreviewCover />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page2"
+            element={<ProposalPreviewContent />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page3"
+            element={<ProposalPreviewA />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page4"
+            element={<ProposalPreviewB />}
+          />
+          <Route
+            path="/event/proposal/proposalpreview-page5"
+            element={<ProposalPreviewC />}
+          />
+
+          <Route
+            path="/createEvent/eventDetails"
+            element={<FirstCreateEvent />}
+          />
+          <Route
+            path="/createEvent/tagsTimelines"
+            element={<TimeLineEvent />}
+          />
+          <Route
+            path="/createEvent/eventPlanPreview"
+            element={<EventPlanPreview />}
+          />
+          <Route path="/createEvent/submitted" element={<Submitted />} />
+          <Route
+            path="/dashboard"
+            element={
+              <Sidebar>
+                <DashboardHome />
               </Sidebar>
             }
           />
           <Route path="*" element={<NoPage />} />
-          <Route path="/progress" element={<FlowBody />} />
-          <Route path="/defineaudience" element={<DefineAudience />} />
-          <Route path="/event/proposal/proposalpreviewcover" element={<ProposalPreviewCover />} />
-          <Route path="/event/proposal/proposalpreviewcontent" element={<ProposalPreviewContent />} />
-          <Route path="/event/proposal/proposalpreviewpage1" element={<ProposalPreviewA/>} />
-          <Route path="/event/proposal/proposalpreviewpage2" element={<ProposalPreviewB/>} />
-          <Route path="/event/proposal/proposalpreviewpage3" element={<ProposalPreviewC/>} />
-
+          <Route path="/budget" element={<Budget />} />
         </Routes>
       </>
     </Suspense>

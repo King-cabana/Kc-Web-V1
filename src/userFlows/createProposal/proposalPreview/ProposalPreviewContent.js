@@ -1,6 +1,5 @@
 import React from "react";
 import TopBar from "../../../userFlows/topBar/dashboardTopBar/TopBar";
-import LoadingScreen from "../../../LoadingScreen";
 import {
   AbsolutePrimaryButton,
   AlternativeButton2,
@@ -15,26 +14,45 @@ import {
   WelcomeHeader,
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { PreviewLogoBg } from "./ProposalPreviewCoverStyled";
+import { PreviewLogoBg, ProposalInner } from "./ProposalPreviewCoverStyled";
+import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
 const ProposalPreviewContent = () => {
-  const [loading, setLoading] = useState(true);
+  const totalPages = 5;
+  const [currentPage, setCurrentPage] = useState(2);
+
   const navigate = useNavigate();
 
   const navigateBack = () => {
-    navigate("/event/proposal/proposalpreviewcover");
+    navigate("/event/proposal/proposalpreview-page1");
   };
 
   const navigateNext = () => {
-    navigate("/event/proposal/proposalpreviewpage1");
+    navigate("/event/proposal/proposalpreview-page3");
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    navigate(`/event/proposal/proposalpreview-page${pageNumber}`);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage - 1}`);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      navigate(`/event/proposal/proposalpreview-page${currentPage + 1}`);
+    }
   };
 
   return (
     <>
       <TopBar marginBottom="1rem" />
-      {/* {loading ? (
-        <LoadingScreen />
-      ) : ( */}
       <OverallContainer>
         <ProposalContainer style={{ marginTop: "5%" }}>
           <WelcomeHeader>
@@ -54,7 +72,7 @@ const ProposalPreviewContent = () => {
           </WelcomeHeader>
         </ProposalContainer>
         <PreviewLogoBg>
-          <div style={{ width: "100%", height: "100%", padding: "2rem 5rem" }}>
+          <ProposalInner>
             <h4 style={{ textAlign: "center" }}>Table of Contents</h4>
             <div style={{ lineHeight: "2.5rem" }}>
               <li>Event Name</li>
@@ -68,8 +86,16 @@ const ProposalPreviewContent = () => {
               <li>Budget</li>
               <li>Confidentiality</li>
             </div>
-          </div>
+          </ProposalInner>
         </PreviewLogoBg>
+        
+          <ProposalPagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPreviousPage={handlePreviousPage}
+            onNextPage={handleNextPage}
+            handlePageChange={handlePageChange}
+          />
 
         <ButtonContainer
           style={{ margin: "0rem", borderTop: "1px solid #ff2957" }}
@@ -93,7 +119,6 @@ const ProposalPreviewContent = () => {
           </AbsolutePrimaryButton>
         </ButtonContainer>
       </OverallContainer>
-      {/* )} */}
     </>
   );
 };
