@@ -47,14 +47,24 @@ export const HistoryImageContainer = styled.div`
 
 export const HistoryImage = styled.img`
   width: 32%;
-  height: 50%;
+  height: 320px;
   border-radius: 10px;
   object-fit: cover;
+  margin: 1rem 0rem 1rem 0rem;
 
+  @media screen and (max-width: 960px) {
+    height: 280px;
+  }
   @media screen and (max-width: 768px) {
-    width: 60%;
+    width: 62%;
+    height: 320px;
+  }
+  @media screen and (max-width: 640px) {
+    width: 77%;
+    height: 300px;
   }
   @media screen and (max-width: 425px) {
     width: 100%;
+    height: 270px;
   }
 `;

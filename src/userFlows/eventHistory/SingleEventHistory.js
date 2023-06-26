@@ -63,9 +63,9 @@ const SingleEventHistory = () => {
       "Arike and her Lover Man in the Maldives",
     ],
     again: [
-      "https://res.cloudinary.com/dcanx4ftd/image/upload/v1687259231/images/xclqpnhy46kmwxvrzldi.jpg",
-      "https://res.cloudinary.com/dcanx4ftd/image/upload/v1687259231/images/xclqpnhy46kmwxvrzldi.jpg",
-      "https://res.cloudinary.com/dcanx4ftd/image/upload/v1687259231/images/xclqpnhy46kmwxvrzldi.jpg",
+      "https://res.cloudinary.com/dcanx4ftd/image/upload/v1687765489/images/nkmvql6kmwdr37peixjm.jpg",
+      "https://res.cloudinary.com/dcanx4ftd/image/upload/v1687573273/images/asz7escqvxj3rraufayf.jpg",
+      "https://res.cloudinary.com/dcanx4ftd/image/upload/v1687765417/images/wrwx56rlduir17azi1np.jpg",
     ],
   };
   return (
@@ -74,7 +74,7 @@ const SingleEventHistory = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <Page style={{ marginTop: "1rem" }}>
+        <Page style={{ marginTop: "1rem", padding: "0 2%" }}>
           <WelcomeHeader style={{ marginBottom: "1.5rem" }}>
             <Txt>Event</Txt>
             <BsChevronRight style={{ marginRight: "0.5rem" }} />
@@ -101,7 +101,7 @@ const SingleEventHistory = () => {
           </Display>
 
           <BudgetSection style={{ padding: "0rem" }}>
-            <Partition style={{ gap: "0rem 1rem", marginBottom: "0.6rem" }}>
+            <Partition style={{ gap: "0rem 1rem", marginBottom: "0.4rem" }}>
               <Partition1>
                 <BudgetTitle1>Event Name</BudgetTitle1>
                 <BudgetInventorySubtitle style={{ marginBottom: "0.6rem" }}>

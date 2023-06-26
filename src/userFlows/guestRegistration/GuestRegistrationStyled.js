@@ -116,7 +116,7 @@ export const HR = styled.hr`
 export const Like = styled.section`
   display: ${(props) => (props.display ? props.display : "flex")};
   cursor: pointer;
-  margin-right: ${(props) => (props.marginRight ? props.marginRight : "0rem")};
+  margin-right: ${(props) => (props.marginright ? props.marginright : "0rem")};
 
   &:hover {
     color: #969699;
