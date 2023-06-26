@@ -88,7 +88,7 @@ const ProposalPreviewA = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <PreviewLogoBg>
+          <PreviewLogoBg style={{height:"fit-content"}}>
             <ProposalInner>
               <h4
                 style={{

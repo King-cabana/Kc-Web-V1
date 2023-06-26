@@ -118,7 +118,7 @@ const ProposalPreviewC = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <PreviewLogoBg>
+          <PreviewLogoBg style={{height:"fit-content"}}>
             <ProposalInner>
               <h4 style={{textAlign: "center", color: "#0068ff", textDecoration: "underline"}}>
                 {eventCreated?.eventName ? eventCreated?.eventName + `'s` : "Event Name"}{" "}
