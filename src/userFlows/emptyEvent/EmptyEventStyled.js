@@ -67,7 +67,9 @@ export const NoContentText = styled.p`
   line-height: 28px;
   color: #484848;
   margin-top: 2rem;
-  margin-bottom: 3.2rem;
+  /* margin-bottom: 3.2rem; */
+  margin-bottom: ${(props) =>
+    props.marginbottom ? props.marginbottom : "3.2rem"};
   text-align: center;
 
   @media screen and (max-width: 769px) {
@@ -117,5 +119,12 @@ export const PrimaryButton = styled.button`
   &:disabled {
     background-color: rgba(255, 41, 87, 0.3);
     color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+export const HistoryPrimaryButton = styled(PrimaryButton)`
+  @media screen and (max-width: 769px) {
+    width: auto;
+    padding: 0rem 0.5rem;
   }
 `;

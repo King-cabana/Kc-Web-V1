@@ -219,13 +219,12 @@ const EventHome = () => {
                 </ButtonLink>
               </Wrap>
               {/* <JointContainer> */}
-              <ButtonLink to="/event/create">
+              <ButtonLink to="/event/history">
                 <CustomAlt
                   style={{
                     color: "#FF2957",
                     fontWeight: "600",
                   }}
-                  disabled
                 >
                   Add event history
                 </CustomAlt>

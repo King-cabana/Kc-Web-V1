@@ -51,7 +51,7 @@ const ViewEvent = () => {
   const navigate = useNavigate();
   const encryptedId = encryptId(event?.id);
   const decryptedId = decryptId(id);
-  console.log(decryptedId);
+  // console.log(decryptedId);
   // console.log(id);
   // console.log(event?.id);
   const shareDetails = {
@@ -67,7 +67,7 @@ const ViewEvent = () => {
       try {
         const { data } = await axios.get(API_URL_2 + `events/${decryptedId}`);
         setEvent(data);
-        console.log(data);
+        // console.log(data);
 
         const response2 = await axios.get(
           API_URL_2 + `attendee/event/size?id=${decryptedId}`
@@ -127,11 +127,11 @@ const ViewEvent = () => {
 
           <BudgetSection>
             <IconsContainer>
-              <Like marginRight="1rem">
+              <Like marginright="1rem">
                 <AiOutlineEdit />
               </Like>
 
-              <Like marginRight="1rem">
+              <Like marginright="1rem">
                 <BsUpload
                   onClick={() => {
                     window.navigator.share(shareDetails);
@@ -181,8 +181,8 @@ const ViewEvent = () => {
                 </SECTION>
 
                 <Display>
-                  <Wrapper>
-                    <AiTwotoneCalendar color="#FF2957" size="1.5em" />
+                  <Wrapper gap="0.5em">
+                    <AiTwotoneCalendar color="#FF2957" size="1em" />
                     <BudgetTitle2>Date and Time</BudgetTitle2>
                   </Wrapper>
                   <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
@@ -194,8 +194,8 @@ const ViewEvent = () => {
                       : "---"}
                   </BudgetInventorySubtitle>
 
-                  <Wrapper>
-                    <ImLocation color="#FF2957" size="1.5em" />
+                  <Wrapper gap="0.5em">
+                    <ImLocation color="#FF2957" size="1em" />
                     <BudgetTitle2>Address</BudgetTitle2>
                   </Wrapper>
                   {event?.eventAddress ? (
@@ -209,8 +209,8 @@ const ViewEvent = () => {
                     "---"
                   )}
 
-                  <Wrapper>
-                    <ImLink color="#FF2957" size="1.5em" />
+                  <Wrapper gap="0.5em">
+                    <ImLink color="#FF2957" size="1em" />
                     <BudgetTitle2>Virtual Link</BudgetTitle2>
                   </Wrapper>
                   <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
