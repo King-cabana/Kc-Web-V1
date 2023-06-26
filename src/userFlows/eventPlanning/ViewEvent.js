@@ -181,8 +181,8 @@ const ViewEvent = () => {
                 </SECTION>
 
                 <Display>
-                  <Wrapper>
-                    <AiTwotoneCalendar color="#FF2957" size="1.5em" />
+                  <Wrapper gap="0.5em">
+                    <AiTwotoneCalendar color="#FF2957" size="1em" />
                     <BudgetTitle2>Date and Time</BudgetTitle2>
                   </Wrapper>
                   <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>
@@ -194,8 +194,8 @@ const ViewEvent = () => {
                       : "---"}
                   </BudgetInventorySubtitle>
 
-                  <Wrapper>
-                    <ImLocation color="#FF2957" size="1.5em" />
+                  <Wrapper gap="0.5em">
+                    <ImLocation color="#FF2957" size="1em" />
                     <BudgetTitle2>Address</BudgetTitle2>
                   </Wrapper>
                   {event?.eventAddress ? (
@@ -209,8 +209,8 @@ const ViewEvent = () => {
                     "---"
                   )}
 
-                  <Wrapper>
-                    <ImLink color="#FF2957" size="1.5em" />
+                  <Wrapper gap="0.5em">
+                    <ImLink color="#FF2957" size="1em" />
                     <BudgetTitle2>Virtual Link</BudgetTitle2>
                   </Wrapper>
                   <BudgetInventorySubtitle style={{ marginBottom: "0.5rem" }}>

@@ -1,6 +1,5 @@
-import React from "react";
 import Lottie from "lottie-react";
-import animationData from "../../../assets/lotties/proposal-document.json";
+import animationData from "../../assets/lotties/no-event-history.json";
 import {
   NoEventContainer,
   WelcomeHeader,
@@ -11,35 +10,40 @@ import {
   ButtonLink,
   LottieWrapper,
   PrimaryButton,
-} from "../../emptyEvent/EmptyEventStyled";
+  HistoryPrimaryButton,
+} from "../emptyEvent/EmptyEventStyled";
 import { BsChevronRight } from "react-icons/bs";
 
-const EmptyProposal = () => {
+const EmptyEventHistory = () => {
   return (
     <>
-      <OverallContainer style={{ width: "100vw" }}>
+      <OverallContainer style={{ width: "100vw", height: "80vh" }}>
         <NoEventContainer>
           <WelcomeHeader>
             <Txt>Event</Txt>
             <BsChevronRight style={{ marginRight: "0.5rem" }} />
             <Txt fontWeight="400" color="#FF2957">
-              Proposal
+              History
             </Txt>
           </WelcomeHeader>
-          <NoEventCenter>
+          <NoEventCenter
+            style={{ width: "100%", height: "80%", marginTop: "-5rem" }}
+          >
             <LottieWrapper>
               <Lottie
                 animationData={animationData}
                 loop={true}
-                style={{ width: "100px", height: "100px" }}
+                style={{ width: "150px", height: "150px" }}
               />
             </LottieWrapper>
-            <NoContentText>
-              You have no event created yet to generate proposal.
+            <NoContentText marginbottom="-8rem">
+              Oops! <br /> You have no event history <br />
+              Add event history to make your event experience more credible to
+              potential sponsors
             </NoContentText>
           </NoEventCenter>
-          <ButtonLink to="/createevent/eventdetails/1">
-            <PrimaryButton>Create event</PrimaryButton>
+          <ButtonLink to="/createEvent/eventdetails">
+            <HistoryPrimaryButton>Add Event History</HistoryPrimaryButton>
           </ButtonLink>
         </NoEventContainer>
       </OverallContainer>
@@ -47,4 +51,4 @@ const EmptyProposal = () => {
   );
 };
 
-export default EmptyProposal;
+export default EmptyEventHistory;

@@ -18,6 +18,7 @@ import GuestContact from "./userFlows/guestRegistration/GuestContact";
 import Registered from "./userFlows/guestRegistration/Registered";
 import Event from "./userFlows/pages/Event";
 import Proposal from "./userFlows/createProposal/Proposal";
+import EventHistory from "./userFlows/pages/EventHistory";
 import Generated from "./userFlows/createProposal/Generated";
 import Inventory from "./userFlows/createProposal/budgetInventory/Inventory";
 import FlowBody from "./userFlows/generateProposalFlow/flowBody/FlowBody";
@@ -29,6 +30,7 @@ import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/Proposa
 import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB";
 import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC";
 import Budget from "./pages/Budget/Budget";
+import SingleEventHistory from "./userFlows/eventHistory/SingleEventHistory";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -143,7 +145,15 @@ function App() {
               </Sidebar>
             }
           />
-
+          <Route
+            path="/event/history"
+            element={
+              <Sidebar>
+                <EventHistory />
+              </Sidebar>
+            }
+          />
+          <Route path="event/event-history" element={<SingleEventHistory />} />
           <Route path="/generateproposal/:id" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
           <Route
