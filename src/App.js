@@ -31,6 +31,7 @@ import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/Proposa
 import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC";
 import Budget from "./pages/Budget/Budget";
 import SingleEventHistory from "./userFlows/eventHistory/SingleEventHistory";
+import PreviousEvents from "./userFlows/eventOrganizerProfile/previousEvents/PreviousEvents";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -53,6 +54,12 @@ const SignUp = lazy(() => import("./auth/signUp/SignUp"));
 
 const FirstCreateEvent = lazy(() =>
   import("./userFlows/createEvent/FirstCreateEvent")
+);
+
+const OrganizerProfilePage = lazy(() =>
+  import(
+    "./userFlows/eventOrganizerProfile/organizerProfilePage/OrganizerProfilePage"
+  )
 );
 
 function App() {
@@ -153,7 +160,12 @@ function App() {
               </Sidebar>
             }
           />
-          <Route path="event/event-history" element={<SingleEventHistory />} />
+          <Route path="/profile" element={<OrganizerProfilePage />} />
+          <Route path="/profile/previous-event" element={<PreviousEvents />} />
+          <Route
+            path="/event/history/eventId"
+            element={<SingleEventHistory />}
+          />
           <Route path="/generateproposal/:id" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
           <Route
