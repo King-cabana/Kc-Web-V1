@@ -41,7 +41,7 @@ export const PrimaryButton = styled.button`
 export const AbsolutePrimaryButton = styled(PrimaryButton)`
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   width: fit-content;
   padding: 15px;
 
@@ -109,12 +109,13 @@ export const AlternativeButton = styled.button`
 
   &:hover {
     color: #ff2957;
+    border: 1px solid #f4d5dc;
   }
 
   &:disabled {
     background-color: white;
     color: white;
-   border: 1.5px solid rgba(255, 41, 87, 0.6);
+    border: 1.5px solid rgba(255, 41, 87, 0.6);
   }
 
   @media screen and (orientation: landscape) and (max-width: 960px) {

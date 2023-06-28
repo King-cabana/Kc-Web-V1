@@ -53,7 +53,8 @@ const EventHome = () => {
   const navigate = useNavigate();
   const userEmail = user.details.email;
 
-  // console.log(user);
+  console.log(state)
+  console.log(user);
   // console.log(user.details.email);
 
   useEffect(() => {
@@ -63,6 +64,16 @@ const EventHome = () => {
         if (state?.id) {
           const response = await axios.get(
             API_URL_2 + `profiles/${state?.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          data = response.data;
+        }else if (user?.details?.id) {
+          const response = await axios.get(
+            API_URL_2 + `profiles/${user?.details?.id}`,
             {
               headers: {
                 Authorization: `Bearer ${user?.token}`,

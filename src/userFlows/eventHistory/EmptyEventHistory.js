@@ -9,7 +9,6 @@ import {
   OverallContainer,
   ButtonLink,
   LottieWrapper,
-  PrimaryButton,
   HistoryPrimaryButton,
 } from "../emptyEvent/EmptyEventStyled";
 import { BsChevronRight } from "react-icons/bs";

@@ -68,3 +68,18 @@ export const getEventStatus = (eventStartDate, eventEndDate) => {
     return <span style={{ color: "red" }}>expired</span>;
   }
 };
+
+export const addressString = (address) => {
+  if (!address) {
+    return ""; // Return an empty string if the address is undefined
+  }
+  const { houseNo, street, state, city, country, zipCode } = address;
+  const addressParts = [houseNo, street, city, state, country, zipCode];
+
+  // Filter out empty values and trim whitespace
+  const filteredAddressParts = addressParts.filter(
+    (part) => part.trim() !== ""
+  );
+
+  return filteredAddressParts.join(", ");
+};
