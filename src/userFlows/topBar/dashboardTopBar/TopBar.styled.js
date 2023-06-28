@@ -5,7 +5,7 @@ export const TopBarContainer = styled.div`
   width: 100%;
   height: 62px;
   display: flex;
-  padding: 0 2%;
+  padding: 0rem 1rem;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ff2957;
@@ -18,23 +18,18 @@ export const TopBarContainer = styled.div`
 
   @media screen and (max-width: 480px) {
     z-index: 9999999;
-    width: 100%;
   }
 `;
 
 export const TopBarLogo = styled.div`
   height: inherit;
-  width: 12%;
+  width: 30%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin-left: 0.5rem;
 
   @media screen and (max-width: 480px) {
-    /* width: 20%; */
-    img {
-      width: 30px;
-      height: 30px;
-    }
+    margin-left: 0rem;
   }
 `;
 
@@ -111,7 +106,6 @@ export const ProfilePicture = styled.div`
   justify-content: center;
   align-items: center;
 
-
   img {
     width: 100%;
     height: 100%;
@@ -154,14 +148,13 @@ export const DropDownBtn = styled.div`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #F1F1F1;
+    background-color: #f1f1f1;
   }
 
   &:active {
     background-color: #bfbfbf;
   }
 `;
-
 
 export const DropdownContent = styled.div`
   display: none;
