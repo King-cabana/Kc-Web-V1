@@ -25,14 +25,29 @@ const Submitted = () => {
   const event = useSelector((state) => state.eventCreated);
   const encryptedId = encryptId(event?.id);
   const decryptedId = decryptId(encryptedId);
-  // console.log(encryptedId);
-  // console.log(decryptedId);
+
+  const proposal = useSelector((state) => state?.proposalCreated);
+  const encryptedProposalId = encryptId(proposal?.id);
+  const decryptedProposalId= decryptId(encryptedProposalId)
+
+  console.log(encryptedProposalId);
+  console.log(proposal);
+  console.log(decryptedProposalId)
+  console.log(encryptedId);
+  console.log(decryptedId);
 
   const shareDetails = {
     title: event?.eventName,
     url: `/guestRegistration/${encryptedId}`,
     text: event?.eventTheme,
   };
+
+  const shareProposal = {
+    title: event?.eventName,
+    // url: `${encryptedProposalId}`,
+    text: event?.eventTheme,
+  };
+
   return (
     <>
       <CreateEventTopBar />
@@ -71,7 +86,13 @@ const Submitted = () => {
 
             <ModalButtonContainer>
               <AlternativeButton2>Download PDF</AlternativeButton2>
-              <ModalPrimaryButton>Share proposal link</ModalPrimaryButton>
+              <ModalPrimaryButton
+                onClick={() => {
+                  window.navigator.share(shareProposal);
+                }}
+              >
+                Share proposal link
+              </ModalPrimaryButton>
             </ModalButtonContainer>
           </>
         ) : null}

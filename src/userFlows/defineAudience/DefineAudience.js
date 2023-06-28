@@ -39,6 +39,8 @@ const DefineAudience = ({ padding, activeStep, setActiveStep }) => {
   console.log(decryptedId);
   console.log(id);
 
+  console.log(state)
+
   sessionStorage.setItem("line41", id);
 
   const location = useLocation();
