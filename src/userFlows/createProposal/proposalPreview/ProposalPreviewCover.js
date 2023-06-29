@@ -102,7 +102,7 @@ const ProposalPreviewCover = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <OverallContainer>
+        <OverallContainer id="page1">
           <ProposalContainer style={{ marginTop: "5%" }}>
             <WelcomeHeader>
               <Txt>Event</Txt>

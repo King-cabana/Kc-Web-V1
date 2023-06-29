@@ -31,6 +31,8 @@ import { useDispatch, useSelector } from "react-redux";
 import createProposal from "../../../redux/services/createProposal";
 import { clearAllFields } from "../../../redux/slices/proposalSlice";
 import { setProposalCreated } from "../../../redux/slices/proposalCreatedSlice";
+// import jsPDF from "jspdf";
+
 
 const ProposalPreviewC = () => {
   const [loading, setLoading] = useState(false);
@@ -118,7 +120,7 @@ const ProposalPreviewC = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <PreviewLogoBg style={{height:"fit-content"}}>
+          <PreviewLogoBg style={{height:"fit-content"}} id="page5">
             <ProposalInner>
               <h4
                 style={{

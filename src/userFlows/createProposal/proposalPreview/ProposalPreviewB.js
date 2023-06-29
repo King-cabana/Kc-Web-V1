@@ -22,6 +22,8 @@ import {
 } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 import { useSelector } from "react-redux";
+// import jsPDF from "jspdf";
+
 
 const ProposalpreviewB = () => {
   const [loading, setLoading] = useState(false);
@@ -104,7 +106,7 @@ const ProposalpreviewB = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <PreviewLogoBg style={{ height: "fit-content" }}>
+          <PreviewLogoBg style={{ height: "fit-content" }} id="page4">
             <ProposalInner>
               <h4
                 style={{
