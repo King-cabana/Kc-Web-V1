@@ -93,6 +93,8 @@ const ProposalDetails = () => {
     } catch (error) {
       console.log("Failed to delete proposal:", error);
       toast.error(error.message);
+    } finally {
+      setModal(false);
     }
   };
 
