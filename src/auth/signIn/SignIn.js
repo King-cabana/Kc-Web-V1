@@ -63,8 +63,17 @@ const SignIn = () => {
     };
     setUserObject(user);
     try {
-      await googleSignIn(user);
-      const userToken = localStorage.getItem("userToken") || "";
+      const res = await googleSignIn(user);
+      dispatch(setUserDetails(email));
+      setEmail(email);
+      localStorage.setItem("email", email);
+      const headers = res.headers;
+      const token = headers.get("authorization");
+      const tokenWithoutBearer = token ? token.replace("Bearer ", "") : "";
+      const userToken = tokenWithoutBearer || "";
+      dispatch(setUserToken({ name: "token", value: userToken }));
+      localStorage.setItem("userToken", userToken);
+      localStorage.setItem("email", email);
       dispatch(fetchUserDetails(user.email, userToken));
       dispatch(setUserDetails(user.email, userToken));
       console.log(user.email, userToken)

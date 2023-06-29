@@ -105,7 +105,6 @@ const EventPlanning = () => {
       value={{ active, selectedEvent, handleApiClick, shareDetails, loading }}
     >
       {modal && <PopUpOverlay onClick={handleOutsideClick} />}
-      {/* {active?.length > 0 ? ( */}
       <OverallContainer onClick={handleOutsideClick}>
         <NoEventContainer>
           <WelcomeHeader>

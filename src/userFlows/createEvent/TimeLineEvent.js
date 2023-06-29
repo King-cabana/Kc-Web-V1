@@ -52,6 +52,7 @@ import {
 import { BsChevronRight } from "react-icons/bs";
 import { WelcomeHeader, Txt } from "../emptyEvent/EmptyEventStyled";
 import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
+import FooterButtonComponent from "../../components/FooterButtonComponent";
 const libraries = ["places"];
 
 const TimeLineEvent = ({ padding }) => {
@@ -342,21 +343,29 @@ const TimeLineEvent = ({ padding }) => {
         </BudgetSection>
 
         {location.pathname === "/createEvent/eventPlanPreview" ? null : (
-          <ButtonContainer style={{ margin: "0rem" }}>
-            <AlternativeButton2
-              onClick={navigateBack}
-              style={{
-                color: "#FF2957",
-                fontWeight: "600",
-                marginRight: "2rem",
-              }}
-            >
-              Back
-            </AlternativeButton2>
-            <AbsolutePrimaryButton onClick={navigateNext} disabled={isDisabled}>
-              Save & Continue
-            </AbsolutePrimaryButton>
-          </ButtonContainer>
+          // <ButtonContainer style={{ margin: "0rem" }}>
+          //   <AlternativeButton2
+          //     onClick={navigateBack}
+          //     style={{
+          //       color: "#FF2957",
+          //       fontWeight: "600",
+          //       marginRight: "2rem",
+          //     }}
+          //   >
+          //     Back
+          //   </AlternativeButton2>
+          //   <AbsolutePrimaryButton onClick={navigateNext} disabled={isDisabled}>
+          //     Save & Continue
+          //   </AbsolutePrimaryButton>
+          // </ButtonContainer>
+
+          <FooterButtonComponent
+            onClickWhiteBtn={navigateBack}
+            onClickRedBtn={navigateNext}
+            disabledRedBtn={isDisabled}
+            whiteBtnText="Back"
+            redBtnText="Save & Continue"
+          />
         )}
       </BudgetInventoryContainer>
     </>

@@ -72,6 +72,7 @@ export const BudgetInventorySubtitle = styled.p`
   line-height: 24px;
   color: #484848;
   margin-top: 5px;
+  margin-bottom: ${({ marginbottom }) => marginbottom && marginbottom};
 
   @media screen and (max-width: 960px) {
     font-size: 11px;

@@ -130,6 +130,7 @@ export const AlternativeButton2 = styled.button`
   border: 1px solid #ff2957;
   cursor: pointer;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "600")};
+  margin-right: ${({ marginright }) => marginright && marginright};
 
   &:hover {
     color: #ff2957;
