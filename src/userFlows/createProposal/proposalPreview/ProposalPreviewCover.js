@@ -38,7 +38,6 @@ const ProposalPreviewCover = () => {
   const profile = useSelector((state) => state?.eventOrganizerProfile);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const id = sessionStorage.getItem("line41");
 
   useEffect(() => {
     const fetchEvent = async () => {

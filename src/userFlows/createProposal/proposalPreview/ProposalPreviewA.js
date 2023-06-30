@@ -18,6 +18,8 @@ import { BsChevronRight } from "react-icons/bs";
 import { PreviewLogoBg, ProposalInner } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 import { useSelector } from "react-redux";
+import { MdAccessTime } from "react-icons/md";
+import { AiTwotoneCalendar } from "react-icons/ai";
 
 const ProposalPreviewA = () => {
   const [loading, setLoading] = useState(false);
@@ -144,19 +146,25 @@ const ProposalPreviewA = () => {
                 >
                   <div style={{ width: "50%" }}>
                     <h3>Event Time</h3>
+                    <div style={{width:"fit-content", gap:"10px", display:"flex", alignItems:"center"}}>
+                    <MdAccessTime/>
                     <p>
                       {eventCreated?.eventStartTime
                         ? eventCreated?.eventStartTime
                         : "Event time"}
                     </p>
+                    </div>
                   </div>
                   <div style={{ width: "50%" }}>
                     <h3>Event Date</h3>
+                    <div style={{width:"fit-content", gap:"10px", display:"flex", alignItems:"center"}}>
+                    <AiTwotoneCalendar/>
                     <p>
                       {eventCreated?.eventStartDate
                         ? eventCreated?.eventStartDate
                         : "Event date"}
                     </p>
+                    </div>
                   </div>
                 </div>
                 <div style={{ marginTop: "2%" }}>
