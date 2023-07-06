@@ -14,27 +14,30 @@ import { KBTextS, KBTextXl } from "../fonts/Fonts";
 
 const Card = (props) => {
   return (
-    <CardBody>
-      <ImageHolder>
+    <CardBody onClick={props.onClickCard}>
+      <ImageHolder height={props.height}>
         <Image src={props.image} alt={props.eventName} />
       </ImageHolder>
 
-      <CardContentHolder>
-        <KBTextXl fontWeight="bold" color="#484848" style={{marginBottom:'2%'}}>{props.eventName}</KBTextXl>
+      <CardContentHolder height={props.holderHeight}>
+        <KBTextXl fontWeight="600" color="#484848" style={{marginBottom:'2%'}}>{props.eventName}</KBTextXl>
         <KBTextS>{props.eventDescription}</KBTextS>
         <CardInfoHolder>
-          <IconInfoHolder>
+          {props.eventTime && <IconInfoHolder>
             <CiClock2 /> 
             <p>{props.eventTime}</p>
-          </IconInfoHolder>
-          <IconInfoHolder>
+          </IconInfoHolder>}
+          
+          {props.eventDate &&  <IconInfoHolder>
             <CiCalendar /> 
             <p>{props.eventDate}</p>
-          </IconInfoHolder>
-          <IconInfoHolder>
+          </IconInfoHolder>}
+
+{props.eventLocation && <IconInfoHolder>
             <CiLocationOn /> 
             <p>{props.eventLocation}</p>
-          </IconInfoHolder>
+          </IconInfoHolder>}
+          
         </CardInfoHolder>
       </CardContentHolder>
     </CardBody>

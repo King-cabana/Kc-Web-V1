@@ -15,9 +15,15 @@ import {
   WelcomeHeader,
 } from "../proposalBuildup/ProposalBuildupStyled";
 import { BsChevronRight } from "react-icons/bs";
-import { PreviewLogoBg, ProposalInner, UlInner } from "./ProposalPreviewCoverStyled";
+import {
+  PreviewLogoBg,
+  ProposalInner,
+  UlInner,
+} from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 import { useSelector } from "react-redux";
+// import jsPDF from "jspdf";
+
 
 const ProposalpreviewB = () => {
   const [loading, setLoading] = useState(false);
@@ -27,6 +33,9 @@ const ProposalpreviewB = () => {
   const user = useSelector((state) => state.userDetails);
   const proposal = useSelector((state) => state.proposal);
   const eventCreated = useSelector((state) => state.eventCreated);
+
+  const p = proposal?.takeInventory;
+  console.log(p);
 
   const navigate = useNavigate();
 
@@ -64,6 +73,15 @@ const ProposalpreviewB = () => {
     }
   }, [user?.token]);
 
+  const { demographyDto } = proposal || {};
+
+  const formatHeader = (text) => {
+    const words = text.match(/[A-Za-z][a-z]*/g);
+    return words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <>
       <TopBar marginBottom="1rem" />
@@ -88,7 +106,7 @@ const ProposalpreviewB = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <PreviewLogoBg style={{ height: "fit-content" }}>
+          <PreviewLogoBg style={{ height: "fit-content" }} id="page4">
             <ProposalInner>
               <h4
                 style={{
@@ -97,59 +115,88 @@ const ProposalpreviewB = () => {
                   textDecoration: "underline",
                 }}
               >
-                {eventCreated?.eventName ? eventCreated?.eventName + `'s` : "Event Name"}{" "}
+                {eventCreated?.eventName
+                  ? eventCreated?.eventName + `'s`
+                  : "Event Name"}{" "}
                 Proposal to{" "}
                 {proposal?.eventSponsor ? proposal?.eventSponsor : "Sponsor"}.
               </h4>
 
-              <div style={{ marginTop: "3%" }}>
+              <div style={{ marginTop: "3%", color: "#484848" }}>
                 <h4>Attendees Profile</h4>
                 <div style={{ lineHeight: "2rem" }}>
                   <li>
                     Age:{" "}
-                    {proposal?.demographyDto
-                      ? proposal?.demographyDto?.ageRange.join(", ")
+                    {demographyDto?.ageRange
+                      ? demographyDto.ageRange.join(", ")
                       : "Age"}
                   </li>
                   <li>
                     Income Range:{" "}
-                    {proposal?.demographyDto
-                      ? proposal?.demographyDto?.income.join(", ")
+                    {demographyDto?.income
+                      ? demographyDto.income.join(", ")
                       : "Income"}
                   </li>
                   <li>
                     Gender:{" "}
-                    {proposal?.demographyDto
-                      ? proposal?.demographyDto?.genderList.join(", ")
+                    {demographyDto?.genderList
+                      ? demographyDto.genderList.join(", ")
                       : "Gender"}
                   </li>
                   <li>
                     Religion:{" "}
-                    {proposal?.demographyDto
-                      ? proposal?.demographyDto?.religionList.join(", ")
+                    {demographyDto?.religionList
+                      ? demographyDto.religionList.join(", ")
                       : "Religion"}
                   </li>
                   <li>
                     Employment Status:{" "}
-                    {proposal?.demographyDto
-                      ? proposal?.demographyDto?.employmentStatusList.join(", ")
+                    {demographyDto?.employmentStatusList
+                      ? demographyDto.employmentStatusList.join(", ")
                       : "Employment status"}
                   </li>
                   <li>
                     Educational Level:{" "}
-                    {proposal?.demographyDto
-                      ? proposal?.demographyDto?.educationLevelList.join(", ")
+                    {demographyDto?.educationLevelList
+                      ? demographyDto.educationLevelList.join(", ")
                       : "Educational level"}
                   </li>
                 </div>
               </div>
 
               <div style={{ marginTop: "3%" }}>
+                <h4 style={{ color: "#484848" }}>
+                  Benefits of sponsoring this event (Inventory)
+                </h4>
+                <div style={{ lineHeight: "2rem", marginTop: "1%" }}>
+                  {Object.keys(proposal.takeInventory).map((key) => {
+                    const value = proposal.takeInventory[key];
+                    if (Array.isArray(value)) {
+                      const formattedKey = formatHeader(key);
+                      if (value.length > 0) {
+                      return (
+                        <div key={key}>
+                          <h4 style={{ color: "#484848" }}>{formattedKey}</h4>
+                          <ul style={{ margin: "1% 2%" }}>
+                            {value.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                            }
+                    }
+                    return null;
+                  })}
+                </div>
+              </div>
+
+              <div style={{ marginTop: "3%", color: "#484848" }}>
                 <h4>Impact of the event on the community</h4>
                 <div style={{ lineHeight: "2rem", marginBottom: "5%" }}>
                   {proposal?.potentialImpacts ? (
                     <UlInner>
-                      {proposal.potentialImpacts.map((impacts) => (
+                      {proposal?.potentialImpacts?.map((impacts) => (
                         <li key={impacts}>{impacts}</li>
                       ))}
                     </UlInner>

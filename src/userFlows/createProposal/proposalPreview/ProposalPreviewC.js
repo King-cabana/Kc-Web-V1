@@ -30,6 +30,9 @@ import ProposalPagination from "../../proposalPagination/ProposalPagination";
 import { useDispatch, useSelector } from "react-redux";
 import createProposal from "../../../redux/services/createProposal";
 import { clearAllFields } from "../../../redux/slices/proposalSlice";
+import { setProposalCreated } from "../../../redux/slices/proposalCreatedSlice";
+// import jsPDF from "jspdf";
+
 
 const ProposalPreviewC = () => {
   const [loading, setLoading] = useState(false);
@@ -83,7 +86,10 @@ const ProposalPreviewC = () => {
         throw new Error("ID is not defined");
       }
       const stateWithId = { ...proposal, id: eventCreated.id };
-      await createProposal(stateWithId, user.token);
+      // await createProposal(stateWithId, user.token);
+      const response = await createProposal(stateWithId, user.token);
+      localStorage.setItem("proposalId", response.id);
+      dispatch(setProposalCreated(stateWithId));
       dispatch(clearAllFields());
       localStorage.removeItem("budget");
       navigate("/create-proposal/generated");
@@ -116,7 +122,7 @@ const ProposalPreviewC = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <PreviewLogoBg>
+          <PreviewLogoBg style={{height:"fit-content"}} id="page5">
             <ProposalInner>
               <h4
                 style={{

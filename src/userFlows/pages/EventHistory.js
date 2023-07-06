@@ -15,8 +15,8 @@ const EventHistory = () => {
   const eventsHistory = useSelector((state)=>state?.eventsHistory);
   const [loading, setLoading] = useState(true);
   console.log(profile?.profileEmail)
-  console.log(eventsHistory)
-  console.log(eventsHistory?.length)
+  // console.log(eventsHistory)
+  // console.log(eventsHistory?.length)
   useEffect(()=>{
     const fetchEventHistory= async()=>{
       try{
@@ -28,7 +28,8 @@ const EventHistory = () => {
             },
           }
         );
-          dispatch(setEventsHistory(data));
+        const reversedData = data.reverse();
+          dispatch(setEventsHistory(reversedData));
       }catch(error){
         if(error?.message === "Network Error"){
           toast.error("Error retrieving event history, reload page");

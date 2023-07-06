@@ -41,7 +41,7 @@ const EmptyEventHistory = () => {
               potential sponsors
             </NoContentText>
           </NoEventCenter>
-          <ButtonLink to="/createEvent/eventdetails">
+          <ButtonLink to="/event/event-history">
             <HistoryPrimaryButton>Add Event History</HistoryPrimaryButton>
           </ButtonLink>
         </NoEventContainer>

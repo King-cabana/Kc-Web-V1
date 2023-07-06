@@ -11,12 +11,15 @@ import userDetailsSlice from "./redux/slices/userDetailsSlice";
 import userProfileSlice from "./redux/slices/userProfileSlice";
 import proposalSlice from "./redux/slices/proposalSlice";
 import proposalPreviewSlice from "./redux/slices/proposalPreviewSlice";
+import proposalCreatedSlice from "./redux/slices/proposalCreatedSlice";
 import pastEventSlice from "./redux/slices/pastEventSlice";
 import eventsHistorySlice from "./redux/slices/eventsHistorySlice";
+import createEventHistorySlice from "./redux/slices/createEventHistorySlice";
 
 const persistConfig = {
   key: "kingCabana",
   storage,
+  // blacklist: ["userDetails"],
 };
 
 const reducer = combineReducers({
@@ -30,9 +33,19 @@ const reducer = combineReducers({
   userProfile: userProfileSlice,
   proposal: proposalSlice,
   proposalPreview: proposalPreviewSlice,
+  proposalCreated: proposalCreatedSlice,
   pastEvent: pastEventSlice,
   eventsHistory: eventsHistorySlice,
+  createEventHistory : createEventHistorySlice,
 });
+
+// const appReducer = (state, action) => {
+//   if (action.type === "LOGOUT") {
+//     // Clear the state by replacing it with the initial state of all reducers
+//     state = reducer(undefined, {});
+//   }
+//   return reducer(state, action);
+// };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Page } from "../../guestRegistration/GuestRegistrationStyled";
+import { Page, Wrapper } from "../../guestRegistration/GuestRegistrationStyled";
 import { AiTwotoneCalendar } from "react-icons/ai";
 import {
   BudgetSection,
@@ -27,7 +27,11 @@ import axios from "axios";
 import { API_URL_2 } from "../../../redux/services/authService";
 import { setPastEvent } from "../../../redux/slices/pastEventSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { addressString, decryptId, formatDate, formatTime } from "../../../utils";
+import { addressString, decryptId, encryptId, formatDate, formatTime } from "../../../utils";
+import { AnimationContainer } from "../../../globalStyles";
+import Lottie from "lottie-react";
+import { Description } from "../../eventHome/EventHomeStyled";
+import animationData from "../../../assets/lotties/no-data-preview.json"
 
 const ViewHistoryEvent = ({
   topBar,
@@ -43,8 +47,10 @@ const ViewHistoryEvent = ({
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const state = useSelector((state) => state?.pastEvent);
-  console.log(state)
-  const handleViewProfile = () => navigate("/organizer-profile/profileName");
+  // console.log(state)
+  const profile = useSelector((state)=>state?.eventOrganizerProfile);
+  // console.log(profile);
+  const handleViewProfile = () => navigate(`/organizer-profile/${encryptId(profile?.id)}`);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -94,15 +100,15 @@ const ViewHistoryEvent = ({
 
                 <BudgetTitle2>Sponsors</BudgetTitle2>
                 <UL>
-                  {state?.sponsorList?.map((sponsor, index) => {
+                  {state?.sponsorList?.length > 0 ? state?.sponsorList?.map((sponsor, index) => {
                     return <LI key={index}>{sponsor}</LI>;
-                  })}
+                  }) : "-"}
                 </UL>
                 <BudgetTitle2>Benefits our sponsors received</BudgetTitle2>
                 <UL>
-                  {state?.sponsorBenefits?.map((benefit, index) => {
+                  {state?.sponsorBenefits?.length > 0 ? state?.sponsorBenefits?.map((benefit, index) => {
                     return <LI key={index}>{benefit}</LI>;
-                  })}
+                  }) : "-"}
                 </UL>
 
                 <Display>
@@ -150,9 +156,18 @@ const ViewHistoryEvent = ({
 
             <BudgetTitle2>Gallery</BudgetTitle2>
             <HistoryImageContainer>
-              {state?.imageUrls?.map((image, index) => {
-                return <HistoryImage key={index} src={image} alt="gallery" />;
-              })}
+              {state?.imageUrls?.length > 0 ? state?.imageUrls?.map((image, index) => {
+                return (
+                  <HistoryImage key={index} src={image} alt="gallery" />
+                )}) : 
+                <Wrapper  justifycontent="center" style={{flexDirection: "column", justifySelf: "center"}}>
+              <AnimationContainer>
+              <Lottie animationData={animationData} loop={true} />
+            </AnimationContainer>
+                <div style={{alignSelf: "center"}}>
+                <Description>Upload images when updating event</Description></div>
+                </Wrapper>
+              }
             </HistoryImageContainer>
           </BudgetSection>
 

@@ -35,6 +35,8 @@ import ViewHistoryEvent from "./userFlows/eventHistory/ViewHistoryEvent";
 import PreviousEvents from "./userFlows/eventOrganizerProfile/previousEvents/PreviousEvents";
 import ViewProposal from "./userFlows/createProposal/viewProposal/ViewProposal";
 import ShareViewProposal from "./userFlows/createProposal/viewProposal/ShareViewProposal";
+import ProposalGenerated from "./userFlows/generateProposalFlow/proposalGenerated/ProposalGenerated";
+import EventHistoryForm from "./userFlows/eventHistory/components/EventHistoryForm";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -164,7 +166,7 @@ function App() {
             }
           />
           <Route
-            path="/organizer-profile/profileName"
+            path="/organizer-profile/:id"
             element={<OrganizerProfilePage />}
           />
           <Route
@@ -236,7 +238,9 @@ function App() {
             }
           />
           <Route path="*" element={<NoPage />} />
-          <Route path="/budget" element={<Budget />} />
+          <Route path="/generated-proposal/:id" element={<ProposalGenerated />} />
+          <Route path="/event/event-history" element={<Sidebar><EventHistoryForm /></Sidebar>} />
+
         </Routes>
       </>
     </Suspense>

@@ -7,6 +7,7 @@ import GoToTop from "./GoToTop";
 import { BrowserRouter } from "react-router-dom";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
+import 'react-tooltip/dist/react-tooltip.css'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

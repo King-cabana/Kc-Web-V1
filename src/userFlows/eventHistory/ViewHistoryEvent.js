@@ -24,7 +24,6 @@ const ViewHistoryEvent = () => {
           <FooterButtonComponent whiteBtnText="Back" onClickWhiteBtn={handleOnClickTxt2}/>
         }
       />
-      <p>GIRL</p>
     </>
   );
 };

@@ -32,7 +32,6 @@ import {
   AbsolutePrimaryButton,
   AlternativeButton2,
 } from "../../../components/buttons/Buttons";
-// import createProposal from "../../../redux/services/createProposal";
 import { useParams } from "react-router-dom";
 import {
   addFields,
@@ -55,8 +54,7 @@ const ProposalBuildup = () => {
 
   const navigate = useNavigate();
   const decryptedId = decryptId(id);
-  // const user = useSelector((state) => state.userDetails);
-  // console.log(eventId)
+
   const dispatch = useDispatch();
 
   const handleFileChange = async (e) => {
@@ -159,11 +157,8 @@ const ProposalBuildup = () => {
     event.preventDefault();
     try {
       if (!decryptedId) {
-        throw new Error("ID is not defined");
+        throw new Error("proposal not defined");
       }
-      // const stateWithId = { ...state, decryptId: parseInt(decryptId) };
-      // const proposal = await createProposal(stateWithId, user.token);
-      // (sessionStorage.setItem("proposalId", proposal.id))
       navigate("/event/proposal/proposalpreview-page1");
     } catch (error) {
       console.log(error);

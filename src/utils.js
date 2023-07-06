@@ -75,11 +75,31 @@ export const addressString = (address) => {
   }
   const { houseNo, street, state, city, country, zipCode } = address;
   const addressParts = [houseNo, street, city, state, country, zipCode];
-
   // Filter out empty values and trim whitespace
-  const filteredAddressParts = addressParts.filter(
-    (part) => part.trim() !== ""
+  const filteredAddressParts = addressParts?.filter(
+    (part) => part?.trim() !== ""
   );
+  const formattedAddressParts = filteredAddressParts.map((part, index) => {
+    if (index === filteredAddressParts.length - 1) {
+      // Last part of the address
+      return part;
+    } else if (index === filteredAddressParts.length - 2) {
+      // Second last part of the address (before country)
+      return part + ".";
+    } else {
+      // Other parts of the address
+      return part + ",";
+    }
+  });
+  return formattedAddressParts.join(" ");
+};
 
-  return filteredAddressParts.join(", ");
+export const truncateText = (text, limit=20) => {
+  if (!text) {
+    return ""; // Return an empty string if the address is undefined
+  }
+  if (text.length > limit) {
+    return `${text.slice(0, limit)}...`;
+  }
+  return text;
 };

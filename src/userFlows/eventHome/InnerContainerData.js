@@ -17,6 +17,7 @@ const InnerContainerData = () => {
   const [proposals, setProposals] = useState();
   const [proposalList, setProposalList] = useState(0);
   const [attendees, setAttendees] = useState(0);
+  const [historyLength, setHistoryLength] = useState(0);
   const { state } = useContext(EventOrganizerContext) || { state: {} };
   const { userEmail, axios, user, API_URL_2, navigate } = useContext(
     EventOrganizerContext
@@ -70,8 +71,21 @@ const InnerContainerData = () => {
       }
     };
 
+    const eventHistory = async()=>{
+      try{
+        const {data} = await axios.get(API_URL_2+`histories/profile?email=${state?.profileEmail ? state?.profileEmail : userEmail}`,
+        {
+          header: {Authorization: `Bearer ${user?.token}`},
+        });
+        setHistoryLength(data?.length);
+      }catch(error){
+        console.log(error)
+      }
+    };
+
     fetchAttendees();
     proposalsGenerated();
+    eventHistory();
   }, [state, userEmail, proposals]);
 
   const eventReportData = [
@@ -92,7 +106,8 @@ const InnerContainerData = () => {
     },
     {
       title: "Event history",
-      counter: 0,
+      counter: historyLength,
+      to: "/event/history"
     },
     {
       title: "Sponsors engaged",

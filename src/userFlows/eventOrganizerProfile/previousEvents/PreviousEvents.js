@@ -6,6 +6,7 @@ import SingleEventHistory from "../../eventHistory/components/SingleEventHistory
 const PreviousEvents = () => {
   const navigate = useNavigate();
   const handleContact = ()=>navigate("/signin")
+  // const state = useSelector((state)=>state?.pastEvent)
   return (
     <>
       <SingleEventHistory
