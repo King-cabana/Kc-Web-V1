@@ -36,16 +36,23 @@ import {
 // import { addFields } from "../../../redux/slices/proposalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useFileUpload } from "../../../components/FileUpload";
-import { addEventHistoryFields, addImageUrl, addSponsors, removeSponsors } from "../../../redux/slices/createEventHistorySlice";
+import { addEventHistoryFields, addImageUrl, addSponsors, removeSponsors, addSponsorsBenefits, removeSponsorsBenefits, clearEventHistory } from "../../../redux/slices/createEventHistorySlice";
 import { AiOutlineClose } from "react-icons/ai";
+import { ButtonContainer } from "../../createProposal/budgetInventory/BudgetStyled";
+import { AbsolutePrimaryButton} from "../../../components/buttons/Buttons";
+import createEventHistory from "../../../redux/services/createEventHistory";
+import {useNavigate } from "react-router-dom";
 
 const EventHistoryForm = () => {
   const [loading, setLoading] = useState(false);
   const [sponsorList, setSponsorList] = useState("");
-  // const [file, setFile] = useState("");
+  const [benefitList, setBenefitList] = useState("");
   const state = useSelector((state) => state.createEventHistory);
+  const user = useSelector((state) => state.userDetails);
+  const keyContact = useSelector((state) => state.eventOrganizerProfile)
   const dispatch = useDispatch()
-  console.log(state)
+
+  const navigate = useNavigate()
 
   const otherFields = (e) => {
     dispatch(addEventHistoryFields({ name: e.target.name, value: e.target.value }));
@@ -138,6 +145,62 @@ const EventHistoryForm = () => {
   ));
   
 
+  const handleBenefitsTag = () => {
+    if (benefitList !== "") {
+      const alreadyExists = state?.sponsorsBenefits?.some(
+        (tag) => tag === benefitList
+      );
+      if (!alreadyExists && state?.sponsorsBenefits?.length < 5) {
+        dispatch(addSponsorsBenefits(benefitList));
+      }
+      setBenefitList("");
+    }
+  };
+  const handleRemoveBenefits = (tag) => {
+    dispatch(removeSponsorsBenefits(tag));
+  };
+  
+
+  const benefitTags = state?.sponsorsBenefits?.map((tag, index) => (
+    <div key={index}>
+      <BenefitsTag
+        style={{
+          marginTop: "2%",
+          width: "max-content",
+          border: "1px solid black",
+          color: "black",
+        }}
+      >
+        {tag}
+        <Delete
+          onClick={() => handleRemoveBenefits(tag)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#ff2957",
+          }}
+        >
+          <AiOutlineClose />
+        </Delete>
+      </BenefitsTag>
+    </div>
+  ));
+
+  const handleEventHistory = async (event) => {
+    event.preventDefault();
+    try {
+      const updatedState = {...state, keyContactEmail: keyContact?.profileEmail }
+      await createEventHistory(updatedState, user.token)
+      dispatch(clearEventHistory())
+      navigate("/event/history")
+     
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
   return (
     <>
       <TopBar marginBottom="1rem" />
@@ -154,7 +217,7 @@ const EventHistoryForm = () => {
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
-          <HistoryInner>
+          <HistoryInner onSubmit={handleEventHistory}>
             <HeaderDiv>
               <p
                 style={{
@@ -240,20 +303,20 @@ const EventHistoryForm = () => {
               </InputTagBox>
               <ProposalTagsWrapper>{sponsorsTags}</ProposalTagsWrapper>
             </EventSubSection>
-{/* 
+
             <EventSubSection style={{ padding: "0", marginTop: "2%" }}>
               <Txt>Benefits our sponsors received</Txt>
               <InputTagBox>
                 <Input
                   placeholder="List any and all benefits sponsors received by sponsoring your event."
                   type="text"
-                  //   value={potentialImpacts}
-                  //   onChange={(event) => setPotentialImpacts(event.target.value)}
+                  value={benefitList}
+                  onChange={(event) => setBenefitList(event.target.value)}
                 />
-                <AddButton type="button">Add</AddButton>
+                <AddButton type="button" onClick={handleBenefitsTag}>Add</AddButton>
               </InputTagBox>
-              <ProposalTagsWrapper></ProposalTagsWrapper>
-            </EventSubSection> */}
+              <ProposalTagsWrapper>{benefitTags}</ProposalTagsWrapper>
+            </EventSubSection>
 
             <HistorySection style={{ marginTop: "2%" }}>
               <Txt>Add pictures taken at the event</Txt>
@@ -451,6 +514,11 @@ const EventHistoryForm = () => {
                 </InputSeg>
               </HistoryTimeAndDateHolder>
             </HistorySection>
+            <ButtonContainer style={{ margin: "0rem" }}>
+              <AbsolutePrimaryButton type="submit">
+                Save
+              </AbsolutePrimaryButton>
+            </ButtonContainer>
           </HistoryInner>
         </OverallContainer>
       )}

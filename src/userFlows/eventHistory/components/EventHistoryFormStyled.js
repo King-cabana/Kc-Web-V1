@@ -5,7 +5,7 @@ export const HeaderDiv = styled.div`
     width: 100%;
     display : flex;
     justify-content: center;
-    align-items-center;
+    align-items: center;
 `
 
 export const HistoryInner = styled.form`

@@ -37,6 +37,16 @@ export const createEventHistorySlice = createSlice({
         (sponsor) => sponsor !== payload
       );
     },
+    addSponsorsBenefits: (state, { payload }) => {
+      if (state.sponsorsBenefits.length < 5) {
+        state.sponsorsBenefits.push(payload);
+      }
+    },
+    removeSponsorsBenefits: (state, { payload }) => {
+      state.sponsorsBenefits = state.sponsorsBenefits.filter(
+        (benefit) => benefit !== payload
+      );
+    },
     
     addImageUrl: (state, action) => {
         const imageUrl = action.payload;
@@ -64,6 +74,7 @@ export const {
   removeSponsors,
   addImageUrl,
   clearEventHistory,
-
+  addSponsorsBenefits,
+  removeSponsorsBenefits
 } = createEventHistorySlice.actions;
 export default createEventHistorySlice.reducer;
