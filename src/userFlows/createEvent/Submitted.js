@@ -18,6 +18,9 @@ import { useNavigate } from "react-router";
 import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
 import { encryptId, decryptId } from "../../utils";
 import { ModalButtonContainer } from "../createProposal/budgetInventory/InventoryStyled";
+// import { jsPDF } from "jspdf";
+// import html2canvas from "html2canvas";
+
 
 const Submitted = () => {
   const navigate = useNavigate();
@@ -25,6 +28,14 @@ const Submitted = () => {
   const event = useSelector((state) => state.eventCreated);
   const encryptedId = encryptId(event?.id);
   const decryptedId = decryptId(encryptedId);
+
+  const proposal = useSelector((state) => state?.proposalCreated);
+  const encryptedProposalId = encryptId(proposal?.id);
+  const decryptedProposalId= decryptId(encryptedProposalId)
+
+  console.log(encryptedProposalId);
+  console.log(proposal);
+  console.log(decryptedProposalId)
   // console.log(encryptedId);
   // console.log(decryptedId);
 
@@ -33,10 +44,60 @@ const Submitted = () => {
     url: `/guestRegistration/${encryptedId}`,
     text: event?.eventTheme,
   };
+
+  const shareProposal = {
+    title: event?.eventName,
+    // url: `${encryptedProposalId}`,
+    text: event?.eventTheme,
+  };
+
+  // const generatePdfFromElement = (elementId) => {
+  //   const pdf = new jsPDF();
+  
+  //   return new Promise((resolve) => {
+  //     html2canvas(document.getElementById(elementId)).then((canvas) => {
+  //       const imgData = canvas.toDataURL("image/png");
+  //       const imgWidth = 210; // A4 paper width in mm
+  //       const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+  //       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+  //       resolve(pdf.output("datauristring"));
+  //     });
+  //   });
+  // };
+
+  
+  // const handleDownloadPdf = async () => {
+  //   const pdf = new jsPDF();
+  
+  //   const page1Data = await generatePdfFromElement("page1");
+  //   pdf.addPage();
+  //   pdf.addImage(page1Data, "PNG", 0, 0);
+  
+    // const page2Data = await generatePdfFromElement("page2");
+    // pdf.addPage();
+    // pdf.addImage(page2Data, "PNG", 0, 0);
+  
+    // const page3Data = await generatePdfFromElement("page3");
+    // pdf.addPage();
+    // pdf.addImage(page3Data, "PNG", 0, 0);
+
+    // const page4Data = await generatePdfFromElement("page4");
+    // pdf.addPage();
+    // pdf.addImage(page4Data, "PNG", 0, 0);
+
+    // const page5Data = await generatePdfFromElement("page5");
+    // pdf.addPage();
+    // pdf.addImage(page5Data, "PNG", 0, 0);
+  
+  //   pdf.save("combined.pdf");
+  // };
+  
+
   return (
     <>
       <CreateEventTopBar />
-      <SubmittedContainer>
+      <SubmittedContainer id="page1">
         <AnimationContainer>
           <Lottie animationData={animationData} loop={true} />
         </AnimationContainer>
@@ -70,8 +131,14 @@ const Submitted = () => {
             </BudgetInventorySubtitle>
 
             <ModalButtonContainer>
-              <AlternativeButton2>Download PDF</AlternativeButton2>
-              <ModalPrimaryButton>Share proposal link</ModalPrimaryButton>
+              <AlternativeButton2 >Download PDF</AlternativeButton2>
+              <ModalPrimaryButton
+                onClick={() => {
+                  window.navigator.share(shareProposal);
+                }}
+              >
+                Share proposal link
+              </ModalPrimaryButton>
             </ModalButtonContainer>
           </>
         ) : null}

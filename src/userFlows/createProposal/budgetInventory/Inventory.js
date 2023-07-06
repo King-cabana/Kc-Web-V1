@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editInventoryCheckbox } from "../../../redux/slices/proposalSlice";
 import {
@@ -27,61 +26,54 @@ import {
   ButtonDiv,
   InventoryProgressContainer,
 } from "./InventoryStyled";
-import "../../../App.css";
-import "../../../modal.css";
 import { BsChevronDown } from "react-icons/bs";
 import { inventoryData } from "./InventoryData";
 import { ViewButton } from "../../eventPlanning/EventPlanningStyled";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { AbsolutePrimaryButton, AlternativeButton2 } from "../../../components/buttons/Buttons";
 
-const Inventory = ({ padding , activeStep, setActiveStep}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const Inventory = ({ padding, activeStep, setActiveStep }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state?.proposal?.takeInventory);
   const [modal, setModal] = useState(false);
   const [selectedInventoryIndex, setSelectedInventoryIndex] = useState(null);
+
+  console.log(state)
+
   const toggleModal = () => {
     setModal(!modal);
   };
+
   const handleInventoryClick = (index) => {
     setSelectedInventoryIndex(index);
     toggleModal();
   };
+
   const handleNextInventory = () => {
     setSelectedInventoryIndex((prevIndex) => prevIndex + 1);
   };
+
   const handlePreviousInventory = () => {
     setSelectedInventoryIndex((prevIndex) => prevIndex - 1);
   };
 
-
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
+
   const handlePrevious = () => {
     setActiveStep(activeStep - 1);
   };
 
-  // Modal Contitions
-  if (modal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
-  }
-  const showModal = !modal && "notShown";
-
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
-    const arr = state?.[name];
-    const updatedArr = checked
-      ? [...arr, value]
-      : arr?.filter((item) => item !== value);
-    console.log(updatedArr);
+    const arr = state?.[name] || [];
+    const updatedArr = checked ? [...arr, value] : arr?.filter((item) => item !== value);
     dispatch(editInventoryCheckbox({ category: name, item: updatedArr }));
-    console.log(state);
   };
+
+  const showModal = !modal && "notShown";
+
   return (
     <>
       {modal && (
@@ -92,25 +84,18 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
       )}
       <div className={`${showModal}`}></div>
       <BudgetInventoryContainer style={{ padding: padding }}>
-        {location.pathname === "/eventPlanPreview" ? null : (
-          <BudgetInventoryHeader>
-            <BudgetTitle1>Budget & Take Inventory</BudgetTitle1>
-            <BudgetInventorySubtitle>
-              In order to capture the range of tangible benefits your
-              organization has to offer, you need to prepare an inventory of
-              your assets.
-            </BudgetInventorySubtitle>
-          </BudgetInventoryHeader>
-        )}
-
+        <BudgetInventoryHeader>
+          <BudgetTitle1>Budget & Take Inventory</BudgetTitle1>
+          <BudgetInventorySubtitle>
+            In order to capture the range of tangible benefits your organization has to offer, you need to prepare an inventory of your assets.
+          </BudgetInventorySubtitle>
+        </BudgetInventoryHeader>
         <BudgetSection>
-          <BudgetTitle2 style={{marginTop:"3%"}}>Take Inventory</BudgetTitle2>
+          <BudgetTitle2 style={{ marginTop: "3%" }}>Take Inventory</BudgetTitle2>
           <BudgetUpload>
             <BudgetSubtitle style={{ fontWeight: "400" }}>
-              Add and make a list of every promotional and marketing opportunity
-              that could possibly be of value to a potential sponsor(s)
+              Add and make a list of every promotional and marketing opportunity that could possibly be of value to a potential sponsor(s)
             </BudgetSubtitle>
-
             <InventorySection>
               {inventoryData?.map((inventory, index) => (
                 <CheckDivWrap key={index}>
@@ -166,13 +151,7 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
                                 value={item}
                                 name={inventory?.inventoryName}
                                 id={itemIndex}
-                                checked={
-                                  state?.[inventory?.inventoryName]?.includes(
-                                    item
-                                  )
-                                    ? true
-                                    : false
-                                }
+                                checked={state?.[inventory?.inventoryName]?.includes(item)}
                                 onChange={handleCheckboxChange}
                               />
                               <CheckLabel htmlFor={itemIndex}>
@@ -181,7 +160,6 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
                             </Check>
                           ))}
                         </CheckboxWrapper>
-
                         <ButtonDiv>
                           {index === 0 ? (
                             ""
@@ -190,7 +168,6 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
                               Back
                             </ViewButton>
                           )}
-
                           {inventory?.title === "Cause Tie-in" ? (
                             <ViewButton
                               style={{
@@ -223,8 +200,8 @@ const Inventory = ({ padding , activeStep, setActiveStep}) => {
         </BudgetSection>
       </BudgetInventoryContainer>
       <ButtonContainer style={{ margin: "0rem" }}>
-              <AlternativeButton2 onClick={handlePrevious} style={{color: "#FF2957",fontWeight: "600", marginRight: "2rem", }}>Back</AlternativeButton2>
-              <AbsolutePrimaryButton onClick={() => handleInventoryClick(0)}>Continue</AbsolutePrimaryButton>
+        <AlternativeButton2 onClick={handlePrevious} style={{ color: "#FF2957", fontWeight: "600", marginRight: "2rem" }}>Back</AlternativeButton2>
+        <AbsolutePrimaryButton onClick={() => handleInventoryClick(0)}>Continue</AbsolutePrimaryButton>
       </ButtonContainer>
     </>
   );

@@ -38,7 +38,6 @@ const ProposalPreviewCover = () => {
   const profile = useSelector((state) => state?.eventOrganizerProfile);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const id = sessionStorage.getItem("line41");
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -102,7 +101,7 @@ const ProposalPreviewCover = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <OverallContainer>
+        <OverallContainer id="page1">
           <ProposalContainer style={{ marginTop: "5%" }}>
             <WelcomeHeader>
               <Txt>Event</Txt>

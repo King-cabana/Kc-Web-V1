@@ -17,6 +17,7 @@ import { BsChevronRight } from "react-icons/bs";
 import { PreviewLogoBg, ProposalInner } from "./ProposalPreviewCoverStyled";
 import ProposalPagination from "../../proposalPagination/ProposalPagination";
 
+
 const ProposalPreviewContent = () => {
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(2);
@@ -71,7 +72,7 @@ const ProposalPreviewContent = () => {
             </Txt>
           </WelcomeHeader>
         </ProposalContainer>
-        <PreviewLogoBg>
+        <PreviewLogoBg style={{height:"fit-content"}} id="page2">
           <ProposalInner>
             <h4 style={{ textAlign: "center" }}>Table of Contents</h4>
             <div style={{ lineHeight: "2.5rem" }}>

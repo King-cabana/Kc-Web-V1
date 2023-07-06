@@ -11,6 +11,7 @@ import userDetailsSlice from "./redux/slices/userDetailsSlice";
 import userProfileSlice from "./redux/slices/userProfileSlice";
 import proposalSlice from "./redux/slices/proposalSlice";
 import proposalPreviewSlice from "./redux/slices/proposalPreviewSlice";
+import proposalCreatedSlice from "./redux/slices/proposalCreatedSlice";
 import pastEventSlice from "./redux/slices/pastEventSlice";
 import eventsHistorySlice from "./redux/slices/eventsHistorySlice";
 
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   userProfile: userProfileSlice,
   proposal: proposalSlice,
   proposalPreview: proposalPreviewSlice,
+  proposalCreated: proposalCreatedSlice,
   pastEvent: pastEventSlice,
   eventsHistory: eventsHistorySlice,
 });
