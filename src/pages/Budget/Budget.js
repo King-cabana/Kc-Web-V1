@@ -37,7 +37,7 @@ const Budget = ({ activeStep, setActiveStep }) => {
   console.log(state);
 
   const sendTotal = () => {
-    dispatch(addTotal({ value: totalCost }));
+    dispatch(addTotal({ value: formatNumberWithCommas(totalCost)}));
   };
 
   const navigate = useNavigate();
@@ -52,10 +52,15 @@ const Budget = ({ activeStep, setActiveStep }) => {
   const handleChange = (index, field, value) => {
     const updatedBudget = [...budget];
     updatedBudget[index] = { ...updatedBudget[index], [field]: value };
+  
+    if (field === "cost") {
+      updatedBudget[index].cost = formatCost(value); // Format the cost value with commas
+    }
+  
     setBudget(updatedBudget);
-
     dispatch(editBudget({ category: index, item: updatedBudget[index] }));
   };
+  
 
   const handleDelete = (index) => {
     setBudget((prev) => prev.filter((_, i) => i !== index));
@@ -70,26 +75,39 @@ const Budget = ({ activeStep, setActiveStep }) => {
     setBudget((prev) => [...prev, newBudgetItem]);
   };
 
+  const formatCost = (value) => {
+    const unformattedValue = value.replace(/,/g, "");
+    const floatValue = parseFloat(unformattedValue.replace(/[^\d.-]/g, ""));
+  
+    if (isNaN(floatValue)) return ""; 
+  
+    return new Intl.NumberFormat().format(floatValue);
+  };
+
   useEffect(() => {
     const calculateTotalCost = () => {
       let sum = 0;
       budget.forEach((item) => {
-        const cost = parseFloat(item.cost);
+        const cost = parseFloat(item.cost.replace(/,/g, "")); 
         if (!isNaN(cost)) {
           sum += cost;
         }
       });
       setTotalCost(sum.toFixed(2));
     };
-
+  
     calculateTotalCost();
     localStorage.setItem("budget", JSON.stringify(budget));
   }, [budget]);
-  console.log(budget);
+  
 
   useEffect(() => {
     sendTotal();
   }, [totalCost]);
+
+  const formatNumberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   return (
     <>
@@ -133,6 +151,9 @@ const Budget = ({ activeStep, setActiveStep }) => {
                     onChange={(e) =>
                       handleChange(index, "cost", e.target.value)
                     }
+                    onBlur={(e) =>
+                      handleChange(index, "cost", formatCost(e.target.value))
+                    }
                   />
                 </BudgetBox>
               );
@@ -145,7 +166,7 @@ const Budget = ({ activeStep, setActiveStep }) => {
         </OverflowContoller>
         <Total>
           <p>Total</p>
-          <Sum>{totalCost}</Sum>
+          <Sum>{formatNumberWithCommas(totalCost)}</Sum>
         </Total>
         <ButtonContainer style={{ margin: "0rem" }}>
           <AlternativeButton2

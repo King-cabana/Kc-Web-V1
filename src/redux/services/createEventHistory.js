@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL_2 = "http://localhost:8081/proposals/";
-export const createProposal = async (data, token) => {
+const API_URL_2 = "http://localhost:8081/histories/";
+export const createEventHistory = async (data, token) => {
   console.log(data);
   try {
     const response = await axios.post(API_URL_2 + "create", data, {
@@ -16,4 +16,4 @@ export const createProposal = async (data, token) => {
   }
 };
 
-export default createProposal;
+export default createEventHistory;

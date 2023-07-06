@@ -38,19 +38,18 @@ const ProposalGenerated = () => {
   const [loading, setLoading] = useState(false);
   const [proposal, setProposal] = useState();
 
-  const user = useSelector((state) => state.userDetails);
-  const proposalS = useSelector((state) => state.proposal);
+  // const user = useSelector((state) => state.userDetails);
 
   const navigate = useNavigate();
-//   const dispatch = useDispatch();
   const { id } = useParams();
-  // console.log(id);
+
   const decryptedId = decryptId(id);
-//   const encryptedId = encryptId(decryptedId);
+  const proposalId = localStorage.getItem("proposalId")
+  // const encryptedId = encryptId(decryptedId);
 
   const currentYear = new Date().getFullYear();
 
-  const { demographyDto } = proposalS || {};
+//   const { takeInventory } = proposal || {};
 
   const formatHeader = (text) => {
     const words = text.match(/[A-Za-z][a-z]*/g);
@@ -62,8 +61,9 @@ const ProposalGenerated = () => {
   useEffect(() => {
     const fetchProposal = async () => {
       try {
-        const { data } = await axios.get(API_URL_2 + `proposals/${decryptedId}`);
+        const { data } = await axios.get(API_URL_2 + `proposals/${proposalId}`);
         setProposal(data);
+        console.log(data)
       } catch (error) {
         if (error?.response?.status === 400) {
           navigate("/*");
@@ -141,7 +141,7 @@ const ProposalGenerated = () => {
                   <li>Sponsorship Benefits</li>
                   <li>Budget</li>
                   <li>Confidentiality</li>
-                  <li>**Additional</li>
+                  <li> </li>
                 </TOCInnerDiv>
               </TableOfContentInner>
 
@@ -234,38 +234,38 @@ const ProposalGenerated = () => {
                 <div style={{ lineHeight: "2rem" }}>
                   <li>
                     Age:{" "}
-                    {demographyDto?.ageRange
-                      ? demographyDto.ageRange.join(", ")
+                    {proposal?.defineAudience?.ageRange
+                      ? proposal?.defineAudience?.ageRange.join(", ")
                       : "Age"}
                   </li>
                   <li>
                     Income Range:{" "}
-                    {demographyDto?.income
-                      ? demographyDto.income.join(", ")
+                    {proposal?.defineAudience?.income
+                      ? proposal?.defineAudience?.income.join(", ")
                       : "Income"}
                   </li>
                   <li>
                     Gender:{" "}
-                    {demographyDto?.genderList
-                      ? demographyDto.genderList.join(", ")
+                    {proposal?.defineAudience?.genderList
+                      ? proposal?.defineAudience?.genderList.join(", ")
                       : "Gender"}
                   </li>
                   <li>
                     Religion:{" "}
-                    {demographyDto?.religionList
-                      ? demographyDto.religionList.join(", ")
+                    {proposal?.defineAudience?.religionList
+                      ? proposal?.defineAudience?.religionList.join(", ")
                       : "Religion"}
                   </li>
                   <li>
                     Employment Status:{" "}
-                    {demographyDto?.employmentStatusList
-                      ? demographyDto.employmentStatusList.join(", ")
+                    {proposal?.defineAudience?.employmentStatusList
+                      ? proposal?.defineAudience?.employmentStatusList.join(", ")
                       : "Employment status"}
                   </li>
                   <li>
                     Educational Level:{" "}
-                    {demographyDto?.educationLevelList
-                      ? demographyDto.educationLevelList.join(", ")
+                    {proposal?.defineAudience?.educationLevelList
+                      ? proposal?.defineAudience?.educationLevelList.join(", ")
                       : "Educational level"}
                   </li>
                 </div>
@@ -276,10 +276,11 @@ const ProposalGenerated = () => {
                   Benefits of sponsoring this event (Inventory)
                 </h4>
                 <div style={{ lineHeight: "2rem", marginTop: "1%" }}>
-                  {Object.keys(proposalS.takeInventory).map((key) => {
-                    const value = proposalS.takeInventory[key];
+                  {proposal && proposal.takeInventory && Object.keys(proposal.takeInventory).map((key) => {
+                    const value = proposal.takeInventory[key];
                     if (Array.isArray(value)) {
                       const formattedKey = formatHeader(key);
+                      if (value.length > 0) {
                       return (
                         <div key={key}>
                           <h4 style={{ color: "#484848" }}>{formattedKey}</h4>
@@ -290,6 +291,7 @@ const ProposalGenerated = () => {
                           </ul>
                         </div>
                       );
+                            }
                     }
                     return null;
                   })}
@@ -349,8 +351,8 @@ const ProposalGenerated = () => {
                   <h4 style={{ color: "#484848" }}>Event Organizer’s Ask</h4>
                   <p>
                     We would require{" "}
-                    {proposal?.eventBudgetAddOn
-                      ? proposal?.eventBudgetAddOn
+                    {proposal?.amountRequired
+                      ? proposal?.amountRequired
                       : "Event organizer's Ask "}{" "}
                     worth of sponsorship from your organization
                   </p>

@@ -173,6 +173,7 @@ const ProposalpreviewB = () => {
                     const value = proposal.takeInventory[key];
                     if (Array.isArray(value)) {
                       const formattedKey = formatHeader(key);
+                      if (value.length > 0) {
                       return (
                         <div key={key}>
                           <h4 style={{ color: "#484848" }}>{formattedKey}</h4>
@@ -183,6 +184,7 @@ const ProposalpreviewB = () => {
                           </ul>
                         </div>
                       );
+                            }
                     }
                     return null;
                   })}

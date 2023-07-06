@@ -32,6 +32,8 @@ const Submitted = () => {
   const proposal = useSelector((state) => state?.proposalCreated);
   const encryptedProposalId = encryptId(proposal?.id);
   const decryptedProposalId= decryptId(encryptedProposalId)
+  const proposalId = (localStorage.getItem("proposalId"))
+
 
   console.log(encryptedProposalId);
   console.log(proposal);
@@ -47,7 +49,7 @@ const Submitted = () => {
 
   const shareProposal = {
     title: event?.eventName,
-    // url: `${encryptedProposalId}`,
+    url: `/generated-proposal/${proposalId}`,
     text: event?.eventTheme,
   };
 

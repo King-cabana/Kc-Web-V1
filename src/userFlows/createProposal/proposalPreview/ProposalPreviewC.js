@@ -86,7 +86,9 @@ const ProposalPreviewC = () => {
         throw new Error("ID is not defined");
       }
       const stateWithId = { ...proposal, id: eventCreated.id };
-      await createProposal(stateWithId, user.token);
+      // await createProposal(stateWithId, user.token);
+      const response = await createProposal(stateWithId, user.token);
+      localStorage.setItem("proposalId", response.id);
       dispatch(setProposalCreated(stateWithId));
       dispatch(clearAllFields());
       localStorage.removeItem("budget");

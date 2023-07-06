@@ -10,7 +10,7 @@ export const HeaderDiv = styled.div`
 
 export const HistoryInner = styled.form`
   width: 100%;
-  padding: 1rem 5rem;
+  padding: 1rem 2rem;
 `;
 
 export const HistorySection = styled.div`

@@ -69,7 +69,8 @@ const ProposalDetails = () => {
         );
         // console.log(data);
         setActive(data);
-        dispatch(setEventCreated(data));
+        const response = dispatch(setEventCreated(data));
+        console.log(response)
       } catch (error) {
         console.log(error);
         toast.error(error.message);
