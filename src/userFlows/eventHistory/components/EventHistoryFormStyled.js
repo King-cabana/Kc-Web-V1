@@ -5,12 +5,12 @@ export const HeaderDiv = styled.div`
     width: 100%;
     display : flex;
     justify-content: center;
-    align-items-center;
-`
+    align-items: center;
+`;
 
 export const HistoryInner = styled.form`
   width: 100%;
-  padding: 1rem 5rem;
+  padding: 1rem 2rem;
 `;
 
 export const HistorySection = styled.div`

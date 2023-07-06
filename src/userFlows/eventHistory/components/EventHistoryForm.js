@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopBar from "../../topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../../LoadingScreen";
 import {
+  BenefitsTag,
   InputSeg,
   OverallContainer,
   ProposalContainer,
@@ -26,15 +27,116 @@ import {
   Supported,
   UploadBtn,
 } from "../../createEvent/FirstCreateEventStyled";
-import { TextArea } from "../../../pages/Budget/BudgetStyled";
 import {
   AddButton,
+  Delete,
   EventSubSection,
   InputTagBox,
 } from "../../createEvent/TimeLineEventsStyled";
+// import { addFields } from "../../../redux/slices/proposalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useFileUpload } from "../../../components/FileUpload";
+import { addEventHistoryFields, addImageUrl, addSponsors, removeSponsors } from "../../../redux/slices/createEventHistorySlice";
+import { AiOutlineClose } from "react-icons/ai";
 
 const EventHistoryForm = () => {
   const [loading, setLoading] = useState(false);
+  const [sponsorList, setSponsorList] = useState("");
+  // const [file, setFile] = useState("");
+  const state = useSelector((state) => state.createEventHistory);
+  const dispatch = useDispatch()
+  console.log(state)
+
+  const otherFields = (e) => {
+    dispatch(addEventHistoryFields({ name: e.target.name, value: e.target.value }));
+  };
+
+  const {
+    handleFileChange: handleFileChange1,
+    errorMsg: errorMsg1,
+    isSuccess: isSuccess1,
+    loading: loading1,
+    file: file1
+  } = useFileUpload();
+
+  const {
+    handleFileChange: handleFileChange2,
+    errorMsg: errorMsg2,
+    isSuccess: isSuccess2,
+    loading: loading2,
+    file: file2
+  } = useFileUpload();
+
+  const {
+    handleFileChange: handleFileChange3,
+    errorMsg: errorMsg3,
+    isSuccess: isSuccess3,
+    loading: loading3,
+    file: file3
+  } = useFileUpload();
+
+
+  useEffect(() => {
+    if (isSuccess1) {
+      dispatch(addImageUrl(file1));
+    }
+  }, [isSuccess1, file1]);
+  
+  useEffect(() => {
+    if (isSuccess2) {
+      dispatch(addImageUrl(file2));
+    }
+  }, [isSuccess2, file2]);
+  
+  useEffect(() => {
+    if (isSuccess3) {
+      dispatch(addImageUrl(file3));
+    }
+  }, [isSuccess3, file3]);
+  
+
+  const handleSponsorsTag = () => {
+    if (sponsorList !== "") {
+      const alreadyExists = state?.sponsorList?.some(
+        (tag) => tag === sponsorList
+      );
+      if (!alreadyExists && state?.sponsorList?.length < 5) {
+        dispatch(addSponsors(sponsorList));
+      }
+      setSponsorList("");
+    }
+  };
+  const handleRemoveSponsors = (tag) => {
+    dispatch(removeSponsors(tag));
+  };
+  
+
+  const sponsorsTags = state?.sponsorList?.map((tag, index) => (
+    <div key={index}>
+      <BenefitsTag
+        style={{
+          marginTop: "2%",
+          width: "max-content",
+          border: "1px solid black",
+          color: "black",
+        }}
+      >
+        {tag}
+        <Delete
+          onClick={() => handleRemoveSponsors(tag)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#ff2957",
+          }}
+        >
+          <AiOutlineClose />
+        </Delete>
+      </BenefitsTag>
+    </div>
+  ));
+  
 
   return (
     <>
@@ -43,7 +145,7 @@ const EventHistoryForm = () => {
         <LoadingScreen />
       ) : (
         <OverallContainer>
-          <ProposalContainer style={{ marginTop: "5%" }}>
+          <ProposalContainer style={{padding:"1rem 2rem" }}>
             <WelcomeHeader>
               <Txt>Event</Txt>
               <BsChevronRight style={{ marginRight: "0.5rem" }} />
@@ -70,8 +172,8 @@ const EventHistoryForm = () => {
                 type="text"
                 name="eventName"
                 placeholder="Enter your event name"
-                // onChange={otherFields}
-                // defaultValue={state?.eventSponsor}
+                onChange={otherFields}
+                defaultValue={state?.eventName}
               />
             </InputSeg>
 
@@ -84,8 +186,8 @@ const EventHistoryForm = () => {
                 type="text"
                 name="eventDescription"
                 placeholder="Be descriptive and concise"
-                // onChange={otherFields}
-                // defaultValue={state?.eventSponsor}
+                onChange={otherFields}
+                defaultValue={state?.eventDescription}
               />
             </HistorySection>
 
@@ -95,8 +197,8 @@ const EventHistoryForm = () => {
                 <Input
                   type="time"
                   name="eventTime"
-                  // onChange={otherFields}
-                  // defaultValue={state?.eventSponsor}
+                  onChange={otherFields}
+                  defaultValue={state?.eventTime}
                 />
               </InputSeg>
 
@@ -105,8 +207,8 @@ const EventHistoryForm = () => {
                 <Input
                   type="date"
                   name="eventDate"
-                  // onChange={otherFields}
-                  // defaultValue={state?.eventSponsor}
+                  onChange={otherFields}
+                  defaultValue={state?.eventDate}
                 />
               </InputSeg>
             </HistoryTimeAndDateHolder>
@@ -115,10 +217,10 @@ const EventHistoryForm = () => {
               <Txt>Event Location</Txt>
               <Input
                 type="text"
-                name="eventLocation"
+                name="eventAddress"
                 placeholder="Select Location"
-                // onChange={otherFields}
-                // defaultValue={state?.eventSponsor}
+                onChange={otherFields}
+                defaultValue={state?.eventAddress}
               />
             </InputSeg>
 
@@ -131,14 +233,14 @@ const EventHistoryForm = () => {
                 <Input
                   placeholder="List of sponsors for the event."
                   type="text"
-                  //   value={potentialImpacts}
-                  //   onChange={(event) => setPotentialImpacts(event.target.value)}
+                  value={sponsorList}
+                  onChange={(event) => setSponsorList(event.target.value)}
                 />
-                <AddButton type="button">Add</AddButton>
+                <AddButton type="button" onClick={handleSponsorsTag} >Add</AddButton>
               </InputTagBox>
-              <ProposalTagsWrapper></ProposalTagsWrapper>
+              <ProposalTagsWrapper>{sponsorsTags}</ProposalTagsWrapper>
             </EventSubSection>
-
+{/* 
             <EventSubSection style={{ padding: "0", marginTop: "2%" }}>
               <Txt>Benefits our sponsors received</Txt>
               <InputTagBox>
@@ -151,7 +253,7 @@ const EventHistoryForm = () => {
                 <AddButton type="button">Add</AddButton>
               </InputTagBox>
               <ProposalTagsWrapper></ProposalTagsWrapper>
-            </EventSubSection>
+            </EventSubSection> */}
 
             <HistorySection style={{ marginTop: "2%" }}>
               <Txt>Add pictures taken at the event</Txt>
@@ -166,15 +268,15 @@ const EventHistoryForm = () => {
                         <input
                           type="file"
                           style={{ cursor: "pointer" }}
-                          //   onChange={handleFileChange}
+                          onChange={handleFileChange1}
                           hidden
-                          id="file"
+                          id="file1"
                           accept="image/png, image/jpeg, image/jpg"
-                          name="proposalBannerUrl"
-                          // defaultValue={file}
+                          name="imageUrl1"
+                          defaultValue={file1}
                         />
                       </CustomWrapper>
-                      <UploadBtn style={{ width: "100px" }} htmlFor="file">
+                      <UploadBtn style={{ width: "100px" }} htmlFor="file1">
                         Upload
                       </UploadBtn>
                     </FileWrapper>
@@ -187,13 +289,13 @@ const EventHistoryForm = () => {
                         marginTop: "0.5rem",
                       }}
                     >
-                      {/* {errorMsg} */}
+                      {errorMsg1}
                     </h3>
                     <Supported>Support image: JPEG, JPG, PNG, *img</Supported>
                     <Supported style={{ color: "#ff2957", marginBottom: "3%" }}>
                       Not more than 1mb
                     </Supported>
-                    {/* {isSuccess ? (
+                    {isSuccess1 ? (
                   <div
                     style={{
                       padding: "1rem",
@@ -206,13 +308,13 @@ const EventHistoryForm = () => {
                       Validation successful
                     </p>
                     <img
-                      src={file}
+                      src={file1}
                       style={{ width: "50px", height: "50px" }}
                       alt=""
                     />
                   </div>
-                ) : null} */}
-                    {loading ? (
+                ) : null}
+                    {loading1 ? (
                       <h4
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
@@ -229,15 +331,15 @@ const EventHistoryForm = () => {
                         <input
                           type="file"
                           style={{ cursor: "pointer" }}
-                          //   onChange={handleFileChange}
+                          onChange={handleFileChange2}
                           hidden
-                          id="file"
+                          id="file2"
                           accept="image/png, image/jpeg, image/jpg"
-                          name="proposalBannerUrl"
-                          // defaultValue={file}
+                          name="imageUrl2"
+                          defaultValue={file2}
                         />
                       </CustomWrapper>
-                      <UploadBtn style={{ width: "100px" }} htmlFor="file">
+                      <UploadBtn style={{ width: "100px" }} htmlFor="file2">
                         Upload
                       </UploadBtn>
                     </FileWrapper>
@@ -250,13 +352,13 @@ const EventHistoryForm = () => {
                         marginTop: "0.5rem",
                       }}
                     >
-                      {/* {errorMsg} */}
+                      {errorMsg2}
                     </h3>
                     <Supported>Support image: JPEG, JPG, PNG, *img</Supported>
                     <Supported style={{ color: "#ff2957", marginBottom: "3%" }}>
                       Not more than 1mb
                     </Supported>
-                    {/* {isSuccess ? (
+                    {isSuccess2 ? (
                   <div
                     style={{
                       padding: "1rem",
@@ -269,13 +371,13 @@ const EventHistoryForm = () => {
                       Validation successful
                     </p>
                     <img
-                      src={file}
+                      src={file2}
                       style={{ width: "50px", height: "50px" }}
                       alt=""
                     />
                   </div>
-                ) : null} */}
-                    {loading ? (
+                ) : null}
+                    {loading2 ? (
                       <h4
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >
@@ -292,15 +394,15 @@ const EventHistoryForm = () => {
                         <input
                           type="file"
                           style={{ cursor: "pointer" }}
-                          //   onChange={handleFileChange}
+                          onChange={handleFileChange3}
                           hidden
-                          id="file"
+                          id="file3"
                           accept="image/png, image/jpeg, image/jpg"
-                          name="proposalBannerUrl"
-                          // defaultValue={file}
+                          name="imageUrl3"
+                          defaultValue={file3}
                         />
                       </CustomWrapper>
-                      <UploadBtn style={{ width: "100px" }} htmlFor="file">
+                      <UploadBtn style={{ width: "100px" }} htmlFor="file3">
                         Upload
                       </UploadBtn>
                     </FileWrapper>
@@ -313,13 +415,13 @@ const EventHistoryForm = () => {
                         marginTop: "0.5rem",
                       }}
                     >
-                      {/* {errorMsg} */}
+                      {errorMsg3}
                     </h3>
                     <Supported>Support image: JPEG, JPG, PNG, *img</Supported>
                     <Supported style={{ color: "#ff2957", marginBottom: "3%" }}>
                       Not more than 1mb
                     </Supported>
-                    {/* {isSuccess ? (
+                    {isSuccess3 ? (
                   <div
                     style={{
                       padding: "1rem",
@@ -332,13 +434,13 @@ const EventHistoryForm = () => {
                       Validation successful
                     </p>
                     <img
-                      src={file}
+                      src={file3}
                       style={{ width: "50px", height: "50px" }}
                       alt=""
                     />
                   </div>
-                ) : null} */}
-                    {loading ? (
+                ) : null}
+                    {loading3 ? (
                       <h4
                         style={{ display: "flex", justifyContent: "flex-end" }}
                       >

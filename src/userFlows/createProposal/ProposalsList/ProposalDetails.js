@@ -157,7 +157,7 @@ const ProposalDetails = () => {
                         <ViewButton
                           onClick={() =>
                             navigate(
-                              `/event/proposal/proposal-buildup/proposal-preview/${sponsorKey}`
+                              `/generated-proposal/${encryptId(sponsorKey)}`
                             )
                           }
                         >

@@ -238,8 +238,8 @@ function App() {
             }
           />
           <Route path="*" element={<NoPage />} />
-          <Route path="/generated-proposal" element={<ProposalGenerated />} />
-          <Route path="/event-history" element={<EventHistoryForm />} />
+          <Route path="/generated-proposal/:id" element={<ProposalGenerated />} />
+          <Route path="/event/event-history" element={<Sidebar><EventHistoryForm /></Sidebar>} />
 
         </Routes>
       </>

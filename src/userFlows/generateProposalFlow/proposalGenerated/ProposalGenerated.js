@@ -33,24 +33,25 @@ import axios from "axios";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { decryptId, encryptId } from "../../../utils";
+import { setProposalCreated } from "../../../redux/slices/proposalCreatedSlice";
 
 const ProposalGenerated = () => {
   const [loading, setLoading] = useState(false);
   const [proposal, setProposal] = useState();
 
-  const user = useSelector((state) => state.userDetails);
-  const proposalS = useSelector((state) => state.proposal);
-
+  // const user = useSelector((state) => state.userDetails);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-//   const dispatch = useDispatch();
   const { id } = useParams();
-  // console.log(id);
-  const decryptedId = decryptId(id);
-//   const encryptedId = encryptId(decryptedId);
 
+  const decryptedId = decryptId(id);
+  const proposalCreated = useSelector((state)=>state.proposalCreated)
+  // const encryptedId = encryptId(decryptedId);
+  console.log(id);
+  console.log(decryptedId);
   const currentYear = new Date().getFullYear();
 
-  const { demographyDto } = proposalS || {};
+//   const { takeInventory } = proposal || {};
 
   const formatHeader = (text) => {
     const words = text.match(/[A-Za-z][a-z]*/g);
@@ -64,6 +65,9 @@ const ProposalGenerated = () => {
       try {
         const { data } = await axios.get(API_URL_2 + `proposals/${decryptedId}`);
         setProposal(data);
+        dispatch(setProposalCreated(data))
+        // console.log(proposalCreated)
+        console.log(data)
       } catch (error) {
         if (error?.response?.status === 400) {
           navigate("/*");
@@ -141,7 +145,7 @@ const ProposalGenerated = () => {
                   <li>Sponsorship Benefits</li>
                   <li>Budget</li>
                   <li>Confidentiality</li>
-                  <li>**Additional</li>
+                  <li> </li>
                 </TOCInnerDiv>
               </TableOfContentInner>
 
@@ -232,43 +236,33 @@ const ProposalGenerated = () => {
               <div style={{ marginTop: "3%", color: "#484848" }}>
                 <h4>Audience (Attendees Profile)</h4>
                 <div style={{ lineHeight: "2rem" }}>
-                  <li>
+
+                  {proposal?.defineAudience?.ageRange?.length > 0 && <li>
                     Age:{" "}
-                    {demographyDto?.ageRange
-                      ? demographyDto.ageRange.join(", ")
-                      : "Age"}
-                  </li>
-                  <li>
-                    Income Range:{" "}
-                    {demographyDto?.income
-                      ? demographyDto.income.join(", ")
-                      : "Income"}
-                  </li>
-                  <li>
+                    {proposal?.defineAudience?.ageRange.join(", ")}
+                  </li> }
+
+                  {proposal?.defineAudience?.incomeRange?.length > 0 && <li>
+                    Income:{" "}
+                    {proposal?.defineAudience?.incomeRange.join(", ")}
+                  </li> }
+                  {proposal?.defineAudience?.genderList?.length > 0 && <li>
                     Gender:{" "}
-                    {demographyDto?.genderList
-                      ? demographyDto.genderList.join(", ")
-                      : "Gender"}
-                  </li>
-                  <li>
+                    {proposal?.defineAudience?.genderList.join(", ")}
+                  </li> }
+                  {proposal?.defineAudience?.religionList?.length > 0 && <li>
                     Religion:{" "}
-                    {demographyDto?.religionList
-                      ? demographyDto.religionList.join(", ")
-                      : "Religion"}
-                  </li>
-                  <li>
+                    {proposal?.defineAudience?.religionList.join(", ")}
+                  </li> }
+                  {proposal?.defineAudience?.employmentStatusList?.length > 0 && <li>
                     Employment Status:{" "}
-                    {demographyDto?.employmentStatusList
-                      ? demographyDto.employmentStatusList.join(", ")
-                      : "Employment status"}
-                  </li>
-                  <li>
+                    {proposal?.defineAudience?.employmentStatusList.join(", ")}
+                  </li> }
+                  {proposal?.defineAudience?.educationLevelList?.length > 0 && <li>
                     Educational Level:{" "}
-                    {demographyDto?.educationLevelList
-                      ? demographyDto.educationLevelList.join(", ")
-                      : "Educational level"}
-                  </li>
-                </div>
+                    {proposal?.defineAudience?.educationLevelList.join(", ")}
+                  </li> }
+                  </div>
               </div>
 
               <div style={{ marginTop: "3%" }}>
@@ -276,10 +270,11 @@ const ProposalGenerated = () => {
                   Benefits of sponsoring this event (Inventory)
                 </h4>
                 <div style={{ lineHeight: "2rem", marginTop: "1%" }}>
-                  {Object.keys(proposalS.takeInventory).map((key) => {
-                    const value = proposalS.takeInventory[key];
+                  {proposal && proposal.takeInventory && Object.keys(proposal.takeInventory).map((key) => {
+                    const value = proposal.takeInventory[key];
                     if (Array.isArray(value)) {
                       const formattedKey = formatHeader(key);
+                      if (value.length > 0) {
                       return (
                         <div key={key}>
                           <h4 style={{ color: "#484848" }}>{formattedKey}</h4>
@@ -290,6 +285,7 @@ const ProposalGenerated = () => {
                           </ul>
                         </div>
                       );
+                            }
                     }
                     return null;
                   })}
@@ -349,8 +345,8 @@ const ProposalGenerated = () => {
                   <h4 style={{ color: "#484848" }}>Event Organizer’s Ask</h4>
                   <p>
                     We would require{" "}
-                    {proposal?.eventBudgetAddOn
-                      ? proposal?.eventBudgetAddOn
+                    {proposal?.amountRequired
+                      ? proposal?.amountRequired
                       : "Event organizer's Ask "}{" "}
                     worth of sponsorship from your organization
                   </p>
