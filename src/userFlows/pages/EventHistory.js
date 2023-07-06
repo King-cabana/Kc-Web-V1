@@ -28,7 +28,8 @@ const EventHistory = () => {
             },
           }
         );
-          dispatch(setEventsHistory(data));
+        const reversedData = data.reverse();
+          dispatch(setEventsHistory(reversedData));
       }catch(error){
         if(error?.message === "Network Error"){
           toast.error("Error retrieving event history, reload page");

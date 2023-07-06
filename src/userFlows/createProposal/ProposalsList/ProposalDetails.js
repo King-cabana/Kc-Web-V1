@@ -68,8 +68,9 @@ const ProposalDetails = () => {
           }
         );
         // console.log(data);
-        setActive(data);
-        dispatch(setEventCreated(data));
+        const reversedData = data.reverse();
+        setActive(reversedData);
+        dispatch(setEventCreated(reversedData));
       } catch (error) {
         console.log(error);
         toast.error(error.message);

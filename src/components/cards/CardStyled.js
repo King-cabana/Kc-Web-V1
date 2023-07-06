@@ -6,14 +6,17 @@ export const CardBody= styled.div`
     height: 400px;
     width: 100%;
 
+    @media screen and (max-width: 768px){
+        height: 100%;
+    }
     @media screen and (max-width: 480px){
         margin-bottom: 5%;
     }
-`
+`;
 
 export const ImageHolder = styled.div`
-    height: 130px;
-`
+    height: ${({height})=>height ? height : "130px"};
+`;
 
 export const Image = styled.img`
     height: 100%;
@@ -21,19 +24,22 @@ export const Image = styled.img`
     object-fit: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-`
+`;
 
 export const CardContentHolder = styled.div`
-    height: 270px;
+    height: ${({height})=>height ? height : "270px"};
     padding: 3%;
 
-`
+    @media screen and (max-width: 768px) {
+        height: 100%;
+    }
+`;
 
 export const CardInfoHolder = styled.div`
     width: inherit;
     padding : 4% 2%;
     
-`
+`;
 
 export const IconInfoHolder = styled.div`
   display: flex;
@@ -50,8 +56,8 @@ export const IconInfoHolder = styled.div`
     height: 20px;
     width: 20px;
   }
-`
+`;
 
 export const IconHolder = styled.div`
     width : 20px;
-`
+`;

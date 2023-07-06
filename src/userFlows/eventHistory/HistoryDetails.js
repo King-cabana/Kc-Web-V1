@@ -14,6 +14,9 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { encryptId, formatDate, formatTime, getEventStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { HistoryContext } from "./FilledEventHistory";
+import { IMG } from "./components/SingleEventHistoryStyled";
+import kcLogo from "../../assets/images/KCLogo.svg"
+import { Tooltip } from "react-tooltip";
 
 const HistoryDetails = () => {
   const navigate = useNavigate();
@@ -28,6 +31,7 @@ const HistoryDetails = () => {
   return (
     <>
       <div id="event-details-container" style={{ overflowX: "auto" }}>
+        
         <EventPlanningTable style={{ marginBottom: "10rem" }}>
           <tbody>
             <TableHead>
@@ -45,6 +49,18 @@ const HistoryDetails = () => {
               onClick={() => handleApiClick(data, index)}
             >
               <HistoryTdLg>
+                <span style={{marginRight: "0.8rem"}}>
+                  {data.eventHistoryType === "INTERNAL" && 
+                  <>
+                  <IMG data-tooltip-id="event-type" data-tooltip-content="Powered by KingCabana"src={kcLogo} alt="King Cabana Event"/>
+                  <Tooltip
+                  id="event-type"
+                  style={{zIndex: "999999"}}
+                 variant="info"
+                  />
+      </>
+                  }
+                </span>
                 {data.eventName}
                 {/* Peter Enumah And Co */}
               </HistoryTdLg>
@@ -75,6 +91,8 @@ const HistoryDetails = () => {
           </tbody>
         </EventPlanningTable>
       </div>
+
+      
     </>
   );
 };

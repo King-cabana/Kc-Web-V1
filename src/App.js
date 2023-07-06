@@ -164,7 +164,7 @@ function App() {
             }
           />
           <Route
-            path="/organizer-profile/profileName"
+            path="/organizer-profile/:id"
             element={<OrganizerProfilePage />}
           />
           <Route
