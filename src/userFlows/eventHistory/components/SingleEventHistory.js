@@ -30,8 +30,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addressString, decryptId, encryptId, formatDate, formatTime } from "../../../utils";
 import { AnimationContainer } from "../../../globalStyles";
 import Lottie from "lottie-react";
-import { Description } from "../../eventHome/EventHomeStyled";
+import { BackgroundPicture, Description, ImagesContainer } from "../../eventHome/EventHomeStyled";
 import animationData from "../../../assets/lotties/no-data-preview.json"
+import banner from "../../../assets/images/bgBanner.jpg";
 
 const ViewHistoryEvent = ({
   topBar,
@@ -76,6 +77,14 @@ const ViewHistoryEvent = ({
       ) : (
         <Page style={{ marginTop: "2rem", padding: "0 2%" }}>
           {pathNavigation}
+
+          <ImagesContainer>
+            <BackgroundPicture
+              src={state?.bannerUrl ? state?.bannerUrl : banner}
+              alt="Background Picture"
+            />
+          </ImagesContainer>
+
           <Display style={{ marginRight: "1.5rem" }}>
             <ViewProfileComponent
               onClick={handleViewProfile}
