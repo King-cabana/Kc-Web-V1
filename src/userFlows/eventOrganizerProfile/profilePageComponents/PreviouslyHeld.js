@@ -51,7 +51,7 @@ const PreviouslyHeld = ()=>{
             <EventCardHolder>
                 {history?.slice(0,6)?.map((data, index)=>
                     <Card onClickCard={()=>viewEvent(data)} key={index}
-                    image={data?.imageUrls.length > 0 ? data?.imageUrls[0] : noImage}
+                    image={data?.bannerUrl ? data?.bannerUrl : noImage}
                     eventName={(
                         <>
                           {data?.eventHistoryType === "INTERNAL" && (
