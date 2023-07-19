@@ -106,7 +106,7 @@ const ViewHistoryEvent = ({
                 </UL>
                 <BudgetTitle2>Benefits our sponsors received</BudgetTitle2>
                 <UL>
-                  {state?.sponsorBenefits?.length > 0 ? state?.sponsorBenefits?.map((benefit, index) => {
+                  {state?.sponsorsBenefits?.length > 0 ? state?.sponsorsBenefits?.map((benefit, index) => {
                     return <LI key={index}>{benefit}</LI>;
                   }) : "-"}
                 </UL>
