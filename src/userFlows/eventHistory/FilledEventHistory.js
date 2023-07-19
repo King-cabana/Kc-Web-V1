@@ -91,7 +91,7 @@ const FilledEventHistory = () => {
           <HistoryDetails />
 
           <ButtonContainer>
-            <ButtonLink to="/createEvent/eventDetails">
+            <ButtonLink to="/event/event-history">
               <AbsolutePrimaryButton>Add Event History</AbsolutePrimaryButton>
             </ButtonLink>
           </ButtonContainer>
