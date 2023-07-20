@@ -9,7 +9,6 @@ export const createProposal = async (data, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // store.dispatch(addProposal(response.data));
     return response.data;
   } catch (error) {
     console.log(error);

@@ -57,9 +57,10 @@ const EventPlanning = () => {
             },
           }
         );
-        dispatch(setEventCreated(data));
-        setActive(data?.map((data) => ({ ...data, selected: false })));
-        setPopUpVisibility(data?.map(() => false));
+        const reversedData = data.reverse();
+        dispatch(setEventCreated(reversedData));
+        setActive(reversedData?.map((data) => ({ ...data, selected: false })));
+        setPopUpVisibility(reversedData?.map(() => false));
       } catch (error) {
         console.log(error);
         toast.error(error.message);
@@ -105,7 +106,6 @@ const EventPlanning = () => {
       value={{ active, selectedEvent, handleApiClick, shareDetails, loading }}
     >
       {modal && <PopUpOverlay onClick={handleOutsideClick} />}
-      {/* {active?.length > 0 ? ( */}
       <OverallContainer onClick={handleOutsideClick}>
         <NoEventContainer>
           <WelcomeHeader>

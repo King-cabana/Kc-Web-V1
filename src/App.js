@@ -30,8 +30,13 @@ import ProposalPreviewA from "./userFlows/createProposal/proposalPreview/Proposa
 import ProposalPreviewB from "./userFlows/createProposal/proposalPreview/ProposalPreviewB";
 import ProposalPreviewC from "./userFlows/createProposal/proposalPreview/ProposalPreviewC";
 import Budget from "./pages/Budget/Budget";
-import SingleEventHistory from "./userFlows/eventHistory/SingleEventHistory";
+import SingleEventHistory from "./userFlows/eventHistory/components/SingleEventHistory";
+import ViewHistoryEvent from "./userFlows/eventHistory/ViewHistoryEvent";
 import PreviousEvents from "./userFlows/eventOrganizerProfile/previousEvents/PreviousEvents";
+import ViewProposal from "./userFlows/createProposal/viewProposal/ViewProposal";
+import ShareViewProposal from "./userFlows/createProposal/viewProposal/ShareViewProposal";
+import ProposalGenerated from "./userFlows/generateProposalFlow/proposalGenerated/ProposalGenerated";
+import EventHistoryForm from "./userFlows/eventHistory/components/EventHistoryForm";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -160,11 +165,29 @@ function App() {
               </Sidebar>
             }
           />
-          <Route path="/profile" element={<OrganizerProfilePage />} />
-          <Route path="/profile/previous-event" element={<PreviousEvents />} />
           <Route
-            path="/event/history/eventId"
+            path="/organizer-profile/:id"
+            element={<OrganizerProfilePage />}
+          />
+          <Route
+            path="/event/proposal/view-proposal/proposalId"
+            element={<ViewProposal />}
+          />
+          <Route
+            path="/view-proposal/proposalId"
+            element={<ShareViewProposal />}
+          />
+          <Route
+            path="/profile/previous-event/:id"
+            element={<PreviousEvents />}
+          />
+          <Route
+            path="/event/history-component/view-event/eventId"
             element={<SingleEventHistory />}
+          />
+          <Route
+            path="/event/history/view-event/:id"
+            element={<ViewHistoryEvent />}
           />
           <Route path="/generateproposal/:id" element={<FlowBody />} />
           <Route path="/defineaudience" element={<DefineAudience />} />
@@ -215,7 +238,9 @@ function App() {
             }
           />
           <Route path="*" element={<NoPage />} />
-          <Route path="/budget" element={<Budget />} />
+          <Route path="/generated-proposal/:id" element={<ProposalGenerated />} />
+          <Route path="/event/event-history" element={<Sidebar><EventHistoryForm /></Sidebar>} />
+
         </Routes>
       </>
     </Suspense>

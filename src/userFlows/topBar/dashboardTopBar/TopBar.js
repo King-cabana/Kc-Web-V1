@@ -72,9 +72,9 @@ const TopBar = () => {
       if (auth2) {
         auth2.signOut().then(() => {
           const data = dispatch(clearUserDetails());
-          console.log(data);
-          const local = localStorage.clear();
-          console.log(local);
+          localStorage.clear();
+          sessionStorage.clear();
+          // console.log(localStorage.getItem("userDetails"))
           toast.success("Logout!");
         });
       }

@@ -8,7 +8,8 @@ export const OverallContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 2%;
+  padding: ${({padding})=>padding ? padding : "0 2%"} ;
+  margin-top: ${({margintop})=>margintop && margintop}
 `;
 
 export const PopUpOverlay = styled.div`
@@ -209,6 +210,8 @@ export const Location = styled(Text)`
   }
 `;
 export const Description = styled(Location)`
+  display: flex;
+align-items: center;
   margin-top: 0.5rem;
   font-size: 15px;
   font-style: normal;

@@ -28,6 +28,7 @@ export const WelcomeHeader = styled.section`
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+  margin-top: ${({ margintop }) => (margintop ? margintop : "0rem")};
   cursor: pointer;
 `;
 

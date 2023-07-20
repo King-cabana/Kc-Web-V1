@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router";
+import { useContext } from "react";
 import {
   EventPlanningTable,
   TdLarge,
@@ -11,12 +11,27 @@ import {
   HistoryTdLg,
 } from "../eventPlanning/EventPlanningStyled";
 import { SlOptionsVertical } from "react-icons/sl";
-// import { encryptId, formatDate, formatTime, getEventStatus } from "../../utils";
+import { encryptId, formatDate, formatTime, getEventStatus } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import { HistoryContext } from "./FilledEventHistory";
+import { IMG } from "./components/SingleEventHistoryStyled";
+import kcLogo from "../../assets/images/KCLogo.svg"
+import { Tooltip } from "react-tooltip";
 
 const HistoryDetails = () => {
+  const navigate = useNavigate();
+
+  const handleViewButtonClick = (e, data) => {
+    e.stopPropagation();
+    const encryptedId = encryptId(data?.id);
+    navigate(`/event/history/view-event/${encryptedId}`);
+  };
+
+  const {active, handleApiClick} = useContext(HistoryContext)
   return (
     <>
       <div id="event-details-container" style={{ overflowX: "auto" }}>
+        
         <EventPlanningTable style={{ marginBottom: "10rem" }}>
           <tbody>
             <TableHead>
@@ -27,20 +42,32 @@ const HistoryDetails = () => {
               <TdMedium style={{ border: "none" }}>{""}</TdMedium>
             </TableHead>
 
-            {/* {active?.map((data, index) => ( */}
+            {active?.map((data, index) => (
             <TableTr
-            //   key={index}
-            //   backgroundcolor={data.selected ? "#f9e6ea" : "white"}
-            //   onClick={() => handleApiClick(data, index)}
+              key={index}
+              backgroundcolor={data.selected ? "#f9e6ea" : "white"}
+              onClick={() => handleApiClick(data, index)}
             >
               <HistoryTdLg>
-                {/* {data.eventName} */}
-                Peter Enumah And Co
+                <span style={{marginRight: "0.8rem"}}>
+                  {data.eventHistoryType === "INTERNAL" && 
+                  <>
+                  <IMG data-tooltip-id="event-type" data-tooltip-content="Powered by KingCabana"src={kcLogo} alt="King Cabana Event"/>
+                  <Tooltip
+                  id="event-type"
+                  style={{zIndex: "999999"}}
+                 variant="info"
+                  />
+      </>
+                  }
+                </span>
+                {data.eventName}
+                {/* Peter Enumah And Co */}
               </HistoryTdLg>
               <HistoryTdMd>
-                {/* {formatDate(data?.eventStartDate)} at{" "}
-                      {formatTime(data?.eventStartTime)} */}
-                Tuesday, January 22, 2023 at 7:00 PM WAT
+                {formatDate(data?.eventDate)} at{" "}
+                      {formatTime(data?.eventTime)}
+                {/* Tuesday, January 22, 2023 at 7:00 PM WAT */}
               </HistoryTdMd>
               <TdSmall style={{ position: "relative" }}>
                 <div
@@ -52,7 +79,7 @@ const HistoryDetails = () => {
                   }}
                 >
                   <ViewButton
-                  // onClick={(event) => handleViewButtonClick(event, data)}
+                  onClick={(e) => handleViewButtonClick(e, data)}
                   >
                     View
                   </ViewButton>
@@ -60,10 +87,12 @@ const HistoryDetails = () => {
                 <SlOptionsVertical cursor="pointer" />
               </TdSmall>
             </TableTr>
-            {/* ))} */}
+            ))}
           </tbody>
         </EventPlanningTable>
       </div>
+
+      
     </>
   );
 };

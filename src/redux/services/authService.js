@@ -149,7 +149,7 @@ const googleSignIn = async (user) => {
       "http://localhost:8080/login/google",
       payload
     );
-    // console.log('Response:', response.data);
+    console.log('Response:', response.data);
     return response;
   } catch (error) {
     console.error("Request error:", error);

@@ -68,8 +68,9 @@ const ProposalDetails = () => {
           }
         );
         // console.log(data);
-        setActive(data);
-        dispatch(setEventCreated(data));
+        const reversedData = data.reverse();
+        setActive(reversedData);
+        dispatch(setEventCreated(reversedData));
       } catch (error) {
         console.log(error);
         toast.error(error.message);
@@ -93,6 +94,8 @@ const ProposalDetails = () => {
     } catch (error) {
       console.log("Failed to delete proposal:", error);
       toast.error(error.message);
+    } finally {
+      setModal(false);
     }
   };
 
@@ -154,7 +157,7 @@ const ProposalDetails = () => {
                         <ViewButton
                           onClick={() =>
                             navigate(
-                              `/event/proposal/proposal-buildup/proposal-preview/${sponsorKey}`
+                              `/generated-proposal/${encryptId(sponsorKey)}`
                             )
                           }
                         >

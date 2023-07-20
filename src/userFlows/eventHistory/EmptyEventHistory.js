@@ -9,7 +9,6 @@ import {
   OverallContainer,
   ButtonLink,
   LottieWrapper,
-  PrimaryButton,
   HistoryPrimaryButton,
 } from "../emptyEvent/EmptyEventStyled";
 import { BsChevronRight } from "react-icons/bs";
@@ -42,7 +41,7 @@ const EmptyEventHistory = () => {
               potential sponsors
             </NoContentText>
           </NoEventCenter>
-          <ButtonLink to="/createEvent/eventdetails">
+          <ButtonLink to="/event/event-history">
             <HistoryPrimaryButton>Add Event History</HistoryPrimaryButton>
           </ButtonLink>
         </NoEventContainer>

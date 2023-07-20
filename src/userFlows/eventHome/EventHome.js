@@ -53,7 +53,8 @@ const EventHome = () => {
   const navigate = useNavigate();
   const userEmail = user.details.email;
 
-  // console.log(user);
+  console.log(state)
+  console.log(user);
   // console.log(user.details.email);
 
   useEffect(() => {
@@ -70,6 +71,18 @@ const EventHome = () => {
             }
           );
           data = response.data;
+          dispatch(setEventOrganizerProfile(data));
+        }else if (user?.details?.id) {
+          const response = await axios.get(
+            API_URL_2 + `profiles/${user?.details?.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user?.token}`,
+              },
+            }
+          );
+          data = response.data;
+          dispatch(setEventOrganizerProfile(data));
         } else {
           const response = await axios.get(
             API_URL_2 + `profiles/email?email=${userEmail}`,
@@ -80,10 +93,10 @@ const EventHome = () => {
             }
           );
           data = response.data;
+          dispatch(setEventOrganizerProfile(data));
         }
         // console.log(data);
         // console.log(user);
-        dispatch(setEventOrganizerProfile(data));
         // console.log(state);
         localStorage.setItem("profileEmail", state?.profileEmail);
         // console.log(state?.profileEmail);

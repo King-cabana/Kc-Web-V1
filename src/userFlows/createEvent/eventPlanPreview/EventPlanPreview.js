@@ -39,6 +39,8 @@ const EventPlanPreview = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.createEvent);
   const user = useSelector((state) => state.userDetails);
+  console.log(state)
+  console.log(user)
 
   const handleChangeIndex = (newIndex) => {
     setIndex(newIndex);

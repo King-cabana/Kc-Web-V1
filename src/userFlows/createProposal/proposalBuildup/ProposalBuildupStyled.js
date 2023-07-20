@@ -103,6 +103,5 @@ export const ProposalTagsWrapper = styled.section`
 
 export const InputSeg = styled.section`
   width: 100%;
-  /* height: 100%; */
   margin-bottom: 2rem;
 `;
