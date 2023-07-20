@@ -6,6 +6,7 @@ const initialState = {
   imageUrls : [],
 };
 
+
 const clearObject = (obj) => {
   const newObj = {};
   for (const key in obj) {
