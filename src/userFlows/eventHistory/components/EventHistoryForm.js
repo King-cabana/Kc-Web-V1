@@ -38,15 +38,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFileUpload } from "../../../components/FileUpload";
 import { addEventHistoryFields, addImageUrl, addSponsors, removeSponsors, addSponsorsBenefits, removeSponsorsBenefits, clearEventHistory } from "../../../redux/slices/createEventHistorySlice";
 import { AiOutlineClose } from "react-icons/ai";
-import { ButtonContainer } from "../../createProposal/budgetInventory/BudgetStyled";
+import { BudgetInventorySubtitle, ButtonContainer} from "../../createProposal/budgetInventory/BudgetStyled";
 import { AbsolutePrimaryButton} from "../../../components/buttons/Buttons";
 import createEventHistory from "../../../redux/services/createEventHistory";
 import {useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { PrimaryButton3 } from "../../../components/buttons/button";
 
 const EventHistoryForm = () => {
+  const [file, setFile] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [bannerLoading, setBannerLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sponsorList, setSponsorList] = useState("");
   const [benefitList, setBenefitList] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
   const state = useSelector((state) => state.createEventHistory);
   const user = useSelector((state) => state.userDetails);
   const keyContact = useSelector((state) => state.eventOrganizerProfile)
@@ -57,6 +66,56 @@ const EventHistoryForm = () => {
   const otherFields = (e) => {
     dispatch(addEventHistoryFields({ name: e.target.name, value: e.target.value }));
   };
+
+  const handleFileChange = async (e) => {
+    const MAX_FILE_SIZE = 1024; // 1MB
+    const file = e.target.files[0];
+    const fileSizeKiloBytes = file?.size / 1024;
+
+    if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+      setErrorMsg("*File size is greater than 1mb*");
+      setIsSuccess(false);
+      return;
+    } else {
+      const data = new FormData();
+      data.append("file", e.target.files[0]);
+      data.append("upload_preset", "kingCabana");
+      setBannerLoading(true);
+      setIsSuccess(false);
+      setSelectedFile(null);
+      try {
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dcanx4ftd/image/upload",
+          data
+        );
+        const uploadedBanner = response.data;
+        // console.log(uploadedBanner.secure_url);
+        if (uploadedBanner.secure_url) {
+          setFile(uploadedBanner.secure_url);
+          setBannerLoading(false);
+          dispatch(
+            addEventHistoryFields({
+              name: e.target.name,
+              value: uploadedBanner.secure_url,
+            })
+          );
+        }
+      } catch (error) {
+        setBannerLoading(false);
+        setErrorMsg("**ERROR UPLOADING FILE!**");
+        console.log(error);
+      }
+    }
+    setSelectedFile(e.target.files[0]);
+    localStorage.setItem("banner", e.target.files[0].name);
+  };
+  useEffect(() => {
+    const bannerData = localStorage.getItem("banner");
+    if (bannerData) {
+      setSelectedFile({ name: bannerData });
+    }
+  }, []);
+  
 
   const {
     handleFileChange: handleFileChange1,
@@ -190,16 +249,31 @@ const EventHistoryForm = () => {
   const handleEventHistory = async (event) => {
     event.preventDefault();
     try {
+      setIsDisabled(true);
       const updatedState = {...state, keyContactEmail: keyContact?.profileEmail }
       await createEventHistory(updatedState, user.token)
       dispatch(clearEventHistory())
+      localStorage.removeItem("banner");
       navigate("/event/history")
+      toast.success("Event added successfully to History")
      
     } catch (error) {
       console.log(error);
+      toast.error("Error adding event to History");
+      setIsDisabled(false);
     }
   };
   
+  useEffect(() => {
+    if (state?.eventName && state?.eventDescription &&
+      state?.eventTime && state?.eventDate &&
+      state?.eventAddress) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [state?.eventName, state?.eventDescription,
+    state?.eventTime, state?.eventDate, state?.eventAddress]);
 
   return (
     <>
@@ -210,10 +284,14 @@ const EventHistoryForm = () => {
         <OverallContainer>
           <ProposalContainer style={{padding:"1rem 2rem" }}>
             <WelcomeHeader>
-              <Txt>Event</Txt>
+              <Txt onClick={()=>navigate("/event/history")}>Event</Txt>
+              <BsChevronRight style={{ marginRight: "0.5rem" }} />
+              <Txt fontWeight="400" onClick={()=>navigate("/event/history")}>
+                History
+              </Txt>
               <BsChevronRight style={{ marginRight: "0.5rem" }} />
               <Txt fontWeight="400" color="#FF2957">
-                History
+                Add event 
               </Txt>
             </WelcomeHeader>
           </ProposalContainer>
@@ -252,6 +330,70 @@ const EventHistoryForm = () => {
                 onChange={otherFields}
                 defaultValue={state?.eventDescription}
               />
+            </HistorySection>
+
+            <HistorySection style={{ marginTop: "2%" }}>
+              <Txt>Event Banner</Txt>
+              <p style={{ marginBottom: "1%" }}>
+                Upload a catchy banner that reflected the essence of the event.
+              </p>
+              <FormContainer style={{padding: "0.5rem", marginTop: "1rem", display: "flex"}}>
+              <FileWrapper style={{marginBottom: "1rem", width: "80px", height: "70px"}}>
+                <CustomWrapper>
+                  <input
+                    type="file"
+                    style={{ cursor: "pointer" }}
+                    onChange={handleFileChange}
+                    name="bannerUrl"
+                    defaultValue={file}
+                    accept="image/png, image/jpeg, image/jpg"
+                    // defaultValue={state?.eventBannerUrl}
+                  />
+                </CustomWrapper>
+                <PrimaryButton3>Upload</PrimaryButton3>
+              </FileWrapper>
+              {isSuccess ? null : (
+                <>
+                  <Supported>
+                    Support files; JPG, PNG, JPEG, *IMG files
+                  </Supported>
+                  <Supported
+                    style={{
+                      color: "#ff2957",
+                    }}
+                  >
+                    Not more than 1mb
+                  </Supported>
+                </>
+              )}
+              <BudgetInventorySubtitle>
+                {selectedFile && `${selectedFile.name}`}
+              </BudgetInventorySubtitle>
+              {isSuccess ? (
+                <div
+                  style={{
+                    padding: "1rem",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}
+                >
+                  <BudgetInventorySubtitle
+                    style={{ color: "green", marginRight: "1rem" }}
+                  >
+                    File uploaded successfully
+                  </BudgetInventorySubtitle>
+                </div>
+              ) : null}
+              {bannerLoading ? (
+                <h4 style={{ display: "flex", justifyContent: "flex-end" }}>
+                  Loading...
+                </h4>
+              ) : null}
+              <p style={{ color: "#ff2957", fontSize: "16px" }}>
+                {!file && errorMsg}
+              </p>
+            </FormContainer>
             </HistorySection>
 
             <HistoryTimeAndDateHolder>
@@ -515,7 +657,7 @@ const EventHistoryForm = () => {
               </HistoryTimeAndDateHolder>
             </HistorySection>
             <ButtonContainer style={{ margin: "0rem" }}>
-              <AbsolutePrimaryButton type="submit">
+              <AbsolutePrimaryButton type="submit" disabled={isDisabled}>
                 Save
               </AbsolutePrimaryButton>
             </ButtonContainer>
