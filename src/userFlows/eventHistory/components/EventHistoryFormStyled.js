@@ -30,9 +30,47 @@ export const Description = styled.textarea`
 `
 
 export const HistoryTimeAndDateHolder =  styled.div`
-    width : 100%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 25px;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 0px;
+    }
+`
+
+export const MultipleImagesHolder = styled(HistoryTimeAndDateHolder)`
+    padding: 1%;
+    gap: 15px;
+
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+        padding: 1rem 7rem;
+    }
+    @media screen and (max-width: 560px) {
+        padding: 1rem 4rem;
+    }
+    @media screen and (max-width: 480px) {
+        padding: 1rem 2rem;
+    }
+    @media screen and (max-width: 360px) {
+        padding: 2%;
+    }
+`;
+
+export const Wrap1 = styled.label`
+  position: absolute;
+  top: 170px;
+  left: 82px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  cursor: pointer;
 `

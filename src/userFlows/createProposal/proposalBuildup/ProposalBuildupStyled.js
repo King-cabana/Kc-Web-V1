@@ -6,7 +6,7 @@ export const OverallContainer = styled.section`
   // height: 100%;
 
   @media screen and (max-width: 480px) {
-    margin-top: 20%;
+    margin-top: 10%;
   }
 `;
 
@@ -104,4 +104,11 @@ export const ProposalTagsWrapper = styled.section`
 export const InputSeg = styled.section`
   width: 100%;
   margin-bottom: 2rem;
+`;
+
+export const InputSegHidden = styled(InputSeg)`
+  visibility: hidden;
+  @media screen and (max-width: 768px) {
+  display: none;
+  }
 `;

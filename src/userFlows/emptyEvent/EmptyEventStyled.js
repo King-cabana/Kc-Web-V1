@@ -12,6 +12,16 @@ export const OverallContainer = styled.section`
     padding: 0rem;
   }
 `;
+export const OverallContainer1 = styled.section`
+  width: 100%;
+  min-height: 100%;
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+
+  @media screen and (max-width: 960px) {
+    padding: 0rem;
+  }
+`;
 
 export const NoEventContainer = styled.div`
   /* padding: 2rem; */
@@ -27,7 +37,7 @@ export const NoEventContainer = styled.div`
 export const WelcomeHeader = styled.section`
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   margin-top: ${({ margintop }) => (margintop ? margintop : "0rem")};
   cursor: pointer;
 `;

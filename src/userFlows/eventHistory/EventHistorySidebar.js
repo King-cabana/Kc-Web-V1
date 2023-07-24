@@ -34,12 +34,15 @@ const EventHistorySidebar = () => {
   }
   const showModal = !modal && "notShown";
 
-
-
   const handleViewButtonClick = (e, selectedEvent) => {
     e.stopPropagation();
     const encryptedId = encryptId(selectedEvent?.id);
     navigate(`/event/history/view-event/${encryptedId}`);
+  };
+  const handleEditButtonClick = (e, selectedEvent) => {
+    e.stopPropagation();
+    const encryptedId = encryptId(selectedEvent?.id);
+    navigate(`/event/history/edit-event-history/${encryptedId}`);
   };
 
   const deleteHistory = async (selectedEvent) => {
@@ -90,7 +93,7 @@ const EventHistorySidebar = () => {
           Share Event Link
         </AlternativeButton2>
 
-        <AlternativeButton2 style={{ marginTop: "1rem", width: "150px" }}>
+        <AlternativeButton2 style={{ marginTop: "1rem", width: "150px" }} onClick={(e) => handleEditButtonClick(e, selectedEvent)}>
           Edit Event
         </AlternativeButton2>
 

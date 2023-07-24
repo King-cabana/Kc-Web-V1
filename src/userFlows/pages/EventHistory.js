@@ -14,7 +14,7 @@ const EventHistory = () => {
   const profile = useSelector((state)=>state?.eventOrganizerProfile);
   const eventsHistory = useSelector((state)=>state?.eventsHistory);
   const [loading, setLoading] = useState(true);
-  console.log(profile?.profileEmail)
+  // console.log(profile?.profileEmail)
   // console.log(eventsHistory)
   // console.log(eventsHistory?.length)
   useEffect(()=>{

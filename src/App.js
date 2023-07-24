@@ -37,6 +37,7 @@ import ViewProposal from "./userFlows/createProposal/viewProposal/ViewProposal";
 import ShareViewProposal from "./userFlows/createProposal/viewProposal/ShareViewProposal";
 import ProposalGenerated from "./userFlows/generateProposalFlow/proposalGenerated/ProposalGenerated";
 import EventHistoryForm from "./userFlows/eventHistory/components/EventHistoryForm";
+import EditEventHistory from "./userFlows/eventHistory/EditEventHistory";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -240,6 +241,7 @@ function App() {
           <Route path="*" element={<NoPage />} />
           <Route path="/generated-proposal/:id" element={<ProposalGenerated />} />
           <Route path="/event/event-history" element={<Sidebar><EventHistoryForm /></Sidebar>} />
+          <Route path ="/event/history/edit-event-history/:id" element={<Sidebar><EditEventHistory /></Sidebar>} />
 
         </Routes>
       </>
