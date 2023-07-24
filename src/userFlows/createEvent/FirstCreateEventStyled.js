@@ -38,6 +38,7 @@ export const Input = styled.input`
   border: 1px solid rgba(0, 104, 255, 0.1);
   outline: none;
   -moz-appearance: textfield;
+  appearance: textfield;
 
   @media screen and (max-width: 960px) {
     height: 40px;

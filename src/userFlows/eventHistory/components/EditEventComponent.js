@@ -1,72 +1,51 @@
-import React, { useEffect } from "react";
-import TopBar from "../../topBar/dashboardTopBar/TopBar";
-import LoadingScreen from "../../../LoadingScreen";
-import {
-  BenefitsTag,
-  InputSeg,
-  OverallContainer,
-  ProposalContainer,
-  ProposalTagsWrapper,
-  Txt,
-  WelcomeHeader,
-} from "../../createProposal/proposalBuildup/ProposalBuildupStyled";
-import { BsChevronRight } from "react-icons/bs";
-import { useState } from "react";
-import {
-  Description,
-  HeaderDiv,
-  HistoryInner,
-  HistorySection,
-  HistoryTimeAndDateHolder,
-  MultipleImagesHolder,
-} from "./EventHistoryFormStyled";
-import {
-  CustomWrapper,
-  FileWrapper,
-  FormContainer,
-  Input,
-  Supported,
-  UploadBtn,
-} from "../../createEvent/FirstCreateEventStyled";
-import {
-  AddButton,
-  Delete,
-  EventSubSection,
-  InputTagBox,
-} from "../../createEvent/TimeLineEventsStyled";
-// import { addFields } from "../../../redux/slices/proposalSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useFileUpload } from "../../../components/FileUpload";
-import { addEventHistoryFields, addImageUrl, addSponsors, removeSponsors, addSponsorsBenefits, removeSponsorsBenefits, clearEventHistory } from "../../../redux/slices/createEventHistorySlice";
-import { AiOutlineClose } from "react-icons/ai";
-import { BudgetInventorySubtitle, ButtonContainer} from "../../createProposal/budgetInventory/BudgetStyled";
-import { AbsolutePrimaryButton} from "../../../components/buttons/Buttons";
-import createEventHistory from "../../../redux/services/createEventHistory";
-import {useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import {toast} from "react-toastify";
+import { CustomWrapper, FileWrapper, FormContainer, Input, InputText, Supported, UploadBtn } from "../../createEvent/FirstCreateEventStyled";
+import { AddButton, Delete, EventSubSection, InputTagBox } from "../../createEvent/TimeLineEventsStyled";
+import { BudgetInventorySubtitle,} from "../../createProposal/budgetInventory/BudgetStyled";
+import { BenefitsTag, InputSeg, InputSegHidden, ProposalTagsWrapper, Txt } from "../../createProposal/proposalBuildup/ProposalBuildupStyled";
+import { Description, HistorySection, HistoryTimeAndDateHolder, MultipleImagesHolder } from "./EventHistoryFormStyled";
+import { EditEventHistoryContext } from "../EditEventHistory";
+import FooterButtonComponent from "../../../components/FooterButtonComponent"
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addEventHistoryFields, addImageUrl, addSponsors, addSponsorsBenefits, clearEventHistory, removeSponsors, removeSponsorsBenefits } from "../../../redux/slices/createEventHistorySlice";
+import { useFileUpload } from "../../../components/FileUpload";
+import { AiOutlineClose } from "react-icons/ai";
+import { Asterix, Wrapper } from "../../../pages/profile/organiserProfile/OrganiserProfileStyled";
+import { BackgroundPicture, ImagesContainer } from "../../eventHome/EventHomeStyled";
+import banner from "../../../assets/images/bgBanner.jpg";
 import { PrimaryButton3 } from "../../../components/buttons/button";
-import { Asterix } from "../../../pages/profile/organiserProfile/OrganiserProfileStyled";
+import { HistoryImage, HistoryImageEdit } from "./SingleEventHistoryStyled";
+import { HiOutlineTrash } from "react-icons/hi";
+import { TbEdit } from "react-icons/tb";
+import { API_URL_2 } from "../../../redux/services/authService";
 
-const EventHistoryForm = () => {
+const EditEventComponent = () => {
+  const {toggleModal, originalData, state, setState} = useContext(EditEventHistoryContext);
   const [file, setFile] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [bannerLoading, setBannerLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [sponsorList, setSponsorList] = useState("");
   const [benefitList, setBenefitList] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-  const state = useSelector((state) => state.createEventHistory);
-  const user = useSelector((state) => state.userDetails);
-  const keyContact = useSelector((state) => state.eventOrganizerProfile)
-  const dispatch = useDispatch()
-
-  const navigate = useNavigate()
+  const user = useSelector((state) => state?.userDetails);
+  const keyContact = useSelector((state) => state?.eventOrganizerProfile);
+  const navigate = useNavigate();
 
   const otherFields = (e) => {
-    dispatch(addEventHistoryFields({ name: e.target.name, value: e.target.value }));
+    setState((prevState)=>({...prevState, [e.target.name]: e.target.value }));
+    console.log(state);
+  };
+  const addressChange = (e) => {
+    setState((prevState)=>({
+      ...prevState,
+      eventAddress: { ...prevState?.eventAddress, [e.target.name]: e.target.value },
+    }));
+    console.log(state);
   };
 
   const handleFileChange = async (e) => {
@@ -95,12 +74,11 @@ const EventHistoryForm = () => {
         if (uploadedBanner.secure_url) {
           setFile(uploadedBanner.secure_url);
           setBannerLoading(false);
-          dispatch(
-            addEventHistoryFields({
-              name: e.target.name,
-              value: uploadedBanner.secure_url,
-            })
-          );
+          setState((prevState)=>({
+              ...prevState,
+              bannerUrl: uploadedBanner.secure_url,
+            }));
+          console.log(state);
         }
       } catch (error) {
         setBannerLoading(false);
@@ -143,39 +121,77 @@ const EventHistoryForm = () => {
     file: file3
   } = useFileUpload();
 
+  const addImageUrl = (file) => {
+    const existingIndex = state?.imageUrls?.findIndex((url) => url === file);
+    if (existingIndex !== -1) {
+      // URL already exists, update it
+      const updatedUrls = [...state.imageUrls];
+      updatedUrls[existingIndex] = file;
+      setState((prevState) => ({
+        ...prevState,
+        imageUrls: updatedUrls,
+      }));
+    } else if (state?.imageUrls?.length < 3) {
+      // URL doesn't exist and array size is less than 3, add the URL
+      setState((prevState) => ({
+        ...prevState,
+        imageUrls: [...prevState.imageUrls, file],
+      }));
+    }
+  };
 
   useEffect(() => {
     if (isSuccess1) {
-      dispatch(addImageUrl(file1));
+      addImageUrl(file1);
     }
+    console.log(state)
   }, [isSuccess1, file1]);
   
   useEffect(() => {
     if (isSuccess2) {
-      dispatch(addImageUrl(file2));
+      addImageUrl(file2);
     }
   }, [isSuccess2, file2]);
   
   useEffect(() => {
     if (isSuccess3) {
-      dispatch(addImageUrl(file3));
+      addImageUrl(file3);
     }
   }, [isSuccess3, file3]);
-  
 
+  const handleImageRemoval = (index) => {
+    if (index >= 0 && index < state?.imageUrls?.length) {
+      const updatedUrls = [...state.imageUrls];
+      updatedUrls.splice(index, 1);
+      setState((prevState) => ({
+        ...prevState,
+        imageUrls: updatedUrls,
+      }));
+    }
+  };
+  
   const handleSponsorsTag = () => {
     if (sponsorList !== "") {
       const alreadyExists = state?.sponsorList?.some(
         (tag) => tag === sponsorList
       );
       if (!alreadyExists && state?.sponsorList?.length < 5) {
-        dispatch(addSponsors(sponsorList));
+        setState((prevState)=>({
+          ...prevState,
+          sponsorList: [...prevState?.sponsorList, sponsorList]
+        }));
       }
       setSponsorList("");
     }
+    console.log(state);
   };
   const handleRemoveSponsors = (tag) => {
-    dispatch(removeSponsors(tag));
+    setState((prevState)=>({
+      ...prevState,
+      sponsorList: prevState?.sponsorList?.filter(
+      (sponsor) => sponsor !== tag
+      )}));
+      console.log(state);
   };
   
 
@@ -183,7 +199,7 @@ const EventHistoryForm = () => {
     <div key={index}>
       <BenefitsTag
         style={{
-          marginTop: "2%",
+          marginTop: "1%",
           width: "max-content",
           border: "1px solid black",
           color: "black",
@@ -212,13 +228,21 @@ const EventHistoryForm = () => {
         (tag) => tag === benefitList
       );
       if (!alreadyExists && state?.sponsorsBenefits?.length < 5) {
-        dispatch(addSponsorsBenefits(benefitList));
+        setState((prevState)=>({
+          ...prevState,
+          sponsorsBenefits: [...prevState?.sponsorsBenefits, benefitList]}));
       }
       setBenefitList("");
     }
+    console.log(state);
   };
   const handleRemoveBenefits = (tag) => {
-    dispatch(removeSponsorsBenefits(tag));
+    setState((prevState)=>({
+      ...prevState,
+      sponsorsBenefits: prevState?.sponsorsBenefits?.filter(
+      (sponsor) => sponsor !== tag
+      )}));
+    console.log(state);
   };
   
 
@@ -226,7 +250,7 @@ const EventHistoryForm = () => {
     <div key={index}>
       <BenefitsTag
         style={{
-          marginTop: "2%",
+          marginTop: "1%",
           width: "max-content",
           border: "1px solid black",
           color: "black",
@@ -250,66 +274,54 @@ const EventHistoryForm = () => {
 
   const handleEventHistory = async (event) => {
     event.preventDefault();
+    if (Object.keys(originalData).length > 0 && Object.keys(state).length > 0) {
+      let patchData = [];
+
+      // Compare originalData with state to generate patch updates
+      for (const key in state) {
+        if (Object.hasOwnProperty.call(state, key)) {
+          if (originalData[key] !== state[key]) {
+            patchData = [...patchData, { op: "replace", path: `/${key}`, value: state[key] }];
+          }
+        }
+      }
+    
     try {
       setIsDisabled(true);
-      const updatedState = {...state, keyContactEmail: keyContact?.profileEmail }
-      await createEventHistory(updatedState, user.token)
-      dispatch(clearEventHistory())
-      localStorage.removeItem("banner");
-      navigate("/event/history")
-      toast.success("Event added successfully to History")
-     
+      const {data} = await axios.patch(
+        API_URL_2 + `histories/${state?.id}`, patchData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.token}`
+          },
+        },
+      );
+        console.log(data);
+        toast.success("Event updated successfully")
+        navigate("/event/history")
     } catch (error) {
       console.log(error);
-      toast.error("Error adding event to History");
+      toast.error("Error updating event");
       setIsDisabled(false);
     }
-  };
+  }
+};
   
   useEffect(() => {
     if (state?.eventName && state?.eventDescription &&
       state?.eventTime && state?.eventDate &&
-      state?.eventAddress) {
+      state?.eventAddress?.state && state?.eventAddress?.country) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   }, [state?.eventName, state?.eventDescription,
-    state?.eventTime, state?.eventDate, state?.eventAddress]);
-
-  return (
-    <>
-      <TopBar marginBottom="1rem" />
-      {loading ? (
-        <LoadingScreen />
-      ) : (
-        <OverallContainer>
-          <ProposalContainer style={{padding:"1rem 2rem" }}>
-            <WelcomeHeader style={{cursor: "pointer"}}>
-              <Txt onClick={()=>navigate("/event/history")}>Event</Txt>
-              <BsChevronRight style={{ marginRight: "0.5rem" }} />
-              <Txt fontWeight="400" onClick={()=>navigate("/event/history")}>
-                History
-              </Txt>
-              <BsChevronRight style={{ marginRight: "0.5rem" }} />
-              <Txt fontWeight="400" color="#FF2957">
-                Add event 
-              </Txt>
-            </WelcomeHeader>
-          </ProposalContainer>
-          <HistoryInner onSubmit={handleEventHistory}>
-            <HeaderDiv>
-              <p
-                style={{
-                  color: "#484848",
-                  fontSize: "20px",
-                  fontWeight: "500",
-                }}
-              >
-                Details of the event
-              </p>
-            </HeaderDiv>
-            <InputSeg style={{ marginTop: "2%" }}>
+    state?.eventTime, state?.eventDate,
+    state?.eventAddress?.state, state?.eventAddress?.country]);
+    return (
+        <>
+           <InputSeg style={{ marginTop: "1%" }}>
               <Txt>Event Name <Asterix>*</Asterix></Txt>
               <Input
                 type="text"
@@ -317,11 +329,11 @@ const EventHistoryForm = () => {
                 placeholder="Enter your event name"
                 onChange={otherFields}
                 defaultValue={state?.eventName}
-                required
+                
               />
             </InputSeg>
 
-            <HistorySection style={{ marginTop: "2%" }}>
+            <HistorySection style={{ marginTop: "1%" }}>
               <Txt>Event Description <Asterix>*</Asterix></Txt>
               <p style={{ marginBottom: "1%" }}>
                 What is the purpose of this event
@@ -332,15 +344,22 @@ const EventHistoryForm = () => {
                 placeholder="Be descriptive and concise"
                 onChange={otherFields}
                 defaultValue={state?.eventDescription}
-                required
+                
               />
             </HistorySection>
 
-            <HistorySection style={{ marginTop: "2%" }}>
+            <HistorySection style={{ marginTop: "1%" }}>
               <Txt>Event Banner</Txt>
               <p style={{ marginBottom: "1%" }}>
                 Upload a catchy banner that reflected the essence of the event.
               </p>
+             {state?.bannerUrl && 
+             <ImagesContainer>
+                <BackgroundPicture 
+                src={state?.bannerUrl ? state?.bannerUrl : banner}
+                alt="Background Picture"/>
+              </ImagesContainer> 
+              } 
               <FormContainer style={{padding: "0.5rem", marginTop: "1rem", display: "flex"}}>
               <FileWrapper style={{marginBottom: "1rem", width: "80px", height: "70px"}}>
                 <CustomWrapper>
@@ -370,9 +389,6 @@ const EventHistoryForm = () => {
                   </Supported>
                 </>
               )}
-              <BudgetInventorySubtitle>
-                {selectedFile && `${selectedFile.name}`}
-              </BudgetInventorySubtitle>
               {isSuccess ? (
                 <div
                   style={{
@@ -408,7 +424,7 @@ const EventHistoryForm = () => {
                   name="eventTime"
                   onChange={otherFields}
                   defaultValue={state?.eventTime}
-                  required
+                  
                 />
               </InputSeg>
 
@@ -419,21 +435,72 @@ const EventHistoryForm = () => {
                   name="eventDate"
                   onChange={otherFields}
                   defaultValue={state?.eventDate}
-                  required
+                  
                 />
               </InputSeg>
             </HistoryTimeAndDateHolder>
 
-            <InputSeg style={{ marginTop: "2%" }}>
+            <InputSeg style={{ marginTop: "1%" }}>
               <Txt>Event Location <Asterix>*</Asterix></Txt>
-              <Input
-                type="text"
-                name="eventAddress"
-                placeholder="Select Location"
-                onChange={otherFields}
-                defaultValue={state?.eventAddress}
-                required
-              />
+            <Wrapper>
+              <InputSeg>
+                <InputText fontSize="13px">Address Number</InputText>
+                <Input
+                  type="text"
+                  name="houseNo"
+                  onChange={addressChange}
+                  defaultValue={state?.eventAddress?.houseNo}
+                />
+              </InputSeg>
+
+              <InputSeg>
+                <InputText fontSize="13px">Location/Street-address</InputText>
+                <Input
+                  type="text"
+                  name="street"
+                  onChange={addressChange}
+                  defaultValue={state?.eventAddress?.street}
+                />
+              </InputSeg>
+            </Wrapper>
+
+            <Wrapper>
+              <InputSeg>
+                <InputText fontSize="13px">Town/City</InputText>
+                <Input
+                  type="text"
+                  name="city"
+                  onChange={addressChange}
+                  defaultValue={state?.eventAddress?.city}
+                />
+              </InputSeg>
+
+              <InputSeg>
+                <InputText fontSize="13px">
+                  State <Asterix>*</Asterix>
+                </InputText>
+                <Input
+                  type="text"
+                  name="state"
+                  onChange={addressChange}
+                  defaultValue={state?.eventAddress?.state}
+                  
+                />
+              </InputSeg>
+
+              <InputSeg>
+                <InputText fontSize="13px">
+                  Country <Asterix>*</Asterix>
+                </InputText>
+                <Input
+                  type="text"
+                  name="country"
+                  onChange={addressChange}
+                  defaultValue={state?.eventAddress?.country}
+                  
+                />
+              </InputSeg>
+            </Wrapper>
             </InputSeg>
 
             <EventSubSection style={{ padding: "0" }}>
@@ -453,7 +520,7 @@ const EventHistoryForm = () => {
               <ProposalTagsWrapper>{sponsorsTags}</ProposalTagsWrapper>
             </EventSubSection>
 
-            <EventSubSection style={{ padding: "0", marginTop: "2%" }}>
+            <EventSubSection style={{ padding: "0", marginTop: "1%" }}>
               <Txt>Benefits our sponsors received</Txt>
               <InputTagBox>
                 <Input
@@ -467,11 +534,26 @@ const EventHistoryForm = () => {
               <ProposalTagsWrapper>{benefitTags}</ProposalTagsWrapper>
             </EventSubSection>
 
-            <HistorySection style={{ marginTop: "2%", marginBottom: "3rem"}}>
+            <HistorySection style={{ marginTop: "1%", marginBottom: "3rem"}}>
               <Txt>Add pictures taken at the event</Txt>
               <p style={{ marginBottom: "1%" }}>
                 You can add maximum of three pictures
               </p>
+              <MultipleImagesHolder>
+                <div>
+                <AiOutlineClose color= "#ff2957" onClick={() => handleImageRemoval(0)} />
+                <HistoryImageEdit src={state?.imageUrls[0] ? state?.imageUrls[0] : banner} alt="img2"/>
+                </div>
+                <div>
+                <AiOutlineClose color= "#ff2957" onClick={() => handleImageRemoval(1)} />
+                <HistoryImageEdit src={state?.imageUrls[1] ? state?.imageUrls[1] : banner} alt="img2"/>
+                </div>
+                <div>
+                <AiOutlineClose color= "#ff2957" onClick={() => handleImageRemoval(2)} />
+                <HistoryImageEdit src={state?.imageUrls[2] ? state?.imageUrls[2] : banner} alt="img2"/>
+                </div>
+              </MultipleImagesHolder>
+              
               <MultipleImagesHolder>
                 <InputSeg style={{ background: "white" }}>
                   <FormContainer>
@@ -536,7 +618,7 @@ const EventHistoryForm = () => {
                   </FormContainer>
                 </InputSeg>
 
-                <InputSeg style={{ background: "white" }}>
+                <InputSegHidden>
                   <FormContainer>
                     <FileWrapper style={{ width: "100%" }}>
                       <CustomWrapper>
@@ -597,9 +679,9 @@ const EventHistoryForm = () => {
                       </h4>
                     ) : null}
                   </FormContainer>
-                </InputSeg>
+                </InputSegHidden>
 
-                <InputSeg style={{ background: "white" }}>
+                <InputSegHidden>
                   <FormContainer>
                     <FileWrapper style={{ width: "100%" }}>
                       <CustomWrapper>
@@ -660,19 +742,18 @@ const EventHistoryForm = () => {
                       </h4>
                     ) : null}
                   </FormContainer>
-                </InputSeg>
+                </InputSegHidden>
               </MultipleImagesHolder>
             </HistorySection>
-            <ButtonContainer style={{ margin: "0rem" }}>
-              <AbsolutePrimaryButton type="submit" disabled={isDisabled}>
-                Save
-              </AbsolutePrimaryButton>
-            </ButtonContainer>
-          </HistoryInner>
-        </OverallContainer>
-      )}
-    </>
-  );
-};
+            <FooterButtonComponent
+                whiteBtnText="Cancel"
+                onClickWhiteBtn={toggleModal}
+                redBtnText="Save"
+                onClickRedBtn={handleEventHistory}
+                disabledRedBtn={isDisabled}
+            />
+        </>
+    )   
+}
 
-export default EventHistoryForm;
+export default EditEventComponent;

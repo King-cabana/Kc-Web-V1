@@ -60,6 +60,12 @@ export const SidebarData = [
         path: "/event/history",
         icon: <BsIcons.BsDot />,
         cName: "sub-nav",
+        subNav: [
+          {
+            path: "/event/history/edit-event-history/:id",
+            cname: "sub-nav-child"
+          },
+        ],
       },
     ],
   },

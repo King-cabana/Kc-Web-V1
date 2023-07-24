@@ -12,8 +12,8 @@ export const useFileUpload = () => {
 
   const handleFileChange = async (e) => {
     const MAX_FILE_SIZE = 1024; // 1MB
-    const file = e.target.files[0];
-    const fileSizeKiloBytes = file.size / 1024;
+    const file = e?.target?.files[0];
+    const fileSizeKiloBytes = file?.size / 1024;
 
     if (fileSizeKiloBytes > MAX_FILE_SIZE) {
       setErrorMsg("*Image size is greater than 1mb*");
@@ -21,8 +21,8 @@ export const useFileUpload = () => {
       return;
     } else {
       const data = new FormData();
-      data.append("file", e.target.files[0]);
-      data.append("upload_preset", "kingCabana");
+      data?.append("file", e?.target?.files[0]);
+      data?.append("upload_preset", "kingCabana");
       setLoading(true);
       try {
         const response = await fetch(

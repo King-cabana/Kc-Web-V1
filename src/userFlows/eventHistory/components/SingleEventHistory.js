@@ -41,8 +41,8 @@ const ViewHistoryEvent = ({
 }) => {
   const { id } = useParams();
   const decryptedId = decryptId(id);
-  console.log(id);
-  console.log(decryptedId);
+  // console.log(id);
+  // console.log(decryptedId);
   const dispatch = useDispatch();
   // I first set loading to false because it will load till infinity until we get data integrated from backend
   const [loading, setLoading] = useState(true);
@@ -57,7 +57,7 @@ const ViewHistoryEvent = ({
     const fetchEvent = async () => {
       try {
         const { data } = await axios.get(API_URL_2 + `histories/${decryptedId}`);
-        console.log(data);
+        // console.log(data);
         dispatch(setPastEvent(data));
       } catch (error) {
         console.log(error);

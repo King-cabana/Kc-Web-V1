@@ -68,3 +68,28 @@ export const HistoryImage = styled.img`
     height: 270px;
   }
 `;
+
+export const HistoryImageEdit = styled.img`
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin: 0.2rem 0rem 0.2rem 0rem;
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    /* width: 77%; */
+    height: 320px;
+  }
+  @media screen and (max-width: 640px) {
+    /* width: 87%; */
+    height: 300px;
+  }
+  @media screen and (max-width: 425px) {
+    /* width: 100%; */
+    height: 270px;
+  }
+`;
+
