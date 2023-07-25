@@ -103,3 +103,15 @@ export const truncateText = (text, limit=20) => {
   }
   return text;
 };
+
+  // Convert the image to Base64 format
+export const convertImageToBase64 = async (imageUrl) => {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };

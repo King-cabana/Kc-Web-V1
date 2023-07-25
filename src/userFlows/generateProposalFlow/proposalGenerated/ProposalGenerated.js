@@ -3,7 +3,6 @@ import TopBar from "../../topBar/dashboardTopBar/TopBar";
 import LoadingScreen from "../../../LoadingScreen";
 import {
   OverallContainer,
-  ProposalContainer,
 } from "../../createProposal/proposalBuildup/ProposalBuildupStyled";
 import {
   Confidential,
@@ -32,8 +31,11 @@ import { API_URL_2 } from "../../../redux/services/authService";
 import axios from "axios";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { decryptId, encryptId } from "../../../utils";
+import { convertImageToBase64, decryptId } from "../../../utils";
 import { setProposalCreated } from "../../../redux/slices/proposalCreatedSlice";
+import { Container1 } from "../../guestRegistration/GuestRegistrationStyled";
+import { AlternativeButton2 } from "../../../components/buttons/button";
+import html2pdf from "html2pdf.js";
 
 const ProposalGenerated = () => {
   const [loading, setLoading] = useState(false);
@@ -51,8 +53,51 @@ const ProposalGenerated = () => {
   console.log(decryptedId);
   const currentYear = new Date().getFullYear();
 
-//   const { takeInventory } = proposal || {};
+  // Function to generate the PDF after the image is loaded and updated
+  const generatePDF = (imageData) => {
+    const rootElement = document.getElementById("pdf-content");
+    // Options for PDF conversion (you can customize as needed)
+    const options = {
+      margin: 10,
+      filename: `Proposal to ${proposal?.eventSponsor}`,
+      image: { type: "jpeg", quality: 0.98, include: true },
+      html2canvas: { scale: 2 },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
 
+    // Modify the image source to use Base64 data
+    const imageElement = document.querySelector(".cover-image-holder img");
+    imageElement.src = imageData;
+
+    // Start the PDF conversion after modifying the image source
+    html2pdf()
+      .from(rootElement)
+      .set(options)
+      .save()
+      .then(() => {
+        // Revert the image source back to the original
+        imageElement.src = proposal?.proposalBannerUrl || TestImage;
+      })
+      .catch((error) => {
+        console.error("Error generating PDF:", error);
+        // Revert the image source back to the original in case of an error
+        imageElement.src = proposal?.proposalBannerUrl || TestImage;
+      });
+  };
+
+  // Function to handle the PDF download
+  const handleDownloadPDF = () => {
+    // Start PDF conversion after converting the image to Base64
+    convertImageToBase64(proposal?.proposalBannerUrl || TestImage)
+      .then((imageData) => {
+        generatePDF(imageData);
+      })
+      .catch((error) => {
+        console.error("Error converting image to Base64:", error);
+      });
+  };
+  
   const formatHeader = (text) => {
     const words = text.match(/[A-Za-z][a-z]*/g);
     return words
@@ -88,9 +133,18 @@ const ProposalGenerated = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <OverallContainer>
-          <ProposalContainer style={{ marginTop: "5%" }} />
-          <CoverImageHolder>
+        <OverallContainer style={{marginTop: "4.5rem"}}>
+          <Container1
+            style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}
+          >
+            <AlternativeButton2
+              onClick={handleDownloadPDF}
+            >
+              Download Proposal
+            </AlternativeButton2>
+          </Container1>
+          <div id="pdf-content">
+          <CoverImageHolder className="cover-image-holder">
             <img
               src={
                 proposal?.proposalBannerUrl
@@ -382,6 +436,7 @@ const ProposalGenerated = () => {
               </TableAndContentContainer>
             </ProposalInner>
           </PreviewLogoBg>
+          </div>
         </OverallContainer>
       )}
     </>
