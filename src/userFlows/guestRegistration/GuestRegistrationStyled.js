@@ -134,6 +134,17 @@ export const Container = styled.section`
   }
 `;
 
+export const Container1 = styled.section`
+    display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  padding: 0rem 5rem;
+
+  @media screen and (max-width: 550px) {
+    padding: 0rem 1rem
+}
+`
+
 export const IconsContainer = styled.section`
   display: flex;
   justify-content: flex-end;
