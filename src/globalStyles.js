@@ -32,7 +32,7 @@ export const AuthBackground = styled.div`
   justify-content: center;
   display: flex;
   background: url(${background});
-  bacground-repeat : no-repeat;
+  background-repeat : no-repeat;
   background-position: right;
   background-size: cover;
 
@@ -55,6 +55,7 @@ export const LongButton = styled.button`
     color: rgba(255, 255, 255, 0.3);
     outline: none;
     border: none;
+    cursor: not-allowed;
   }
 
   @media screen and (orientation: landscape) and (max-width: 960px){

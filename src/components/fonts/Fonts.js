@@ -48,6 +48,11 @@ export const KBDisplayXs = styled.p`
   line-height: 32px;
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+    line-height: 26px;
+  }
 `;
 
 export const KBTextXl = styled.p`

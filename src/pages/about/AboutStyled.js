@@ -245,6 +245,43 @@ export const AllAboutInfo = styled.div`
   }
 `;
 
+export const SponsorInfo = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  margin-top: 2rem;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: start;
+    width: 60%;
+    min-height: 450px;
+  }
+  article {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+    padding: 0rem 1rem;
+    margin-top: 1rem;
+    section {
+      align-self: flex-start;
+      width: 100%;
+      min-height: 100%;
+    }
+  }
+  @media screen and (max-width: 630px) {
+    padding: 0.5rem;
+  }
+`;
+
 export const AllAboutSectionContent = styled.div`
   color: #484848;
   width: 100%;

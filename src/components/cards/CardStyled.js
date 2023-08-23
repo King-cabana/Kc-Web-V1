@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const CardBody= styled.div`
     border: 1px solid #D2CEDC;
     border-radius: 8px;
-    height: 400px;
+    height: ${(props) => (props.height ? props.height : "400px")};
     width: 100%;
 
     @media screen and (max-width: 768px){

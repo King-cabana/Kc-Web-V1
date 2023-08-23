@@ -17,7 +17,7 @@ import { NavGroup } from "./Navbar.styled";
 import { AltNavBtn, PryNavBtn } from "../buttons/Buttons";
 // import SignIn from '../../pages/authentication/signIn/SignIn';
 
-const Navbar = () => {
+const Navbar = ({pryBtnCTA = "Sign Up"}) => {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -72,7 +72,7 @@ const Navbar = () => {
                       <AltNavBtn fontWeight="500">Sign In</AltNavBtn>
                     </NavButtonLink>
                     <NavButtonLink to="/signup">
-                      <PryNavBtn fontWeight="500">Create Event</PryNavBtn>
+                      <PryNavBtn fontWeight="500">{pryBtnCTA}</PryNavBtn>
                     </NavButtonLink>
                   </>
                 ) : (
@@ -81,7 +81,7 @@ const Navbar = () => {
                       <AltNavBtn fontWeight="500">Sign In</AltNavBtn>
                     </NavButtonLink>
                     <NavButtonLink to="/signup">
-                      <PryNavBtn fontWeight="500">Create Event</PryNavBtn>
+                      <PryNavBtn fontWeight="500">{pryBtnCTA}</PryNavBtn>
                     </NavButtonLink>
                   </>
                 )}

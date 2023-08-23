@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import background from "../../assets/images/clay-banks-POzx_amnWJw-unsplash.jpg";
+import sponsorBackground from "../../assets/images/sponsorHero-min.jpeg";
+import padlock from "../../assets/images/padlock.png"
 
 export const HeroSection = styled.div`
   width: 100%;
@@ -20,6 +22,12 @@ export const HeroSection = styled.div`
   }
 `;
 
+export const SponsorHeroSection = styled(HeroSection)`
+  background: url(${sponsorBackground});
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
 export const BgOverlay = styled.div`
   height: 100vh;
   width: 100%;
@@ -29,6 +37,126 @@ export const BgOverlay = styled.div`
     width: 100%;
     height: 100vh;
   }
+`;
+
+export const HeroHolder = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #FFF;
+  width: 100%;
+  height: 100%;
+  gap: 2rem;
+  text-align: center;
+  padding: 0rem 3rem;
+
+  @media screen and (max-width: 790px) {
+    padding: 0rem;
+  }
+`;
+
+export const SecondSectionHolder = styled(HeroHolder)`
+  justify-content: flex-start;
+  color: #484848;
+  padding: 2rem;
+
+  @media screen and (max-width: 790px) {
+    padding: 0rem;
+    .second {
+      padding: 2rem 1rem;
+    }
+  }
+`;
+
+
+export const SubSection = styled.div`
+  background: #F6E9EC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 3rem 2rem;
+`;
+
+export const UnlockContainer = styled(SubSection)`
+  background: #FFF;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: start;
+
+  .padlock {
+    width: 300px;
+  }
+  .others {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    .others {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  }
+`;
+
+export const CardsSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+`;
+
+export const CardBorder = styled.section`
+  width: 25%;
+  height: 15rem;
+  display: flex;
+  padding: 30px 5px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 50px;
+  border-radius: 20px;
+  border: 1px solid var(--accent, #F6E9EC);
+  background:#FFF;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  font-weight: 500;
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #FFBC15;
+      color: #FFF;
+    }
+  
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+  }
+  
 `;
 
 export const ContentHolder = styled.div`
@@ -74,14 +202,21 @@ export const ContentHolder = styled.div`
 
   @media screen and (min-width: 481px) and (max-width: 960px) {
     text-align: center;
-    padding-top: 30%;
+    /* padding-top: 15%; */
     display: block;
     width: fit-content;
     text-align: center;
     line-height: 1.3;
+  }
 
-    h1 {
-      font-size: 58px;
+  @media screen and (max-width: 670px) {
+    .bottom {
+      margin-top: 8rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .bottom {
+      margin-top: 0rem;
     }
   }
 
@@ -588,3 +723,37 @@ export const TestButton = styled.button`
     color: white;
   }
 `;
+
+export const MetricsImagesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #C4C4C4;
+
+  @media screen and (max-width: 960px) {
+    padding: 1rem;
+  }
+
+  img {
+    display: none;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .showIcon {
+    color: #FF2957;
+    font-weight: 700;
+  }
+  .next {
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 90%;
+    height: 100%;
+    border-radius: 32px;
+  }
+`;
+
