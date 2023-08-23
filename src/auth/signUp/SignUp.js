@@ -156,6 +156,7 @@ const SignUp = () => {
     const errors = Validation(inputs);
     if (Object.keys(errors).length === 0) {
       setLoading(true);
+      setDisabledButton(true);
     } else {
       setFormErrors(errors);
     }
@@ -165,6 +166,7 @@ const SignUp = () => {
       navigate("/verifyemail");
     } catch (error) {
       setLoading(false);
+      setDisabledButton(false);
       error?.response
         ? toast.error(error?.response?.data?.message)
         : toast.error(error.message);
@@ -412,7 +414,7 @@ const SignUp = () => {
               style={{ marginTop: "3%", marginBottom: "1%" }}
               type="submit"
               disabled={disabledButton}
-              onClick={handleValidation}
+              // onClick={handleValidation}
             >
               {loading ? <ImSpinner6 size={"1.5rem"} /> : "Sign up"}
             </LongButton>

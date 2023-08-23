@@ -208,7 +208,6 @@ const ProposalBuildup = () => {
                       id="file"
                       accept="image/png, image/jpeg, image/jpg"
                       name="proposalBannerUrl"
-                      // defaultValue={file}
                     />
                   </CustomWrapper>
                   <UploadBtn htmlFor="file">Upload</UploadBtn>
@@ -265,16 +264,15 @@ const ProposalBuildup = () => {
               <Txt>Sponsorship Request</Txt>
             </div>
 
-            <InputSeg style={{ marginTop: "2%" }}>
+            {/* <InputSeg style={{ marginTop: "2%" }}>
               <Txt>Name of Sponsor’s Organization</Txt>
               <Input
                 type="text"
                 name="eventSponsor"
                 onChange={otherFields}
                 defaultValue={state?.eventSponsor}
-                // defaultValue={state.}
               />
-            </InputSeg>
+            </InputSeg> */}
 
             <EventSubSection style={{ padding: "0" }}>
               <Txt>Impact of the event on the community</Txt>
@@ -292,7 +290,7 @@ const ProposalBuildup = () => {
               <ProposalTagsWrapper>{impactTags}</ProposalTagsWrapper>
             </EventSubSection>
 
-            <InputSeg style={{ marginTop: "3%" }}>
+            {/* <InputSeg style={{ marginTop: "3%" }}>
               <Txt>Event Organizer's Ask</Txt>
               <p style={{ marginBottom: "1%", fontSize: "14px" }}>
                 Highlight the amount required from sponsor.
@@ -303,9 +301,8 @@ const ProposalBuildup = () => {
                 placeholder="Amount required."
                 onChange={otherFields}
                 defaultValue={state?.eventBudgetAddOn}
-                // defaultValue
               />
-            </InputSeg>
+            </InputSeg> */}
             <ButtonContainer style={{ margin: "0rem" }}>
               <AlternativeButton2
                 onClick={() =>

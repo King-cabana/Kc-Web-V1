@@ -174,14 +174,14 @@ const ProposalGenerated = () => {
               </p>
             </PreparedByDiv>
 
-            <PreparedForDiv>
+            {/* <PreparedForDiv>
               <h3 style={{ color: "#484848" }}>Prepared For</h3>
               <p>
                 {proposal?.eventSponsor
                   ? proposal?.eventSponsor
                   : "Event sponsor"}
               </p>
-            </PreparedForDiv>
+            </PreparedForDiv> */}
           </CoverDetailsHolder>
           <PreviewLogoBg style={{ height: "fit-content" }}>
             <ProposalInner>
@@ -395,7 +395,7 @@ const ProposalGenerated = () => {
                   )}
                 </TableContainer>
 
-                <OrganizerAsk>
+                {/* <OrganizerAsk>
                   <h4 style={{ color: "#484848" }}>Event Organizer’s Ask</h4>
                   <p>
                     We would require{" "}
@@ -404,7 +404,7 @@ const ProposalGenerated = () => {
                       : "Event organizer's Ask "}{" "}
                     worth of sponsorship from your organization
                   </p>
-                </OrganizerAsk>
+                </OrganizerAsk> */}
 
                 <Confidential>
                   <h4 style={{ color: "#484848" }}>Confidentiality</h4>

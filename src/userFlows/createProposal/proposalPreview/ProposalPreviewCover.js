@@ -149,14 +149,14 @@ const ProposalPreviewCover = () => {
               </p>
             </PreparedByDiv>
 
-            <PreparedForDiv>
+            {/* <PreparedForDiv>
               <h3>Prepared For</h3>
               <p>
                 {proposal?.eventSponsor
                   ? proposal?.eventSponsor
                   : "Event sponsor"}
               </p>
-            </PreparedForDiv>
+            </PreparedForDiv> */}
           </CoverDetailsHolder>
           <ProposalPagination
             totalPages={totalPages}

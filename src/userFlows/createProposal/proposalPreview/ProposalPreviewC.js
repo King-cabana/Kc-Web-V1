@@ -36,6 +36,7 @@ import { setProposalCreated } from "../../../redux/slices/proposalCreatedSlice";
 
 const ProposalPreviewC = () => {
   const [loading, setLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const totalPages = 5;
   const [currentPage, setCurrentPage] = useState(5);
   const { id } = useParams();
@@ -81,6 +82,7 @@ const ProposalPreviewC = () => {
 
   const handleProposalPreview = async (event) => {
     event.preventDefault();
+    setIsDisabled(true);
     try {
       if (!eventCreated.id) {
         throw new Error("ID is not defined");
@@ -95,6 +97,8 @@ const ProposalPreviewC = () => {
       navigate("/create-proposal/generated");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsDisabled(false);
     }
   };
 
@@ -233,7 +237,7 @@ const ProposalPreviewC = () => {
             >
               Back
             </AlternativeButton2>
-            <AbsolutePrimaryButton onClick={handleProposalPreview}>
+            <AbsolutePrimaryButton onClick={handleProposalPreview} disabled={isDisabled}>
               Proceed
             </AbsolutePrimaryButton>
           </ButtonContainer>

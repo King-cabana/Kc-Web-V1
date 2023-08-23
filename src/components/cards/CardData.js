@@ -14,6 +14,8 @@ const CardData = [
     eventTime: "11:30am-3:30pm",
     eventDate: "20th, April, 2023.",
     eventLocation: "Suite 13 Bola Ahmed Shopping Complex Oyetayo Street, Oshodi Isolo, Nigeria",
+    attendees: "500 attendees",
+    sponsors: "Nestle, Milo, Indomie"
   },
 
   {
@@ -24,6 +26,8 @@ const CardData = [
     eventTime: "11:30am-3:30pm",
     eventDate: "14th, July, 2023.",
     eventLocation: "Silverbird Galleria, Victoria Island, Lagos",
+    attendees: "1000 attendees",
+    sponsors: "Olympians Group"
   },
 
   { 
@@ -34,6 +38,8 @@ const CardData = [
     eventTime: "4:30pm-7:00pm",
     eventDate: "20th, June, 2023.",
     eventLocation: "Eko Hotel and Suites, Victoria Island, Lagos",
+    attendees: "250 attendees",
+    sponsors: "RBB, Onga"
 },
 
   {
@@ -44,6 +50,8 @@ const CardData = [
     eventTime: "10:00am-5:30pm",
     eventDate: "27th, August, 2023.",
     eventLocation: "Ozone Event Center, Sabo, Yaba",
+    attendees: "2000 attendees",
+    sponsors: "Tiger, Trophy, 33"
   },
 
   {
@@ -54,6 +62,9 @@ const CardData = [
     eventTime: "11:30am-3:30pm",
     eventDate: "1st, June, 2023.",
     eventLocation: "312, Semicolon Africa, Sabo, Yaba",
+    attendees: "5000 attendees",
+    sponsors: "Trivago, AXA"
+
   },
 
   {
@@ -64,6 +75,8 @@ const CardData = [
     eventTime: "11:30am-3:30pm",
     eventDate: "20th, April, 2023.",
     eventLocation: "Landmark Event Center, Lagos, Nigeria.",
+    attendees: "500 attendees",
+    sponsors: "KFC, Chicken Republic"
   },
 ];
 

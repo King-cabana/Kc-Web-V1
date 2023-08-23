@@ -62,7 +62,7 @@ import CardData from "../../components/cards/CardData";
 const Events = () => {
   return (
     <>
-      <Navbar />
+      <Navbar pryBtnCTA="Create Event"/>
       <HeroSection>
         <BgOverlay>
           <ContentHolder>

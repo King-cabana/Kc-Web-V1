@@ -67,9 +67,10 @@ const ProposalDetails = () => {
             },
           }
         );
-        // console.log(data);
+        console.log(data);
         const reversedData = data.reverse();
         setActive(reversedData);
+        console.log(active);
         dispatch(setEventCreated(reversedData));
       } catch (error) {
         console.log(error);
@@ -113,31 +114,33 @@ const ProposalDetails = () => {
               <tbody>
                 <TableHead>
                   <TdLarge style={{ fontWeight: "600", padding: "1rem" }}>
-                    Proposal for {data?.eventName} <br />
+                    {data?.eventName} <br />
                     <SM>
                       {formatDate(data?.eventStartDate)} at{" "}
                       {formatTime(data?.eventStartTime)}
                     </SM>
                   </TdLarge>
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
-                    <AbsolutePrimaryButton
+                    {Object.keys(data?.proposals).length === 0 && <AbsolutePrimaryButton
                       onClick={() =>
                         navigate(`/generateproposal/${encryptId(data?.id)}`)
                       }
                     >
                       Generate Proposal
-                    </AbsolutePrimaryButton>
+                    </AbsolutePrimaryButton>}
+                    
                   </TdMedium>
                 </TableHead>
                 {Object.keys(data?.proposals).map((sponsorKey) => (
                   <TableTr key={sponsorKey}>
-                    <TdLarge style={{ padding: "1rem 0.5rem" }}>
+                    <TdLarge style={{ padding: "0.5rem"}}>
                       <AlignCenter>
                         <HiOutlineDocumentText
                           style={{ marginRight: "0.5rem" }}
                           size="1.5rem"
                         />
-                        To {data?.proposals[sponsorKey]}
+                        Proposal for {data?.eventName}
+                        {console.log(sponsorKey)}
                       </AlignCenter>
                     </TdLarge>
 
