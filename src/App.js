@@ -38,6 +38,7 @@ import ShareViewProposal from "./userFlows/createProposal/viewProposal/ShareView
 import ProposalGenerated from "./userFlows/generateProposalFlow/proposalGenerated/ProposalGenerated";
 import EventHistoryForm from "./userFlows/eventHistory/components/EventHistoryForm";
 import EditEventHistory from "./userFlows/eventHistory/EditEventHistory";
+import SetupSponsorsProfile from "./userFlows/sponsorsFlow/setupSponsorsProfile/SetupSponsorProfile"
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -98,6 +99,7 @@ function App() {
           <Route path="/vendors" element={<Vendor />} />
           <Route path="/aboutUs" element={<About />} />
           <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/setup-sponsors-profile" element={<SetupSponsorsProfile />} />
           <Route path="/guestRegistration/:id" element={<GuestView />} />
           <Route
             path="/event/planning/view-completed-event/:id"

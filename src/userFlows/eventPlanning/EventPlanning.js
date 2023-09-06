@@ -58,6 +58,7 @@ const EventPlanning = () => {
           }
         );
         const reversedData = data.reverse();
+        console.log(data);
         dispatch(setEventCreated(reversedData));
         setActive(reversedData?.map((data) => ({ ...data, selected: false })));
         setPopUpVisibility(reversedData?.map(() => false));

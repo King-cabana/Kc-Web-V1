@@ -33,6 +33,7 @@ import { BsChevronRight } from "react-icons/bs";
 import { WelcomeHeader, Txt } from "../emptyEvent/EmptyEventStyled";
 import { Asterix } from "../../pages/profile/organiserProfile/OrganiserProfileStyled";
 import CreateEventTopBar from "../topBar/CreateEventTopBar/CreateEventTopBar";
+import { handlePaste, preventNegativeValues } from "../../utils";
 
 const FirstCreateEvent = ({ padding }) => {
   const [file, setFile] = useState("");
@@ -65,23 +66,6 @@ const FirstCreateEvent = ({ padding }) => {
 
   const change = (e) => {
     dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
-  };
-  const handlePaste = (e) => {
-    const clipboardData = e.clipboardData || window.clipboardData;
-    const pastedText = clipboardData.getData("text");
-    if (
-      pastedText.includes("-") ||
-      pastedText.includes("+") ||
-      pastedText.includes("e") ||
-      pastedText.includes(".")
-    ) {
-      e.preventDefault();
-    }
-  };
-  const preventNegativeValues = (e) => {
-    if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === ".") {
-      e.preventDefault();
-    }
   };
 
   const handleFileChange = async (e) => {

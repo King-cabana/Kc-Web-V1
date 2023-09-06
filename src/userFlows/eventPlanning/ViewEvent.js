@@ -39,14 +39,22 @@ import {
   Partition2,
   SECTION,
   Display,
+  SwitchView,
 } from "./EventPlanningStyled";
 import LoadingScreen from "../../LoadingScreen";
 import { encryptId, decryptId, formatDate, formatTime } from "../../utils";
+import SponsorshipDetails from "./SponsorshipDetails";
 
 const ViewEvent = () => {
   const [event, setEvent] = useState();
   const [loading, setLoading] = useState(true);
   const [attendees, setAttendees] = useState("");
+  const [switchView, setSwitchView] = useState(1);
+  const infoEvent = switchView === 1;
+  const infoSponsor = switchView === 2;
+  const handleEvent = () => setSwitchView(1);
+  const handleSponsor = () => setSwitchView(2);
+  console.log(switchView);
   const { id } = useParams();
   const navigate = useNavigate();
   const encryptedId = encryptId(event?.id);
@@ -67,12 +75,9 @@ const ViewEvent = () => {
       try {
         const { data } = await axios.get(API_URL_2 + `events/${decryptedId}`);
         setEvent(data);
-        // console.log(data);
+        console.log(data);
 
-        const response2 = await axios.get(
-          API_URL_2 + `attendee/event/size?id=${decryptedId}`
-        );
-        // console.log(response2.data);
+        const response2 = await axios.get(API_URL_2 + `attendee/event/size?id=${decryptedId}`);
         setAttendees(response2.data);
       } catch (error) {
         if (error?.response?.status === 400) {
@@ -86,7 +91,7 @@ const ViewEvent = () => {
       }
     };
     fetchEvent();
-  }, [decryptedId]);
+  }, [decryptedId, navigate]);
 
   return (
     <>
@@ -142,8 +147,22 @@ const ViewEvent = () => {
                 <RiDeleteBin5Line />
               </Like>
             </IconsContainer>
+            {event?.generalProposals && 
+            <SwitchView>
+              <article onClick={handleEvent} className={infoEvent ? "switch" : ""}>
+                <BudgetInventorySubtitle style={{fontWeight: "600"}}>
+                    Event Details
+                </BudgetInventorySubtitle>
+              </article>
+              <article onClick={handleSponsor} className={infoSponsor ? "switch" : ""}>
+                <BudgetInventorySubtitle style={{fontWeight: "600"}}>
+                    Sponsorship Details
+                </BudgetInventorySubtitle>
+              </article>
+            </SwitchView>
+            } 
 
-            <Partition>
+            <Partition display={infoEvent ? "flex" : "none"}>
               <Partition1>
                 <BudgetTitle1>Event Name</BudgetTitle1>
                 <BudgetInventorySubtitle style={{ marginBottom: "0.3rem" }}>
@@ -261,6 +280,10 @@ const ViewEvent = () => {
                   {event?.eventLink ? event.eventLink : "---"}
                 </BudgetInventorySubtitle>
               </Partition2>
+            </Partition>
+
+            <Partition display={infoSponsor ? "flex" : "none"}>
+              <SponsorshipDetails proposalId={event?.generalProposals}/>
             </Partition>
           </BudgetSection>
 

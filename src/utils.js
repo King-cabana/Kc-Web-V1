@@ -115,3 +115,31 @@ export const convertImageToBase64 = async (imageUrl) => {
       reader.readAsDataURL(blob);
     });
   };
+
+export const formatHeader = (text) => {
+    const words = text.match(/[A-Za-z][a-z]*/g);
+    return words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+  
+  // do not allow paste
+  export const handlePaste = (e) => {
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData("text");
+    if (
+      pastedText.includes("-") ||
+      pastedText.includes("+") ||
+      pastedText.includes("e") ||
+      pastedText.includes(".")
+    ) {
+      e.preventDefault();
+    }
+  };
+
+  // prevent negative values
+  export const preventNegativeValues = (e) => {
+    if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === ".") {
+      e.preventDefault();
+    }
+  };

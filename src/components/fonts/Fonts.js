@@ -78,6 +78,10 @@ export const KBTextM = styled.p`
   line-height: 24px;
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color};
+  @media screen and (max-width: 480px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
 `;
 
 export const KBTextS = styled.p`
@@ -95,6 +99,10 @@ export const KBTextXs = styled.p`
 
   && span{
     color: #ff2957;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 9px;
+    line-height: 12px;
   }
 `;
 
