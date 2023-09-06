@@ -245,7 +245,7 @@ export const LoadingSection = styled.div`
 `;
 
 export const Partition = styled.section`
-  display: flex;
+  display: ${(props) => props.display};
   justify-content: space-between;
   align-items: flex-start;
   gap: 0rem 1.5rem;
@@ -278,5 +278,40 @@ export const Display = styled.div`
 
   @media screen and (max-width: 768px) {
     display: block;
+  }
+`;
+
+export const SwitchView = styled.section`
+  margin-bottom: 1rem;
+  display: flex;
+  width: 100%;
+  padding: 4px 0.5rem;
+  justify-content: space-around;
+  align-items: center;
+  gap: 32px;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: -4px -4px 4px 0px rgba(255, 255, 255, 0.10) inset, 4px 4px 10px 0px rgba(255, 255, 255, 0.15) inset, -2px -2px 10px 0px rgba(0, 0, 0, 0.05) inset, 4px 4px 8px 0px rgba(0, 0, 0, 0.25) inset;
+
+  article {
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+  }
+    .switch{
+      background: #FF2957;
+      border-radius: 15px;
+      opacity: 0.95;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px #FFF, 0px 4px 4px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      
+      p {
+        color: #FFF;
+      }
+    }
+
+  @media screen and (max-width: 480px) {
+    padding: 2px;
+    gap: 2px;
   }
 `;

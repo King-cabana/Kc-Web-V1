@@ -46,10 +46,9 @@ export const RadioInput = styled.input`
 
 export const BudgetInventoryContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   padding: 2rem;
-  background: ${(prop) =>
-    prop.background ? prop.background : `url(${Background})`};
+  background: ${(prop) => prop.background ? prop.background : `url(${Background})`};
 
   @media screen and (max-width: 960px) {
     padding: 1rem;
