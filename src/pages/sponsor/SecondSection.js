@@ -90,7 +90,7 @@ const SecondSection = () => {
             </MetricsImagesContainer>
           </SponsorInfo>
 
-        <PrimaryButton onClick={() => navigate("/signup")}>Sponsor event</PrimaryButton>
+        <PrimaryButton onClick={() => navigate("/sponsor-signup")}>Sponsor event</PrimaryButton>
         </div>
       </SecondSectionHolder>
     </>

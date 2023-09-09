@@ -67,7 +67,7 @@ const EventDetailsSidebar = () => {
         <AlternativeButton2 style={{ marginTop: "1rem", width: "150px" }}>
           Edit Event
         </AlternativeButton2>
-        {/* {selectedEvent?.status === "Completed" ? ( */}
+        {Object.keys(selectedEvent?.generalProposals).length === 0 &&
         <AlternativeButton2
           style={{ width: "150px", marginTop: "1rem" }}
           onClick={() =>
@@ -76,7 +76,7 @@ const EventDetailsSidebar = () => {
         >
           Generate Proposal
         </AlternativeButton2>
-        {/* ) : null} */}
+        }
         <AbsolutePrimaryButton style={{ width: "150px", marginTop: "auto" }}>
           Delete Event
         </AbsolutePrimaryButton>

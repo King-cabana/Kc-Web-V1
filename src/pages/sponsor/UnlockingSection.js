@@ -20,7 +20,7 @@ const UnlockingSection = () => {
         <KBTextL>
           Sign up with King Cabana now!
         </KBTextL>
-        <PrimaryButton onClick={()=>navigate("/signup")}>Sign me up</PrimaryButton>
+        <PrimaryButton onClick={()=>navigate("/sponsor-signup")}>Sign me up</PrimaryButton>
         </div>
       </UnlockContainer>
     </>

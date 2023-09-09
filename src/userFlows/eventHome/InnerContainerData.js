@@ -59,7 +59,7 @@ const InnerContainerData = () => {
     const proposalsGenerated = async () => {
       try {
         const { data } = await axios.get(
-          API_URL_2 + `proposals/profile?id=${state?.id}`,
+          API_URL_2 + `general-proposals/profile?id=${state?.id}`,
           {
             headers: { Authorization: `Bearer ${user?.token}` },
           }

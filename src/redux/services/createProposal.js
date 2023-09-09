@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/proposals/";
+const API_URL = "http://localhost:8080/";
 export const createProposal = async (data, token) => {
   console.log(data);
   try {
-    const response = await axios.post(API_URL + "create-general-proposal", data, {
+    const response = await axios.post(API_URL + "general-proposals", data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

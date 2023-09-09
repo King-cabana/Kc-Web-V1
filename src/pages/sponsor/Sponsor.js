@@ -12,7 +12,7 @@ import UnlockingSection from "./UnlockingSection"
 const Sponsor  = () => {
   return (
     <>
-      <Navbar pryBtnCTA="Sponsor Event"/>
+      <Navbar pryBtnCTA="Sponsor Event" signup="/sponsor-signup"/>
       <SponsorHeroSection>
         <BgOverlay>
           <HeroHolder>
@@ -22,7 +22,7 @@ const Sponsor  = () => {
             <KBTextL>
               Enhance Brand Visibility, Maximize Customer Engagement, and Achieve Optimal ROI.
             </KBTextL>
-              <NavButtonLink to="/signup">
+              <NavButtonLink to="/sponsor-signup">
                 <PrimaryButton fontWeight="600">Sponsor Event</PrimaryButton>
               </NavButtonLink>
           </HeroHolder>

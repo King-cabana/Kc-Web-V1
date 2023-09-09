@@ -28,12 +28,14 @@ import { API_URL_2 } from "../../redux/services/authService";
 import { ImLocation, ImLink } from "react-icons/im";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../LoadingScreen";
-import { decryptId, encryptId, formatDate, formatTime } from "../../utils";
+import { addressString, decryptId, encryptId, formatDate, formatTime } from "../../utils";
 import {
+  Display,
   Partition,
   Partition1,
   Partition2,
 } from "../eventPlanning/EventPlanningStyled";
+import IconName from "../../components/IconName";
 
 const GuestView = () => {
   const [event, setEvent] = useState();
@@ -81,7 +83,7 @@ const GuestView = () => {
             />
           </ImagesContainer>
           <BudgetSection>
-            <Partition>
+            <Partition display="flex">
               <Partition1>
                 <BudgetTitle1 style={{ marginTop: "0.5rem" }}>
                   Event Name
@@ -112,6 +114,25 @@ const GuestView = () => {
                     </BudgetInventorySubtitle>
                   </>
                 ) : null}
+
+                <Display>
+                  <IconName
+                    gap="0.5rem"
+                    icon={<AiTwotoneCalendar color="#FF2957" size="1em" />}
+                    title="Date and Time"
+                    details={`${formatDate(event?.eventStartDate)} at ${formatTime(
+                      event?.eventStartTime
+                    )}`}
+                    marginbottom="0.5rem"
+                  />
+                  <IconName
+                    gap="0.5rem"
+                    icon={<ImLocation color="#FF2957" size="1em" />}
+                    title="Location"
+                    details={addressString(event?.eventAddress)}
+                    marginbottom="0.5rem"
+                  />
+                </Display>
 
                 {event?.tags?.length > 0 ? (
                   <>
