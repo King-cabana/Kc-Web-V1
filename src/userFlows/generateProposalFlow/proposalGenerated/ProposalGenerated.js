@@ -108,7 +108,7 @@ const ProposalGenerated = () => {
   useEffect(() => {
     const fetchProposal = async () => {
       try {
-        const { data } = await axios.get(API_URL_2 + `proposals/${decryptedId}`);
+        const { data } = await axios.get(API_URL_2 + `general-proposals/${decryptedId}`);
         setProposal(data);
         dispatch(setProposalCreated(data))
         // console.log(proposalCreated)

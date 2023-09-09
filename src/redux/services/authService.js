@@ -22,6 +22,22 @@ const register = async (payload) => {
   }
 };
 
+const sponsorRegister = async (payload) => {
+  try {
+    const { data } = await axios.post(
+      API_URL + "sponsor",
+      {
+        ...payload,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log(data);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const verifyEmail = async (otp) => {
   try {
     const response = await axios.put(
@@ -38,6 +54,27 @@ const verifyEmail = async (otp) => {
     const userToken = authHeader.split(" ")[1];
     // console.log(vToken);
     localStorage.setItem("userToken", userToken);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+const verifySponsorEmail = async (otp) => {
+  try {
+    const response = await axios.put(
+      API_URL + "verify-email",
+      {
+        otp,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (otp === response.data.otp) {
+      return response.data;
+    }
+    const authHeader = response.headers.get("Authorization");
+    const sponsorUserToken = authHeader.split(" ")[1];
+    // console.log(vToken);
+    localStorage.setItem("sponsorUserToken", sponsorUserToken);
     return response;
   } catch (error) {
     throw error;
@@ -163,7 +200,9 @@ const logout = () => {
 
 export {
   register,
+  sponsorRegister,
   verifyEmail,
+  verifySponsorEmail,
   login,
   forgotPassword,
   forgotPasswordOtp,

@@ -8,34 +8,35 @@ import { LoadingSection } from "./EventPlanningStyled";
 
 const SponsorshipDetails = ({proposalId}) => {
   const [loading, setLoading] = useState(true);
-  const [proposal, setProposal] = useState("");
-  console.log(proposalId);
+  const [proposal, setProposal] = useState();
+  console.log(proposal)
+  console.log(proposalId[0]);
 
   useEffect(() => {
       const fetchGeneralProposal = async () => {
         try {
-          const { data } = axios.get(API_URL_2 + `proposals/${proposalId}`);
+          const { data } = await axios.get(API_URL_2 + `general-proposals/${proposalId[0]}`);
           setProposal(data);
-          console.log(proposal);
+          console.log(data);
         } catch (error) {
           console.log(error);
         } finally {
           setLoading(false);
         }
       };
-      if (typeof proposalId === "number") {
+      if (typeof proposalId[0] === "number") {
         fetchGeneralProposal();
       };
-  }, [proposalId])
+  }, [proposalId[0]])
   return (
     <>
-      <div>Sponsorship Details</div>
+      {/* <div>Sponsorship Details</div> */}
       {loading ? (<LoadingSection style={{ width: "100vw" }}>
                     <ReactLoading type="spin" color="#FF2957" height={100} width={50} />
                   </LoadingSection>) : (
       <PreviewLogoBg style={{ height: "fit-content" }}>
-            <ProposalInner>
-                <div style={{ marginTop: "4%" }}>
+            <ProposalInner style={{padding: "0rem"}}>
+                <div style={{ marginTop: "0rem" }}>
                   <h3 style={{ color: "#484848" }}>Estimated Attendance</h3>
                   <p>{proposal?.estimatedAttendance ? proposal?.estimatedAttendance : "Estimated attendance"}</p>
                 </div>

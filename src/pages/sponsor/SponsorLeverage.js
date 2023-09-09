@@ -43,7 +43,7 @@ const SponsorLeverage = () => {
             )
           })}
         </CardsSection>
-        <PrimaryButton onClick={()=>navigate("/signup")}>Let's get started</PrimaryButton>
+        <PrimaryButton onClick={()=>navigate("/sponsor-signup")}>Let's get started</PrimaryButton>
       </SubSection>
     </>
   )

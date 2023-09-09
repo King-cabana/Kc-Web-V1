@@ -94,7 +94,7 @@ const ViewHistoryEvent = ({
           </Display>
 
           <BudgetSection style={{ padding: "0rem" }}>
-            <Partition style={{ gap: "0rem 1rem", marginBottom: "0.4rem" }}>
+            <Partition style={{ gap: "0rem 1rem", marginBottom: "0.4rem", display: "flex" }}>
               <Partition1>
                 <IconName
                   titleLg="Event Name"

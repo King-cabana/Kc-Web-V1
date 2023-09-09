@@ -85,7 +85,7 @@ const ProposalDetails = () => {
   const deleteProposal = async (sponsorKey) => {
     // console.log(sponsorKey);
     try {
-      await axios.delete(API_URL_2 + `proposals/${sponsorKey}`, {
+      await axios.delete(API_URL_2 + `general-proposals/${sponsorKey}`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
@@ -121,7 +121,7 @@ const ProposalDetails = () => {
                     </SM>
                   </TdLarge>
                   <TdMedium style={{ border: "none", textAlign: "end" }}>
-                    {Object.keys(data?.proposals).length === 0 && <AbsolutePrimaryButton
+                    {Object.keys(data?.generalProposals).length === 0 && <AbsolutePrimaryButton
                       onClick={() =>
                         navigate(`/generateproposal/${encryptId(data?.id)}`)
                       }
@@ -131,7 +131,7 @@ const ProposalDetails = () => {
                     
                   </TdMedium>
                 </TableHead>
-                {Object.keys(data?.proposals).map((sponsorKey) => (
+                {Object.values(data?.generalProposals)?.map((sponsorKey) => (
                   <TableTr key={sponsorKey}>
                     <TdLarge style={{ padding: "0.5rem"}}>
                       <AlignCenter>

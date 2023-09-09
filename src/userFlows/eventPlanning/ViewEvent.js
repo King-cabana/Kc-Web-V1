@@ -54,7 +54,6 @@ const ViewEvent = () => {
   const infoSponsor = switchView === 2;
   const handleEvent = () => setSwitchView(1);
   const handleSponsor = () => setSwitchView(2);
-  console.log(switchView);
   const { id } = useParams();
   const navigate = useNavigate();
   const encryptedId = encryptId(event?.id);
@@ -111,17 +110,15 @@ const ViewEvent = () => {
               View Event
             </Txt>
           </WelcomeHeader>
-          <Container
-            style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}
-          >
-            <AlternativeButton2
-              onClick={() =>
-                navigate(`/generateproposal/${encryptId(event?.id)}`)
-              }
-            >
+        
+          <Container style={{ marginBottom: "0.5rem", justifyContent: "flex-end" }}>
+            {Object.keys(event?.generalProposals)?.length === 0 && (
+            <AlternativeButton2 onClick={() => navigate(`/generateproposal/${encryptId(event?.id)}`)}>
               Generate Proposal
             </AlternativeButton2>
+            )}
           </Container>
+        
 
           <ImagesContainer>
             <BackgroundPicture
@@ -147,7 +144,7 @@ const ViewEvent = () => {
                 <RiDeleteBin5Line />
               </Like>
             </IconsContainer>
-            {event?.generalProposals && 
+            {Object.keys(event?.generalProposals)?.length > 0 && (
             <SwitchView>
               <article onClick={handleEvent} className={infoEvent ? "switch" : ""}>
                 <BudgetInventorySubtitle style={{fontWeight: "600"}}>
@@ -160,7 +157,7 @@ const ViewEvent = () => {
                 </BudgetInventorySubtitle>
               </article>
             </SwitchView>
-            } 
+            )} 
 
             <Partition display={infoEvent ? "flex" : "none"}>
               <Partition1>
@@ -283,7 +280,7 @@ const ViewEvent = () => {
             </Partition>
 
             <Partition display={infoSponsor ? "flex" : "none"}>
-              <SponsorshipDetails proposalId={event?.generalProposals}/>
+              <SponsorshipDetails proposalId={Object.values(event?.generalProposals)}/>
             </Partition>
           </BudgetSection>
 

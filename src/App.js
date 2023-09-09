@@ -39,6 +39,8 @@ import ProposalGenerated from "./userFlows/generateProposalFlow/proposalGenerate
 import EventHistoryForm from "./userFlows/eventHistory/components/EventHistoryForm";
 import EditEventHistory from "./userFlows/eventHistory/EditEventHistory";
 import SetupSponsorsProfile from "./userFlows/sponsorsFlow/setupSponsorsProfile/SetupSponsorProfile"
+import SponsorSignUp from "./auth/signUp/SponsorSignUp";
+import VerifySponsorEmail from "./auth/signUp/VerifySponsorEmail";
 // import BudgetDraft from "./pages/BudgetDraft";
 
 const EditOrganiserProfile = lazy(() =>
@@ -81,6 +83,7 @@ function App() {
 
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/sponsor-signup" element={<SponsorSignUp />} />
 
           <Route path="/aboutUs" element={<About />} />
           <Route path="/contactUs" element={<ContactUs />} />
@@ -88,6 +91,7 @@ function App() {
           <Route path="*" element={<NoPage />} />
 
           <Route path="/verifyEmail" element={<VerifyEmail />} />
+          <Route path="/verify-sponsor-email" element={<VerifySponsorEmail />} />
           <Route path="/signupsuccess" element={<SignUpSuccess />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route
