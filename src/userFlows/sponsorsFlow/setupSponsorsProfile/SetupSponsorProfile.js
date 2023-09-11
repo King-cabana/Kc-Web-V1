@@ -29,7 +29,7 @@ const SetupSponsorsProfile = () => {
             </KBDisplayXs>
             <SetupInputs state={state} setState={setState} handleChange={otherFields} />
             <ListHandler label="Product Offering"
-            items={state.productOffering} maxItems={5}
+            items={state?.productOffering} maxItems={5}
             setItems={(newItems) => setState((prevState) => ({
                 ...prevState,
                 productOffering: newItems,
@@ -37,7 +37,7 @@ const SetupSponsorsProfile = () => {
             description="List of products or services you are offering"
           />
             <ListHandler label="Unique Selling Point"
-            items={state.uniqueSellingPoint} maxItems={5}
+            items={state?.uniqueSellingPoint} maxItems={5}
             setItems={(newItems) => setState((prevState) => ({
                 ...prevState,
                 uniqueSellingPoint: newItems,
@@ -45,7 +45,7 @@ const SetupSponsorsProfile = () => {
             description="List unique attributes of your product that distinguishes it from others"
           />
             <ListHandler label="Project Executed"
-            items={state.projectExecuted} maxItems={5}
+            items={state?.projectExecuted} maxItems={5}
             setItems={(newItems) => setState((prevState) => ({
                 ...prevState,
                 projectExecuted: newItems,
@@ -53,7 +53,7 @@ const SetupSponsorsProfile = () => {
             description="List projects you had sponsors in the past"
           />
             <ListHandler label="CSR Interests"
-            items={state.csrInterest} maxItems={5}
+            items={state?.csrInterest} maxItems={5}
             setItems={(newItems) => setState((prevState) => ({
                 ...prevState,
                 csrInterest: newItems,

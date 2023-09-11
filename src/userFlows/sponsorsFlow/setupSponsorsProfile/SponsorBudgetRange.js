@@ -13,9 +13,9 @@ const SponsorBudgetRange = ({ state, handleChange }) => {
           <Input
             type="number"
             placeholder="From: 0.00"
-            name="budgetFrom"
+            name="budgetRangeFrom"
             onChange={handleChange}
-            defaultValue={state?.budgetFrom}
+            defaultValue={state?.budgetRangeFrom}
             min="0"
             onKeyDown={preventNegativeValues}
             onPaste={handlePaste}
@@ -26,9 +26,9 @@ const SponsorBudgetRange = ({ state, handleChange }) => {
           <Input
             type="number"
             placeholder="To: 0.00"
-            name="budgetTo"
+            name="budgetRangeTo"
             onChange={handleChange}
-            defaultValue={state?.budgetTo}
+            defaultValue={state?.budgetRangeTo}
             min="0"
             onKeyDown={preventNegativeValues}
             onPaste={handlePaste}
