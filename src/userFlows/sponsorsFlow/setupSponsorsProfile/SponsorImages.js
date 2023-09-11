@@ -70,7 +70,7 @@ const SponsorImages = ({ state, setState }) => {
     if (file1) {
       setState((prevState)=>({
           ...prevState,
-          sponsorBgImage : file1,
+          backgroundPictureUrl : file1,
         }));
       console.log(state);
     }
@@ -79,7 +79,7 @@ const SponsorImages = ({ state, setState }) => {
     if (file2) {
       setState((prevState)=>({
           ...prevState,
-          sponsorLogoImage : file2,
+          logoUrl : file2,
         }));
       console.log(state);
     }
@@ -98,7 +98,7 @@ const SponsorImages = ({ state, setState }) => {
                  hidden
                  id="file1"
                  accept="image/png, image/jpeg, image/jpg"
-                 name="sponsorBgImage"
+                 name="backgroundPictureUrl"
                  defaultValue={file1}
                />
              </CustomWrapper>
@@ -162,7 +162,7 @@ const SponsorImages = ({ state, setState }) => {
                hidden
                id="file2"
                accept="image/png, image/jpeg, image/jpg"
-               name="sponsorLogoImage"
+               name="logoUrl"
                defaultValue={file2}
              />
            </CustomWrapper>

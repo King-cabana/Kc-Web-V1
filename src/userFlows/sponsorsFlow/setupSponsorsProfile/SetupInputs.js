@@ -5,7 +5,7 @@ const SetupInputs = ({ state, handleChange }) => {
   
   const inputData = [
     {
-      label: "Organizer's Name",
+      label: "Sponsor's Name",
       type: "text",
       placeholder: "Enter sponsor's name",
       name: "sponsorName",
@@ -15,18 +15,18 @@ const SetupInputs = ({ state, handleChange }) => {
       label: "Phone Number",
       type: "tel",
       placeholder: "Enter phone number",
-      name: "sponsorPhoneNumber",
-      defaultValue: state?.sponsorPhoneNumber,
+      name: "phoneNumber",
+      defaultValue: state?.phoneNumber,
       minLength: 5
     },
     {
       label: "Email Address",
       type: "email",
       placeholder: "Format: email@example.com",
-      name: "sponsorEmail",
+      name: "profileEmail",
       title: "Email format: email@example.com",
       pattern: "^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
-      defaultValue: state?.sponsorEmail,
+      defaultValue: state?.profileEmail,
     },
   ]
 
@@ -53,7 +53,7 @@ const SetupInputs = ({ state, handleChange }) => {
       )})}
       <InputSeg style={{ margin: "1rem 0rem" }}>
         <InputText>
-          Sponsor's Details{" "}
+          Brief Description{" "}
           <Asterix>
             {state?.sponsorDetails?.length ??
               state?.sponsorDetails?.length}
@@ -63,11 +63,11 @@ const SetupInputs = ({ state, handleChange }) => {
         <MyTextArea style={{ marginTop: "0.5rem" }}
           type="textarea"
           row="4"
-          name="organizerDetails"
+          name="description"
           placeholder="Write a short bio: 250 characters maximum"
           maxLength={250}
           onChange={handleChange}
-          defaultValue={state?.sponsorDetails}
+          defaultValue={state?.description}
         />
       </InputSeg>
     </>
