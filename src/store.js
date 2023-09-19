@@ -16,6 +16,7 @@ import pastEventSlice from "./redux/slices/pastEventSlice";
 import eventsHistorySlice from "./redux/slices/eventsHistorySlice";
 import createEventHistorySlice from "./redux/slices/createEventHistorySlice";
 import sponsorDetailsSlice from "./redux/slices/sponsorDetailsSlice";
+import sponsorProfileSlice from "./redux/slices/sponsorProfileSlice";
 
 const persistConfig = {
   key: "kingCabana",
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   message: messageSlice,
   profile: profileSlice,
   eventOrganizerProfile: eventOrganizerProfileSlice,
+  sponsorProfile: sponsorProfileSlice,
   otp: otpSlice,
   createEvent: createEventSlice,
   eventCreated: eventCreatedSlice,

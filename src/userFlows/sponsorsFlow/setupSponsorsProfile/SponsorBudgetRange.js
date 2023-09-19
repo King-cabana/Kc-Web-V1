@@ -6,7 +6,7 @@ import { SponsorFromTo } from "./SetupSponsorsProfileStyled";
 const SponsorBudgetRange = ({ state, handleChange }) => {
   return (
     <>
-      <InputText>Budget Range (in Naira)</InputText>
+      <InputText>Budget range to sponsor event (in Naira)</InputText>
       <SponsorFromTo>
         <div style={{width: "100%"}}>
           <KBTextXs>From</KBTextXs>

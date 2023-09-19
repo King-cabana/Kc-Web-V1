@@ -35,7 +35,7 @@ import {
   setUserDetails,
   setUserToken,
 } from "../../redux/slices/userDetailsSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSponsorDetails } from "../../redux/slices/sponsorDetailsSlice";
 
 const SponsorSignUp = () => {
@@ -45,6 +45,8 @@ const SponsorSignUp = () => {
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
+  const state = useSelector((state) => state?.sponsorDetails);
+  console.log(state);
 
   const [inputs, setInput] = useState({
     firstname: "",
@@ -164,7 +166,7 @@ const SponsorSignUp = () => {
     }
     try {
       const { data } = await sponsorRegister(inputs);
-      dispatch(setSponsorDetails({"Email": inputs.email}));
+      dispatch(setSponsorDetails({"email": inputs.email}));
       console.log(data);
       toast.success("Success, An Otp as been sent to your inbox.");
       navigate("/verify-sponsor-email");

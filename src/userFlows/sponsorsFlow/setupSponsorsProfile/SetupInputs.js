@@ -9,7 +9,8 @@ const SetupInputs = ({ state, handleChange }) => {
       type: "text",
       placeholder: "Enter sponsor's name",
       name: "sponsorName",
-      defaultValue: state?.sponsorName
+      defaultValue: state?.sponsorName,
+      required: "required"
     },
     {
       label: "Phone Number",
@@ -17,7 +18,8 @@ const SetupInputs = ({ state, handleChange }) => {
       placeholder: "Enter phone number",
       name: "phoneNumber",
       defaultValue: state?.phoneNumber,
-      minLength: 5
+      minLength: 5,
+      required: "required"
     },
     {
       label: "Email Address",
@@ -27,6 +29,22 @@ const SetupInputs = ({ state, handleChange }) => {
       title: "Email format: email@example.com",
       pattern: "^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
       defaultValue: state?.profileEmail,
+      required: "required"
+    },
+    {
+      label: "Office Address",
+      type: "text",
+      placeholder: "Number or suite, street, city, state, country, zip code",
+      name: "sponsorOfficeAddress",
+      defaultValue: state?.sponsorOfficeAddress,
+      required: "required"
+    },
+    {
+      label: "Website or Other URL",
+      type: "url",
+      placeholder: "https://example.com/",
+      name: "website",
+      defaultValue: state?.website,
     },
   ]
 
@@ -36,7 +54,7 @@ const SetupInputs = ({ state, handleChange }) => {
         return (
         <InputSeg style={{ margin: "1rem 0rem" }}>
           <InputText>
-            {data?.label} <Asterix>*</Asterix>
+            {data?.label} {data?.required && <Asterix>*</Asterix>} 
           </InputText>
           <Input style={{ marginTop: "0.5rem" }}
             type={data?.type}
@@ -47,7 +65,7 @@ const SetupInputs = ({ state, handleChange }) => {
             pattern={data?.pattern}
             onChange={handleChange}
             defaultValue={data?.defaultValue}
-            required
+            required={data?.required}
           />
         </InputSeg>
       )})}
