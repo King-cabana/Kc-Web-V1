@@ -3,54 +3,6 @@ import { useFileUpload } from "../../../components/FileUpload";
 import { CustomWrapper, FileWrapper, FormContainer, InputText, Supported, UploadBtn } from "../../createEvent/FirstCreateEventStyled"
 
 const SponsorImages = ({ state, setState }) => {
-//   const handleFileChange = async (e) => {
-//     const MAX_FILE_SIZE = 1024; // 1MB
-//     const file = e.target.files[0];
-//     const fileSizeKiloBytes = file?.size / 1024;
-
-//     if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-//       setErrorMsg("*File size is greater than 1mb*");
-//       setIsSuccess(false);
-//       return;
-//     } else {
-//       const data = new FormData();
-//       data.append("file", e.target.files[0]);
-//       data.append("upload_preset", "kingCabana");
-//       setBannerLoading(true);
-//       setIsSuccess(false);
-//       setSelectedFile(null);
-//       try {
-//         const response = await axios.post(
-//           "https://api.cloudinary.com/v1_1/dcanx4ftd/image/upload",
-//           data
-//         );
-//         const uploadedBanner = response.data;
-//         // console.log(uploadedBanner.secure_url);
-//         if (uploadedBanner.secure_url) {
-//           setFile(uploadedBanner.secure_url);
-//           setBannerLoading(false);
-//           setState((prevState)=>({
-//               ...prevState,
-//               bannerUrl: uploadedBanner.secure_url,
-//             }));
-//           console.log(state);
-//         }
-//       } catch (error) {
-//         setBannerLoading(false);
-//         setErrorMsg("**ERROR UPLOADING FILE!**");
-//         console.log(error);
-//       }
-//     }
-//     setSelectedFile(e.target.files[0]);
-//     localStorage.setItem("banner", e.target.files[0].name);
-//   };
-//   useEffect(() => {
-//     const bannerData = localStorage.getItem("banner");
-//     if (bannerData) {
-//       setSelectedFile({ name: bannerData });
-//     }
-//   }, []);
-
   const {
     handleFileChange: handleFileChange1,
     errorMsg: errorMsg1,
