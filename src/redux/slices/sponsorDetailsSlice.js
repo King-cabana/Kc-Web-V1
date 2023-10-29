@@ -5,7 +5,7 @@ const initialState = { isSignedIn: false, details: {} };
 export const fetchSponsorDetails = (sponsorEmail, sponsorToken) => async (dispatch) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/eventuser/email?email=${sponsorEmail}`,
+      `https://kc-backend-systest.onrender.com/eventuser/email?email=${sponsorEmail}`,
       {
         method: "GET",
         headers: {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL_2 = "http://localhost:8080/histories/";
+const API_URL_2 = "https://kc-backend-systest.onrender.com/histories/";
 export const createEventHistory = async (data, token) => {
   console.log(data);
   try {

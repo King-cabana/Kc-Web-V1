@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "https://kc-backend-systest.onrender.com/";
 export const createProposal = async (data, token) => {
   console.log(data);
   try {
