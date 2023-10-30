@@ -30,7 +30,7 @@
     "react-simple-typewriter": "^5.0.1",
     "react-swipeable-views": "^0.14.0",
     "react-toastify": "^9.1.2",
-    "react-tooltip": "^5.18.0",
+    "react-tooltip": "^5.18.1",
     "redux-persist": "^6.0.0",
     "styled-components": "^6.0.0-rc.1",
     "web-vitals": "^2.1.0"

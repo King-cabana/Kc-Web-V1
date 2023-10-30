@@ -66,6 +66,8 @@ const FirstCreateEvent = ({ padding }) => {
   const change = (e) => {
     dispatch(editGenerally({ name: e.target.name, value: e.target.value }));
   };
+
+
   const handlePaste = (e) => {
     const clipboardData = e.clipboardData || window.clipboardData;
     const pastedText = clipboardData.getData("text");
@@ -78,6 +80,8 @@ const FirstCreateEvent = ({ padding }) => {
       e.preventDefault();
     }
   };
+
+  
   const preventNegativeValues = (e) => {
     if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === ".") {
       e.preventDefault();
@@ -166,6 +170,7 @@ const FirstCreateEvent = ({ padding }) => {
     setErrorMsg("");
     setIsSuccess(true);
   }, [file]);
+  
   const handleSubmit = async function (e) {
     e.preventDefault();
     navigate("/createEvent/tagsTimelines");
